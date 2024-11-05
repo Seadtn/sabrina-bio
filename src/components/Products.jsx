@@ -3,11 +3,13 @@ import Skeleton from 'react-loading-skeleton'
 import '../App.css'
 import ProductCard from './ProductCard'
 import 'react-loading-skeleton/dist/skeleton.css'
+import { useTranslation } from 'react-i18next';
 
 const Products = () => {
     let url = 'https://fakestoreapi.com/products'
     const [products,setProducts] = useState([])
     const [loading,setLoading] = useState(false)
+    const { t } = useTranslation();
 
     useEffect(()=>{
         let loadProducts = true;
@@ -72,7 +74,7 @@ const Products = () => {
     return (
         <div className="container">
             <div className="content">
-                <h2 className="title">Featured Products</h2>
+                <h2 className="title">{t('homePage.products.title')}</h2>
                 <div className="categories">
                 </div>
                 <div className="row products">

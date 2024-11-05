@@ -11,10 +11,12 @@ import Profile from './components/Profile'
 import Footer from './components/Footer'
 import PageNotFound from './components/PageNotFound'
 import Contact from './components/Contact'
+// eslint-disable-next-line no-unused-vars
+import i18n from './i18n/i18n'; 
 
 function App() {
   return (
-    <div className="App">
+    <div className="App" >
       <Router>
           <NavBar/>
           <Routes>
