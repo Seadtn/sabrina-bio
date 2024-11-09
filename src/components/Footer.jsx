@@ -10,9 +10,9 @@ const Footer = () => {
 
   return (
     <div className="footer" >
-      <div className="container">
+      <div className="container" dir={isArabic ? 'rtl' : 'ltr'} lang={isArabic ? 'ar' : 'fr'}>
         <div className="row">
-          <div className="footer-co11" dir={isArabic ? 'rtl' : 'ltr'} lang={isArabic ? 'ar' : 'fr'}>
+          <div className="footer-co11"    style={{ textAlign: isArabic ? "right" : "left" }}>
             <h3 >{t("homePage.footer.headers.aboutUs")}</h3>
             <p>
             {t("homePage.footer.aboutUs.par1")}
@@ -21,7 +21,7 @@ const Footer = () => {
             {t("homePage.footer.aboutUs.par2")}
             </p>
           </div>
-          <div className="footer-co12" dir={isArabic ? 'rtl' : 'ltr'} lang={isArabic ? 'ar' : 'fr'}>
+          <div className="footer-co12" dir={isArabic ? 'rtl' : 'ltr'} lang={isArabic ? 'ar' : 'fr' }   style={{ textAlign: isArabic ? "right" : "left" }}>
             <h3>{t("homePage.footer.headers.links")}</h3>
             <ul>
               <li>
@@ -35,7 +35,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          <div className="footer-co13" dir={isArabic ? 'rtl' : 'ltr'} lang={isArabic ? 'ar' : 'fr'}>
+          <div className="footer-co13" dir={isArabic ? 'rtl' : 'ltr'} lang={isArabic ? 'ar' : 'fr'}   style={{ textAlign: isArabic ? "right" : "left" }}>
             <h3>{t("homePage.footer.headers.followUs")}</h3>
             <ul>
               <li>
