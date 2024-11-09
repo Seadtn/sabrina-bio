@@ -60,7 +60,7 @@ const NavBar = () => {
           <li className="dropdown" ref={dropdownRef}>
             <div className="selected-language" onClick={toggleDropdown}>
               <img
-                src={languages[selectedLanguage].flag}
+                src={process.env.PUBLIC_URL+languages[selectedLanguage].flag}
                 alt={languages[selectedLanguage].label}
               />
               {languages[selectedLanguage].label}
@@ -70,7 +70,7 @@ const NavBar = () => {
               <div className="language-dropdown">
                 {Object.entries(languages).map(([key, { label, flag }]) => (
                   <span key={key} onClick={() => changeLanguage(key)}>
-                    <img src={flag} alt={label} /> {label}
+                    <img src={process.env.PUBLIC_URL+flag} alt={label} /> {label}
                   </span>
                 ))}
               </div>

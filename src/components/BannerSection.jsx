@@ -39,7 +39,7 @@ const BannerSection = () =>{
                                 </button>
                             </div>
                             <div className="right">
-                                <img src={slider.cover} alt="slider"/>
+                                <img src={process.env.PUBLIC_URL+slider.cover} alt="slider"/>
                             </div>
                         </div>
                     )
