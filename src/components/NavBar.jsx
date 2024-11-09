@@ -49,13 +49,13 @@ const NavBar = () => {
       <nav>
         <ul className="nav-links">
           <li>
-            <Link to="/">{t("homePage.menu.home")}</Link>
+            <Link to="/sabrine-bio">{t("homePage.menu.home")}</Link>
           </li>
           <li>
-            <Link to="/products">{t("homePage.menu.products")}</Link>
+            <Link to="/sabrine-bio/products">{t("homePage.menu.products")}</Link>
           </li>
           <li>
-            <Link to="/contact">{t("homePage.menu.contact")}</Link>
+            <Link to="/sabrine-bio/contact">{t("homePage.menu.contact")}</Link>
           </li>
           <li className="dropdown" ref={dropdownRef}>
             <div className="selected-language" onClick={toggleDropdown}>
@@ -81,7 +81,7 @@ const NavBar = () => {
               <span id="itemsNum">0</span>
             </i>
           </Link>
-          <Link to="/cart">
+          <Link to="/sabrine-bio/cart">
             <i className="fas fa-shopping-cart cart">
               <span id="itemsNum">0</span>
             </i>

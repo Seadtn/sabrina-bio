@@ -21,14 +21,14 @@ function App() {
           <NavBar/>
           <Routes>
               <Route  path="/sabrine-bio" element={<Home/>}/>  
-              <Route path="/cart" element={<Cart/>}/>  
-              <Route path="/products" element={<Products/>}/>  
-              <Route path="/product/:id" element={<Product/>}/>  
-              <Route path="/sign-in" element={<SignIn/>}/>  
-              <Route path="/sign-up" element={<SignUp/>}/>   
-              <Route path="/profile" element={<Profile/>}/>  
-              <Route path="/contact" element={<Contact/>}/>  
-              <Route path="*" element={<PageNotFound/>}/>  
+              <Route path="/sabrine-bio/cart" element={<Cart/>}/>  
+              <Route path="/sabrine-bio/products" element={<Products/>}/>  
+              <Route path="/sabrine-bio/product/:id" element={<Product/>}/>  
+              <Route path="/sabrine-bio/sign-in" element={<SignIn/>}/>  
+              <Route path="/sabrine-bio/sign-up" element={<SignUp/>}/>   
+              <Route path="/sabrine-bio/profile" element={<Profile/>}/>  
+              <Route path="/sabrine-bio/contact" element={<Contact/>}/>  
+              <Route path="*" element={<Home/>}/>  
           </Routes>
           <Footer/>
       </Router>
