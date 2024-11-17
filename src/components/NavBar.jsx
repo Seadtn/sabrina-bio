@@ -15,6 +15,7 @@ const NavBar = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const { t } = useTranslation();
+  const isArabic = i18n.language === "ar";
 
   const changeLanguage = (lng) => {
     setSelectedLanguage(lng);
@@ -38,57 +39,77 @@ const NavBar = () => {
   }, []);
 
   return (
-    <div className="navbar">
-      <div className="logo">
-        <Link to="/">
-          <h4>
-            Sabrine <span>Bio</span>
-          </h4>
-        </Link>
+    <div>
+      <div
+        className="publicity"
+        dir={isArabic ? "rtl" : "ltr"}
+        lang={isArabic ? "ar" : "fr"}
+      >
+        <h4 className="text">
+          {t("homePage.menu.livraisonText")}
+          <p>{t("homePage.menu.livraisonPrix")}</p>
+        </h4>
       </div>
-      <nav>
-        <ul className="nav-links">
-          <li>
-            <Link to="/sabrine-bio">{t("homePage.menu.home")}</Link>
-          </li>
-          <li>
-            <Link to="/sabrine-bio/products">{t("homePage.menu.products")}</Link>
-          </li>
-          <li>
-            <Link to="/sabrine-bio/contact">{t("homePage.menu.contact")}</Link>
-          </li>
-          <li className="dropdown" ref={dropdownRef}>
-            <div className="selected-language" onClick={toggleDropdown}>
-              <img
-                src={process.env.PUBLIC_URL+languages[selectedLanguage].flag}
-                alt={languages[selectedLanguage].label}
-              />
-              {languages[selectedLanguage].label}
-              <i className={`fas fa-chevron-${dropdownOpen ? "up" : "down"}`} />
-            </div>
-            {dropdownOpen && (
-              <div className="language-dropdown">
-                {Object.entries(languages).map(([key, { label, flag }]) => (
-                  <span key={key} onClick={() => changeLanguage(key)}>
-                    <img src={process.env.PUBLIC_URL+flag} alt={label} /> {label}
-                  </span>
-                ))}
+      <div className="navbar">
+        <div className="logo">
+          <Link to="/">
+            <h4>
+              Sabrina <span>Bio</span>
+            </h4>
+          </Link>
+        </div>
+        <nav>
+          <ul className="nav-links">
+            <li>
+              <Link to="/sabrine-bio">{t("homePage.menu.home")}</Link>
+            </li>
+            <li>
+              <Link to="/sabrine-bio/products">
+                {t("homePage.menu.products")}
+              </Link>
+            </li>
+            <li>
+              <Link to="/sabrine-bio/contact">
+                {t("homePage.menu.contact")}
+              </Link>
+            </li>
+            <li className="dropdown" ref={dropdownRef}>
+              <div className="selected-language" onClick={toggleDropdown}>
+                <img
+                  src={
+                    process.env.PUBLIC_URL + languages[selectedLanguage].flag
+                  }
+                  alt={languages[selectedLanguage].label}
+                />
+                {languages[selectedLanguage].label}
+                <i
+                  className={`fas fa-chevron-${dropdownOpen ? "up" : "down"}`}
+                />
               </div>
-            )}
-          </li>
-          <Link to="#">
-            <i class="fas fa-heart cart">
-              <span id="itemsNum">0</span>
-            </i>
-          </Link>
-          <Link to="/sabrine-bio/cart">
-            <i className="fas fa-shopping-cart cart">
-              <span id="itemsNum">0</span>
-            </i>
-          </Link>
-
-        </ul>
-      </nav>
+              {dropdownOpen && (
+                <div className="language-dropdown">
+                  {Object.entries(languages).map(([key, { label, flag }]) => (
+                    <span key={key} onClick={() => changeLanguage(key)}>
+                      <img src={process.env.PUBLIC_URL + flag} alt={label} />{" "}
+                      {label}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </li>
+            <Link to="#">
+              <i class="fas fa-heart cart">
+                <span id="itemsNum">0</span>
+              </i>
+            </Link>
+            <Link to="/sabrine-bio/cart">
+              <i className="fas fa-shopping-cart cart">
+                <span id="itemsNum">0</span>
+              </i>
+            </Link>
+          </ul>
+        </nav>
+      </div>
     </div>
   );
 };

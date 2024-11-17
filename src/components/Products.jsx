@@ -75,8 +75,6 @@ const Products = () => {
         <div className="container">
             <div className="content">
                 <h2 className="title">{t('homePage.products.title')}</h2>
-                <div className="categories">
-                </div>
                 <div className="row products">
                 { loading ? <Loading/> :
                     products.map((product)=>(

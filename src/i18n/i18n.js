@@ -17,6 +17,8 @@ const resources = {
           home: "Home",
           products: "Products",
           contact: "Contact",
+          livraisonText: "Free delivery starting from ",
+          livraisonPrix: "300 DT",
         },
         slider: {
           collectionBtn: "visit collections",
@@ -30,12 +32,15 @@ const resources = {
         },
         products: {
           title: "Our Products",
+          new: "New Products",
+          newLabel: "New",
           category: {
             all: "All",
-            herbs: "Herbs",
-            oils: "Oils",
+            herbs: "Herbs and grains",
+            oils: "Natural Oils",
             cosmetic: "Cosmetics",
           },
+          viewAllBtn: "View All",
           viewBtn: "Fast View",
           buyBtn: "Buy",
         },
@@ -54,6 +59,10 @@ const resources = {
             description:
               "Our customer service team is available to assist you day and night.",
           },
+          services: "Our Services",
+        },
+        mostSellerSection: {
+          title: "Our Best-Selling",
         },
         footer: {
           headers: {
@@ -62,9 +71,12 @@ const resources = {
             followUs: "Follow us",
           },
           aboutUs: {
-            par1: "Sabrine Bio is a Tunisian small business offering natural cosmetic products like oils and herbs. We believe in the power of nature to enhance beauty and well-being.",
-            par2: "Our products are crafted with care, promoting sustainability and the timeless beauty secrets of Tunisia. Choose Sabrine Bio for pure, natural beauty solutions.",
+            par1: "Sabrina Bio is a Tunisian small business offering natural cosmetic products like oils and herbs. We believe in the power of nature to enhance beauty and well-being.",
+            par2: "Our products are crafted with care, promoting sustainability and the timeless beauty secrets of Tunisia. Choose Sabrina Bio for pure, natural beauty solutions.",
           },
+        },
+        categories: {
+          title: "Our Categories",
         },
       },
 
@@ -85,6 +97,8 @@ const resources = {
           home: "الصفحة الرئيسية",
           products: "المنتجات",
           contact: "اتصل بنا",
+          livraisonText: "توصيل مجاني ابتداءً من ",
+          livraisonPrix: "300 د.ت",
         },
         slider: {
           collectionBtn: "زيارة المجموعات",
@@ -98,12 +112,15 @@ const resources = {
         },
         products: {
           title: "منتجاتنا",
+          new: "منتجاتنا الجديدة",
+          newLabel: "جديد",
           category: {
             all: "الكل",
-            herbs: "الأعشاب",
-            oils: "الزيوت",
+            herbs: "الأعشاب و الحبوب",
+            oils: "الزيوت الطبيعية",
             cosmetic: "مستحضارات تجميل",
           },
+          viewAllBtn: "عرض الكل",
           viewBtn: "عرض سريع",
           buyBtn: "شراء",
         },
@@ -120,6 +137,10 @@ const resources = {
             title: "خدمة العملاء على مدار الساعة",
             description: "فريق خدمة العملاء لدينا متاح لمساعدتك ليلاً ونهارًا",
           },
+          services: "خدماتنا",
+        },
+        mostSellerSection: {
+          title: "الأكثر مبيعا",
         },
         footer: {
           headers: {
@@ -128,9 +149,12 @@ const resources = {
             followUs: "تابعنا",
           },
           aboutUs: {
-            par1: "صابرين بيو هي شركة تونسية صغيرة تقدم منتجات تجميل طبيعية مثل الزيوت والأعشاب. نحن نؤمن بقوة الطبيعة في تعزيز الجمال والرفاهية.",
-            par2: "منتجاتنا مصنوعة بعناية، تروج للاستدامة وأسرار الجمال الخالدة في تونس. اختر صابرين بيو لحلول الجمال الطبيعية والنقية.",
+            par1: "صابرينا بيو هي شركة تونسية صغيرة تقدم منتجات تجميل طبيعية مثل الزيوت والأعشاب. نحن نؤمن بقوة الطبيعة في تعزيز الجمال والرفاهية.",
+            par2: "منتجاتنا مصنوعة بعناية، تروج للاستدامة وأسرار الجمال الخالدة في تونس. اختر صابرينا بيو لحلول الجمال الطبيعية والنقية.",
           },
+        },
+        categories: {
+          title: "فئاتنا",
         },
       },
 
@@ -151,6 +175,8 @@ const resources = {
           home: "Accueil",
           products: "Produits",
           contact: "Contactez",
+          livraisonText: "Livraison gratuite à partir de ",
+          livraisonPrix: "300 DT",
         },
         slider: {
           collectionBtn: " Visiter les collections",
@@ -164,12 +190,15 @@ const resources = {
         },
         products: {
           title: "Nos Produits",
+          new: "Nouveaux Produits",
+          newLabel: "Nouveau",
           category: {
             all: "Tout",
-            herbs: "Herbes",
-            oils: "Huiles",
+            herbs: "Herbes et Grains",
+            oils: "Huiles Naturelles",
             cosmetic: "Cosmétiques",
           },
+          viewAllBtn: "Voir tout",
           viewBtn: "Vue rapide",
           buyBtn: "Acheter",
         },
@@ -188,6 +217,10 @@ const resources = {
             description:
               " Notre équipe de service clientèle est à votre disposition jour et nuit.",
           },
+          services: "Nos Services",
+        },
+        mostSellerSection: {
+          title: "les Plus Vendus",
         },
         footer: {
           headers: {
@@ -196,9 +229,12 @@ const resources = {
             followUs: "Suivez-nous",
           },
           aboutUs: {
-            par1: "Sabrine Bio est une petite entreprise tunisienne offrant des produits cosmétiques naturels tels que des huiles et des herbes. Nous croyons au pouvoir de la nature pour sublimer la beauté et le bien-être.",
-            par2: "Nos produits sont soigneusement élaborés, promouvant la durabilité et les secrets de beauté intemporels de la Tunisie. Choisissez Sabrine Bio pour des solutions de beauté pures et naturelles.",
+            par1: "Sabrina Bio est une petite entreprise tunisienne offrant des produits cosmétiques naturels tels que des huiles et des herbes. Nous croyons au pouvoir de la nature pour sublimer la beauté et le bien-être.",
+            par2: "Nos produits sont soigneusement élaborés, promouvant la durabilité et les secrets de beauté intemporels de la Tunisie. Choisissez Sabrina Bio pour des solutions de beauté pures et naturelles.",
           },
+        },
+        categories: {
+          title: "Nos catégories",
         },
       },
       // Add more translations here
