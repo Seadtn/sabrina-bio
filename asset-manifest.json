@@ -1,17 +1,45 @@
 {
   "files": {
-    "main.css": "/sabrine-bio/static/css/main.39f03c97.css",
-    "main.js": "/sabrine-bio/static/js/main.b2321acb.js",
+    "main.css": "/sabrine-bio/static/css/main.0392be51.css",
+    "main.js": "/sabrine-bio/static/js/main.fdbcb526.js",
+    "static/css/541.a2763dc7.chunk.css": "/sabrine-bio/static/css/541.a2763dc7.chunk.css",
+    "static/js/541.e77bcc13.chunk.js": "/sabrine-bio/static/js/541.e77bcc13.chunk.js",
+    "static/js/336.dfcf950b.chunk.js": "/sabrine-bio/static/js/336.dfcf950b.chunk.js",
+    "static/css/863.349d34bd.chunk.css": "/sabrine-bio/static/css/863.349d34bd.chunk.css",
+    "static/js/863.7ae5ba0a.chunk.js": "/sabrine-bio/static/js/863.7ae5ba0a.chunk.js",
+    "static/css/278.349d34bd.chunk.css": "/sabrine-bio/static/css/278.349d34bd.chunk.css",
+    "static/js/278.64ae4d20.chunk.js": "/sabrine-bio/static/js/278.64ae4d20.chunk.js",
+    "static/js/421.a8ad1755.chunk.js": "/sabrine-bio/static/js/421.a8ad1755.chunk.js",
+    "static/js/795.57912cb5.chunk.js": "/sabrine-bio/static/js/795.57912cb5.chunk.js",
+    "static/js/616.bcbfe7d2.chunk.js": "/sabrine-bio/static/js/616.bcbfe7d2.chunk.js",
+    "static/js/667.e951aae8.chunk.js": "/sabrine-bio/static/js/667.e951aae8.chunk.js",
+    "static/js/510.43856916.chunk.js": "/sabrine-bio/static/js/510.43856916.chunk.js",
+    "static/js/798.672c857b.chunk.js": "/sabrine-bio/static/js/798.672c857b.chunk.js",
+    "static/media/empty-cart.png": "/sabrine-bio/static/media/empty-cart.db905d1f4b063162f25b.png",
     "static/media/slick.svg": "/sabrine-bio/static/media/slick.2630a3e3eab21c607e21.svg",
+    "static/media/favorites.svg": "/sabrine-bio/static/media/favorites.94bf59c4a08b1702ab7a56c91b4125d8.svg",
     "static/media/slick.eot": "/sabrine-bio/static/media/slick.a4e97f5a2a64f0ab1323.eot",
     "static/media/slick.ttf": "/sabrine-bio/static/media/slick.c94f7671dcc99dce43e2.ttf",
     "static/media/slick.woff": "/sabrine-bio/static/media/slick.295183786cd8a1389865.woff",
     "index.html": "/sabrine-bio/index.html",
-    "main.39f03c97.css.map": "/sabrine-bio/static/css/main.39f03c97.css.map",
-    "main.b2321acb.js.map": "/sabrine-bio/static/js/main.b2321acb.js.map"
+    "main.0392be51.css.map": "/sabrine-bio/static/css/main.0392be51.css.map",
+    "main.fdbcb526.js.map": "/sabrine-bio/static/js/main.fdbcb526.js.map",
+    "541.a2763dc7.chunk.css.map": "/sabrine-bio/static/css/541.a2763dc7.chunk.css.map",
+    "541.e77bcc13.chunk.js.map": "/sabrine-bio/static/js/541.e77bcc13.chunk.js.map",
+    "336.dfcf950b.chunk.js.map": "/sabrine-bio/static/js/336.dfcf950b.chunk.js.map",
+    "863.349d34bd.chunk.css.map": "/sabrine-bio/static/css/863.349d34bd.chunk.css.map",
+    "863.7ae5ba0a.chunk.js.map": "/sabrine-bio/static/js/863.7ae5ba0a.chunk.js.map",
+    "278.349d34bd.chunk.css.map": "/sabrine-bio/static/css/278.349d34bd.chunk.css.map",
+    "278.64ae4d20.chunk.js.map": "/sabrine-bio/static/js/278.64ae4d20.chunk.js.map",
+    "421.a8ad1755.chunk.js.map": "/sabrine-bio/static/js/421.a8ad1755.chunk.js.map",
+    "795.57912cb5.chunk.js.map": "/sabrine-bio/static/js/795.57912cb5.chunk.js.map",
+    "616.bcbfe7d2.chunk.js.map": "/sabrine-bio/static/js/616.bcbfe7d2.chunk.js.map",
+    "667.e951aae8.chunk.js.map": "/sabrine-bio/static/js/667.e951aae8.chunk.js.map",
+    "510.43856916.chunk.js.map": "/sabrine-bio/static/js/510.43856916.chunk.js.map",
+    "798.672c857b.chunk.js.map": "/sabrine-bio/static/js/798.672c857b.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.39f03c97.css",
-    "static/js/main.b2321acb.js"
+    "static/css/main.0392be51.css",
+    "static/js/main.fdbcb526.js"
   ]
 }

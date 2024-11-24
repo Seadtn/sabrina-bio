@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunksabrine_bio=self.webpackChunksabrine_bio||[]).push([[616],{7616:(s,e,a)=>{a.r(e),a.d(e,{default:()=>i});a(5043);var b=a(579);const i=()=>(0,b.jsx)("div",{})}}]);
+//# sourceMappingURL=616.bcbfe7d2.chunk.js.map
