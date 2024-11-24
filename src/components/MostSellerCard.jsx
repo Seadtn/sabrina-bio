@@ -1,10 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import i18n from "../i18n/i18n";
 
 const MostSellerCard = ({ product }) => {
-  const { t } = useTranslation();
   const isArabic = i18n.language === "ar";
 
   const shareOnFacebook = () => {
@@ -34,7 +32,7 @@ const MostSellerCard = ({ product }) => {
           <img src={`${process.env.PUBLIC_URL}/images/slider/slide-${Math.floor(Math.random() * 3) + 1}.png`} alt={product.title.substring(0, 25)} />
         </Link>
       </div>
-      <h2>
+      <h2 className="product-title">
         {product.title.length > 25
           ? `${product.title.substring(0, 25)}...`
           : product.title}

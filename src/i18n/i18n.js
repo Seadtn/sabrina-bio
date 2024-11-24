@@ -40,6 +40,17 @@ const resources = {
             oils: "Natural Oils",
             cosmetic: "Cosmetics",
           },
+          sort: {
+            title:"Sort By",
+            select: "Select option",
+            highPrice: "High Price",
+            lowPrice: "Low Price",
+            name: "Name,",
+          },
+          search:{
+            title:"Search",
+            input:"Search by  name..."
+          },
           viewAllBtn: "View All",
           viewBtn: "Fast View",
           buyBtn: "Buy",
@@ -79,7 +90,54 @@ const resources = {
           title: "Our Categories",
         },
       },
-
+      cartPage: {
+        cart: {
+          title: "Your order",
+          total: "Total",
+          price: "DT",
+          empty: {
+            title: "The cart is empty",
+            desc1: "Chances are you haven't added anything to your cart yet.",
+            desc2: "To do so, please visit the catalog.",
+            btn: "Go to the catalog ",
+          },
+        },
+        order: {
+          title: "Checkout",
+          catchPhrase1:
+            "Personal data is familiar with the terms of confidentiality",
+          catchPhrase2: "Delivery method",
+          linePhrase: "Delivery address",
+          catchPhrase3:
+            "You can pay for your purchase in one of the following ways",
+          phraseTic1: "Full subscription via Privat 24",
+          phraseTic2: "Cash on delivery at the Nova Poshta branch",
+          phraseTic3: "Visa/MasterCard money transfer",
+          catchPhrase4: "Promo code",
+          leftLine11: "Delivery ",
+          leftLine12: "At the carrier's rates",
+          leftLine2: "Total price",
+          closingPhrase:
+            "By clicking on the 'pay for thethe order' button, I accept the terms of the public offer and policy Privacy",
+          empty: {
+            title: "Favorites",
+            desc1: "THERE ARE NO PRODUCTS IN FAVORITES",
+            desc2: "POKE ON ❤ YOU DON'T LOSE",
+            btn: "Go to the catalog",
+          },
+        },
+        input: {
+          firstName: "First Name",
+          lastName: "Last Name",
+          phone: "Phone",
+          mail: "Email",
+          city: "City",
+          postalCode: "Postal Code",
+        },
+      },
+      favorites: {
+        title: "Favorites",
+      },
       // Add more translations here
     },
   },
@@ -120,6 +178,17 @@ const resources = {
             oils: "الزيوت الطبيعية",
             cosmetic: "مستحضارات تجميل",
           },
+          sort: {
+            title: "ترتيب حسب",
+            select: "اختر الخيار",
+            highPrice: "أعلى سعر",
+            lowPrice: "أقل سعر",
+            name: "الاسم",
+          },
+          search: {
+            title: "بحث",
+            input: "ابحث بالاسم..."
+          },
           viewAllBtn: "عرض الكل",
           viewBtn: "عرض سريع",
           buyBtn: "شراء",
@@ -157,7 +226,52 @@ const resources = {
           title: "فئاتنا",
         },
       },
-
+      cartPage: {
+        cart: {
+          title: "طلبك",
+          total: "المجموع",
+          price: "دينار تونسي",
+          empty: {
+            title: "السلة فارغة",
+            desc1: "من المحتمل أنك لم تضف أي شيء إلى سلتك بعد.",
+            desc2: "للقيام بذلك، يرجى زيارة الكتالوج.",
+            btn: "اذهب إلى الكتالوج",
+          },
+        },
+        order: {
+          title: "إتمام الطلب",
+          catchPhrase1: "البيانات الشخصية متوافقة مع شروط الخصوصية",
+          catchPhrase2: "طريقة التوصيل",
+          linePhrase: "عنوان التوصيل",
+          catchPhrase3: "يمكنك الدفع لشرائك بإحدى الطرق التالية",
+          phraseTic1: "الاشتراك الكامل عبر Privat 24",
+          phraseTic2: "الدفع نقدًا عند التسليم في فرع Nova Poshta",
+          phraseTic3: "تحويل أموال بواسطة Visa/MasterCard",
+          catchPhrase4: "رمز الخصم",
+          leftLine11: " التوصيل",
+          leftLine12: " حسب أسعارالناقل",
+          leftLine2: "السعر الإجمالي",
+          closingPhrase:
+            "بالنقر على زر 'دفع الطلب'، أوافق على شروط العرض العام وسياسة الخصوصية",
+          empty: {
+            title: "المفضلة",
+            desc1: "لا توجد منتجات في المفضلة",
+            desc2: "اضغط ❤ حتى لا تفقدها",
+            btn: "اذهب إلى الكتالوج",
+          },
+        },
+        input: {
+          firstName: "الاسم ",
+          lastName: "لقب العائلة",
+          phone: "الهاتف",
+          mail: "البريد الإلكتروني",
+          city: "المدينة",
+          postalCode: "الرمز البريدي",
+        },
+      },
+      favorites: {
+        title: "المفضلة",
+      },
       // Add more translations here
     },
   },
@@ -198,6 +312,17 @@ const resources = {
             oils: "Huiles Naturelles",
             cosmetic: "Cosmétiques",
           },
+          sort: { 
+            title: "Trier par",
+            select: "Sélectionner une option",
+            highPrice: "Prix élevé",
+            lowPrice: "Prix bas",
+            name: "Nom"
+          },
+          search: {
+            title: "Rechercher",
+            input: "Rechercher par nom..."
+          },
           viewAllBtn: "Voir tout",
           viewBtn: "Vue rapide",
           buyBtn: "Acheter",
@@ -236,6 +361,55 @@ const resources = {
         categories: {
           title: "Nos catégories",
         },
+      },
+      cartPage: {
+        cart: {
+          title: "Votre commande",
+          total: "Total",
+          price: "DT",
+          empty: {
+            title: "Le panier est vide",
+            desc1:
+              "Il est probable que vous n'ayez pas encore ajouté d'articles à votre panier.",
+            desc2: "Pour ce faire, veuillez visiter le catalogue.",
+            btn: "Aller au catalogue",
+          },
+        },
+        order: {
+          title: "Passer à la caisse",
+          catchPhrase1:
+            "Les données personnelles sont conformes aux conditions de confidentialité",
+          catchPhrase2: "Mode de livraison",
+          linePhrase: "Adresse de livraison",
+          catchPhrase3:
+            "Vous pouvez payer votre achat de l'une des manières suivantes",
+          phraseTic1: "Abonnement complet via Privat 24",
+          phraseTic2: "Paiement à la livraison à la succursale Nova Poshta",
+          phraseTic3: "Transfert d'argent Visa/MasterCard",
+          catchPhrase4: "Code promo",
+          leftLine11: "Livraison ",
+          leftLine12: "Aux tarifs du transporteur",
+          leftLine2: "Prix total",
+          closingPhrase:
+            "En cliquant sur le bouton 'payer la commande', j'accepte les conditions de l'offre publique et la politique de confidentialité",
+          empty: {
+            title: "Favoris",
+            desc1: "IL N'Y A AUCUN PRODUIT DANS LES FAVORIS",
+            desc2: "POKEZ SUR ❤ POUR NE PAS PERDRE",
+            btn: "Aller au catalogue",
+          },
+        },
+        input: {
+          firstName: "Prénom",
+          lastName: "Nom de famille",
+          phone: "Téléphone",
+          mail: "E-mail",
+          city: "Ville",
+          postalCode: "Code postal",
+        },
+      },
+      favorites: {
+        title: "Favoris",
       },
       // Add more translations here
     },

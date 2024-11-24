@@ -6,7 +6,7 @@ const Contact = () =>{
         <>
         <div className="container">
             <div className="content">
-                <div className="row mtop">   
+                <div className="row_contact mtop">   
                     <div className="product-col4">
                         <img src={"./images/log.svg"} alt="contact"/>
                     </div>

@@ -2,8 +2,8 @@ import React,{useEffect,useState} from 'react'
 import '../App.css'
 import ProductCard from './ProductCard'
 import { useParams } from 'react-router-dom'
-import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import Loader from './loader/Loader'
 
 const Product = () => {
     const {id} = useParams()
@@ -40,50 +40,15 @@ const Product = () => {
     },[single,id,url])
 
 
-    const Loading = () =>{
-        return(
-        <>
-            <div className="product-col4">
-                <Skeleton height="400px"/>
-            </div>
-            <div className="col-single">
-                <Skeleton height="30px" width="170px"/>
-                <Skeleton height="30px" width="100px"/>
-                <Skeleton height="30px" width="150px"/>
-                <Skeleton height="200px"/>
-                <Skeleton height="40px" width="100px"/>
-            </div>
-        </>
-        )
-    }
-
-    const RelatedLoad = () =>{
-        return(
-        <>
-            <div className="col4 product"> 
-                <Skeleton height={350}/>
-            </div>
-            <div className="col4 product"> 
-                <Skeleton height={350}/>
-            </div>
-            <div className="col4 product"> 
-                <Skeleton height={350}/>
-            </div>
-            <div className="col4 product"> 
-                <Skeleton height={350}/>
-            </div>
-        </>
-        )
-    }
     if(product && product.id){
     return (
         <div className="container">
             <div className="content">
-                <div className="row row2">
-                {loading ? <Loading/>:
+                <div className="row_contact row2">
+                {loading ? <Loader/>:
                 <>
                 <div className="product-col4">
-                    <img src={product.image} alt={product.title}/>
+                    <img src={`${process.env.PUBLIC_URL}/images/slider/slide-${Math.floor(Math.random() * 3) + 1}.png`}  alt={product.title} className='roduct-image'/>
                 </div>
                 <div className="col-single">
                     <h2>{product.title}</h2>
@@ -98,7 +63,7 @@ const Product = () => {
             </div>
             <h2 className="title-left">Related Products</h2>
                 <div className="row products">
-                    { loading ? <RelatedLoad/> :
+                    { loading ? <Loader/> :
                          products && products.map((product)=>{
                             return(
                                 <ProductCard product={product} key={product.id}/>
@@ -114,7 +79,7 @@ const Product = () => {
            <div className="container">
                <div className="content">
                    <div className="row row2">
-                    {loading ? <Loading/>:
+                    {loading ? <Loader/>:
                     <>
                     <div className="product-col4">
                             <img src={"../images/404.svg"} alt="product"/>

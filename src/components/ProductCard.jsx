@@ -2,11 +2,34 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import i18n from "../i18n/i18n";
+import { useDispatch, useSelector } from "react-redux";
+import { addItems } from "../redux/cart/slice.ts";
+import { addFavoriteItems } from "../redux/favorite/slice.ts";
+import ModalCart from "./Modals/ModalCart/ModalCart.jsx";
+import ModalFavorites from "./Modals/ModalFavorites/ModalFavorites.jsx";
 
 const ProductCard = ({ product }) => {
+  const dispatch = useDispatch();
+
   const { t } = useTranslation();
   const isArabic = i18n.language === "ar";
+  // eslint-disable-next-line
+  const { items, successModal, errorModal } = useSelector((state) => state.cart);
+  // eslint-disable-next-line
+  const { favorites, errorFavModal, successFavModal } = useSelector(
+    (state) => state.favorite,
+  );
+  const isMounted = React.useRef(false);
 
+  React.useEffect(() => {
+    if (isMounted.current) {
+      const dataCart = JSON.stringify(items);
+      localStorage.setItem('cart', dataCart);
+      const dataFavorites = JSON.stringify(favorites);
+      localStorage.setItem('favorites', dataFavorites);
+    }
+    isMounted.current = true;
+  }, [items, favorites]);
   const shareOnFacebook = () => {
     const url = `https://www.facebook.com/dialog/send?app_id=YOUR_APP_ID&link=${encodeURIComponent(
       window.location.origin + `/product/${product.id}`
@@ -20,13 +43,33 @@ const ProductCard = ({ product }) => {
     )}`;
     window.open(url, "_blank");
   };
-
+    const onClickAddItem = () => {
+    dispatch(
+      addItems({
+        id:product.id ?? 0,
+        count: 1,
+        imageUrl:`${process.env.PUBLIC_URL}/images/slider/slide-${Math.floor(Math.random() * 3) + 1}.png`,
+        price:product.price,
+        title:product.title,
+        newId:Math.random(Math.random(1,50),Math.random(100,2000)),
+      }),
+    );
+  };
   const shareOnInstagram = () => {
     alert(
       "Instagram does not support direct web sharing to messages. Use the app to share content."
     );
   };
-
+  const onClickAddFavoriteItems = () => {
+    const favoriteItem = {
+      id:product.id ?? 0,
+      title:product.title,
+      price:product.price,
+      imageUrl:`${process.env.PUBLIC_URL}/images/slider/slide-${Math.floor(Math.random() * 3) + 1}.png`,
+      count: 0,
+    };
+    dispatch(addFavoriteItems(favoriteItem));
+  };
   return (
     <div className="col4 product">
       <div className="image-container">
@@ -38,7 +81,7 @@ const ProductCard = ({ product }) => {
         >
           {t("homePage.products.newLabel")}
         </div>
-        <Link to={`/product/${product.id}`} className="product-link">
+        <Link to={`/sabrine-bio/product/${product.id}`} className="product-link">
           <img src={`${process.env.PUBLIC_URL}/images/slider/slide-${Math.floor(Math.random() * 3) + 1}.png`} alt={product.title.substring(0, 25)} />
         </Link>
         <div
@@ -49,13 +92,13 @@ const ProductCard = ({ product }) => {
           <button className="fast-view-button">
             <i className="fas fa-eye"></i> {t("homePage.products.viewBtn")}
           </button>
-          <button className="buy-button">
+          <button className="buy-button" onClick={onClickAddItem}>
             <i className="fas fa-shopping-cart"></i>{" "}
             {t("homePage.products.buyBtn")}
           </button>
         </div>
       </div>
-      <h2>
+      <h2 className="product-title">
         {product.title.length > 25
           ? `${product.title.substring(0, 25)}...`
           : product.title}
@@ -67,7 +110,7 @@ const ProductCard = ({ product }) => {
       >
         {product.price} {!isArabic ? "DT" : "دت"}
       </p>
-      <button className="favorite-button">
+      <button className="favorite-button" onClick={onClickAddFavoriteItems}>
         <i className="fas fa-heart"></i>
       </button>
 
@@ -83,6 +126,8 @@ const ProductCard = ({ product }) => {
           <i className="fab fa-instagram"></i>
         </button>
       </div>
+      {successModal && <ModalCart />}
+      {successFavModal && <ModalFavorites />}
     </div>
   );
 };

@@ -22,6 +22,7 @@ body {
 .mobile-icon {
   display: none;
 }
+
 @media screen and (max-width: 780px) and (max-width: 820px) {
   .nav-links {
     display: none;
@@ -52,7 +53,7 @@ body {
     border: none;
     background-color: #fff;
   }
-  .cart {
+  .cart_icon {
     margin-right: 35px;
     position: absolute;
   }
@@ -129,13 +130,13 @@ nav ul li a:hover {
 .logo a {
   text-decoration: none;
 }
-.cart span {
+.cart_icon span {
   color: #2fcb00;
   background-color: #fff;
   padding: 5px;
   border-radius: 50%;
 }
-.cart {
+.cart_icon{
   color: #000;
 }
 .fa-chevron-down {
@@ -367,6 +368,7 @@ nav ul li a:hover {
     display: none;
     padding: 0px;
   }
+
 }
 .box .left-ar {
   width: 70%;
@@ -427,6 +429,12 @@ nav ul li a:hover {
   flex-wrap: wrap;
   justify-content: space-around;
 }
+.row_contact{
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+}
 .rowOne {
   display: flex;
   align-items: center;
@@ -449,7 +457,7 @@ nav ul li a:hover {
   min-width: 200px;
   margin-bottom: 20px;
 }
-.clear-cart {
+.clear-cart_icon {
   margin-top: 20px;
 }
 .col a {
@@ -508,9 +516,7 @@ nav ul li a:hover {
   display: flex;
   flex-direction: row;
 }
-label {
-  float: left;
-}
+
 .form-group {
   margin-bottom: 1.9rem;
 }
@@ -529,8 +535,9 @@ label {
   margin-bottom: 50px;
   font-size: 14px;
 }
-.product-col4 img {
-  width: 100%;
+
+.product-col4 .product-image {
+  width: 50%;
 }
 .product img {
   width: 180px;
@@ -538,6 +545,12 @@ label {
   display: flex;
   justify-content: center;
   margin: auto;
+}
+.product-title{
+  font-weight: 600;
+	font-size: 15px;
+	text-align: center;
+	line-height: 30px;
 }
 .title {
   text-align: center;
@@ -978,6 +991,7 @@ form button {
   .box {
     max-width: 100%;
   }
+
 }
 @media screen and (max-width: 1024px) {
   .box {
@@ -1005,6 +1019,9 @@ form button {
   .footer-co13 {
     text-align: left;
     flex: 1;
+  }
+  .product-col4{
+    display: none;
   }
 }
 @media only screen and (max-width: 600px) {
@@ -1462,4 +1479,52 @@ form button {
   height: 100vh; /* Full viewport height */
   background-color: white; /* Background color to match your theme */
 }
+.filters {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+  margin-bottom: 1.5rem;
+}
+
+.filter-category,
+.filter-search,
+.filter-price {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+.filter-category select,
+.filter-search input,
+.filter-price input {
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.loader-circle {
+  border: 3px solid #f3f3f3; /* Light gray background */
+  border-top: 3px solid rgba(47, 203, 0, 0.9); /* Blue color for the spinner */
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  margin: 0 5px ;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loading-more {
+  display: flex;
+  align-items: center;
+}
+
+.loading-more .loader-circle {
+  margin-right: 10px;
+}
+
+
 

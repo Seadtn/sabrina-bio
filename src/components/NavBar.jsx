@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import i18n from "i18next";
 import "../App.css";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
 
 const languages = {
   ar: { label: "العربية", flag: "/images/flags/arabic.jpg" },
@@ -11,6 +12,11 @@ const languages = {
 };
 
 const NavBar = () => {
+  const { items } = useSelector((state) => state.cart);
+  const { favorites } = useSelector((state) => state.favorite);
+
+  const totalCartAmount = items.reduce((sum, item) => item.count + sum, 0);
+  const totalFavoritesAmount = favorites.reduce((sum, item) => item.count + sum, 0);
   const [selectedLanguage, setSelectedLanguage] = useState("ar");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -97,14 +103,14 @@ const NavBar = () => {
                 </div>
               )}
             </li>
-            <Link to="#">
-              <i class="fas fa-heart cart">
-                <span id="itemsNum">0</span>
+            <Link to="/sabrine-bio/favorite">
+              <i class="fas fa-heart cart_icon ">
+                <span id="itemsNum">{totalFavoritesAmount}</span>
               </i>
             </Link>
             <Link to="/sabrine-bio/cart">
-              <i className="fas fa-shopping-cart cart">
-                <span id="itemsNum">0</span>
+              <i className="fas fa-shopping-cart cart_icon ">
+                <span id="itemsNum">{totalCartAmount}</span>
               </i>
             </Link>
           </ul>
