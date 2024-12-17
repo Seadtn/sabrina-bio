@@ -14,19 +14,21 @@ const ProductCard = ({ product }) => {
   const { t } = useTranslation();
   const isArabic = i18n.language === "ar";
   // eslint-disable-next-line
-  const { items, successModal, errorModal } = useSelector((state) => state.cart);
+  const { items, successModal, errorModal } = useSelector(
+    (state) => state.cart
+  );
   // eslint-disable-next-line
   const { favorites, errorFavModal, successFavModal } = useSelector(
-    (state) => state.favorite,
+    (state) => state.favorite
   );
   const isMounted = React.useRef(false);
 
   React.useEffect(() => {
     if (isMounted.current) {
       const dataCart = JSON.stringify(items);
-      localStorage.setItem('cart', dataCart);
+      localStorage.setItem("cart", dataCart);
       const dataFavorites = JSON.stringify(favorites);
-      localStorage.setItem('favorites', dataFavorites);
+      localStorage.setItem("favorites", dataFavorites);
     }
     isMounted.current = true;
   }, [items, favorites]);
@@ -43,16 +45,16 @@ const ProductCard = ({ product }) => {
     )}`;
     window.open(url, "_blank");
   };
-    const onClickAddItem = () => {
+  const onClickAddItem = () => {
     dispatch(
       addItems({
-        id:product.id ?? 0,
+        id: product.id ?? 0,
         count: 1,
-        imageUrl:`${process.env.PUBLIC_URL}/images/slider/slide-${Math.floor(Math.random() * 3) + 1}.png`,
-        price:product.price,
-        title:product.title,
-        newId:Math.random(Math.random(1,50),Math.random(100,2000)),
-      }),
+        imageUrl: `${process.env.PUBLIC_URL}/images/slider/slide-${Math.floor(Math.random() * 3) + 1}.png`,
+        price: product.price,
+        title: product.title,
+        newId: Math.random(Math.random(1, 50), Math.random(100, 2000)),
+      })
     );
   };
   const shareOnInstagram = () => {
@@ -62,10 +64,10 @@ const ProductCard = ({ product }) => {
   };
   const onClickAddFavoriteItems = () => {
     const favoriteItem = {
-      id:product.id ?? 0,
-      title:product.title,
-      price:product.price,
-      imageUrl:`${process.env.PUBLIC_URL}/images/slider/slide-${Math.floor(Math.random() * 3) + 1}.png`,
+      id: product.id ?? 0,
+      title: product.title,
+      price: product.price,
+      imageUrl: `${process.env.PUBLIC_URL}/images/slider/slide-${Math.floor(Math.random() * 3) + 1}.png`,
       count: 0,
     };
     dispatch(addFavoriteItems(favoriteItem));
@@ -74,15 +76,34 @@ const ProductCard = ({ product }) => {
     <div className="col4 product">
       <div className="image-container">
         {/* New Label */}
-        <div
-          className="new-label"
-          dir={isArabic ? "rtl" : "ltr"}
-          lang={isArabic ? "ar" : "fr"}
+        {product.inSold === true && (
+          <div
+            className="sold-label"
+            dir={isArabic ? "rtl" : "ltr"}
+            lang={isArabic ? "ar" : "fr"}
+          >
+            {t("homePage.products.newLabel")}
+          </div>
+        )}
+        {product.isNew ===
+          true && (
+            <div
+              className="new-label"
+              dir={isArabic ? "rtl" : "ltr"}
+              lang={isArabic ? "ar" : "fr"}
+            >
+              {t("homePage.products.newLabel")}
+            </div>
+          )}
+
+        <Link
+          to={`/sabrina-bio/product/${product.id}`}
+          className="product-link"
         >
-          {t("homePage.products.newLabel")}
-        </div>
-        <Link to={`/sabrina-bio/product/${product.id}`} className="product-link">
-          <img src={`${process.env.PUBLIC_URL}/images/slider/slide-${Math.floor(Math.random() * 3) + 1}.png`} alt={product.title.substring(0, 25)} />
+          <img
+            src={`${process.env.PUBLIC_URL}/images/slider/slide-${Math.floor(Math.random() * 3) + 1}.png`}
+            alt={product.name.substring(0, 25)}
+          />
         </Link>
         <div
           className="hover-buttons"
@@ -99,17 +120,24 @@ const ProductCard = ({ product }) => {
         </div>
       </div>
       <h2 className="product-title">
-        {product.title.length > 25
+        {product.name.length > 25
           ? `${product.title.substring(0, 25)}...`
           : product.title}
       </h2>
       <p
-        className="price"
+        className={product.inSold ? "old-price":"price"}
         dir={isArabic ? "rtl" : "ltr"}
         lang={isArabic ? "ar" : "fr"}
       >
         {product.price} {!isArabic ? "DT" : "دت"}
       </p>
+      {product.inSold === true && (<p
+        className="price"
+        dir={isArabic ? "rtl" : "ltr"}
+        lang={isArabic ? "ar" : "fr"}
+      >
+        {product.price*product.soldRatio*0.01} {!isArabic ? "DT" : "دت"}
+      </p>)}
       <button className="favorite-button" onClick={onClickAddFavoriteItems}>
         <i className="fas fa-heart"></i>
       </button>

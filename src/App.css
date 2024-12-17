@@ -1395,7 +1395,13 @@ form button {
   color: #25d366;
   font-weight: bold;
 }
-
+.old-price {
+  text-decoration: line-through;
+  text-align: center;
+  font-size: large;
+  font-weight: bold;
+  color: gray;
+}
 /* Share Buttons */
 .share-buttons {
   display: flex;
@@ -1451,6 +1457,29 @@ form button {
   border: none;
   padding: 10px;
   background-color: #2fcb00;
+  border-radius: 0 10px 10px 0;
+  color: white;
+  font-size: 10px;
+  cursor: pointer;
+  outline: none;
+  transition: color 0.3s ease;
+  -webkit-border-radius: 0 10px 10px 0;
+  -moz-border-radius: 0 10px 10px 0;
+  -ms-border-radius: 0 10px 10px 0;
+  -o-border-radius: 0 10px 10px 0;
+  -webkit-transition: color 0.3s ease;
+  -moz-transition: color 0.3s ease;
+  -ms-transition: color 0.3s ease;
+  -o-transition: color 0.3s ease;
+}
+.sold-label {
+  position: absolute;
+  top: 60px;
+  left: 0px;
+  background: transparent;
+  border: none;
+  padding: 10px;
+  background-color: rgb(255, 162, 0);
   border-radius: 0 10px 10px 0;
   color: white;
   font-size: 10px;

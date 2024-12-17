@@ -6,9 +6,9 @@ import { useTranslation } from "react-i18next";
 import Loader from "./loader/Loader";
 import i18n from "../i18n/i18n";
 import { Link } from "react-router-dom";
+import { getAllProducts } from "../api/backend";
 
 const Products = () => {
-  let url = "https://fakestoreapi.com/products";
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -16,20 +16,20 @@ const Products = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState(""); 
   const [visibleProductsCount, setVisibleProductsCount] = useState(9); 
-  const [loadingMore, setLoadingMore] = useState(false); // This controls the loader on the "View More" button
+  const [loadingMore, setLoadingMore] = useState(false); 
   const { t } = useTranslation();
   const isArabic = i18n.language === "ar";
 
   useEffect(() => {
     let loadProducts = true;
-    const getProducts = async () => {
+
+    const fetchProducts = async () => {
       setLoading(true);
       try {
-        const res = await fetch(url, { mode: "cors" });
+        const data = await getAllProducts(); 
         if (loadProducts) {
-          const data = await res.json();
           setProducts(data);
-          setFilteredProducts(data); // Initialize filtered products
+          setFilteredProducts(data);
         }
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -40,12 +40,12 @@ const Products = () => {
       }
     };
 
-    getProducts();
+    fetchProducts();
 
     return () => {
-      loadProducts = false;
+      loadProducts = false; // Cleanup flag
     };
-  }, [url]);
+  }, []);
 
   // Filter and sort products whenever filters change
   useEffect(() => {
