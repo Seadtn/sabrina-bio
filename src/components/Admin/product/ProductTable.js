@@ -53,7 +53,7 @@ const ProductTable = ({ products, onEdit, onView, onDelete }) => {
               <TableCell>{product.quantity}</TableCell>
               <TableCell>{product.creationDate}</TableCell>
               <TableCell>
-                {product.inSold === true && product.soldRation > 0
+                {product.inSold === true && product.soldRatio > 0
                   ? `Yes (${product.soldRatio}%)`
                   : "No"}
               </TableCell>

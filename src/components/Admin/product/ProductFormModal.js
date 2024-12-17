@@ -15,11 +15,11 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
   const [formData, setFormData] = useState({
     name: '',
     description: '',
-    price: '',
+    price: 0,
     image: null,
     creationDate: new Date().toISOString().split('T')[0],
     inSold: false,
-    soldRatio: '',
+    soldRatio: 0,
     startDate: '',
     lastDate: ''
   });
