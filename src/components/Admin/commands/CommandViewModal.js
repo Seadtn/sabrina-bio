@@ -2,7 +2,7 @@ import React from 'react';
 import { 
   Dialog, DialogTitle, DialogContent, Grid, Typography, 
   Box, Chip, Table, TableBody, TableCell, TableHead, 
-  TableRow, FormControl, Select, MenuItem, 
+  TableRow,
   Button
 } from '@mui/material';
 import { Status } from '../../../types/Product.ts';

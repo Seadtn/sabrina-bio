@@ -1,6 +1,5 @@
-import { Chip, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
+import { Chip, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import React from 'react'
-import EditIcon from '@mui/icons-material/Edit';
 
 function CommandsTable({ commands, onEdit,onView }) {
 
