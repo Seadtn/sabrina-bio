@@ -18,12 +18,12 @@ const NAVIGATION = [
     title: 'All',
   },
   {
-    segment: '/all-products', 
+    segment: 'sabrina-bio/admin/products',
     title: 'Products',
     icon: <ShoppingCartIcon />,
   },
   {
-    segment: '/all-commands', 
+    segment: 'sabrina-bio/admin/commands',
     title: 'Commands',
     icon: <BackupTableIcon /> 
   },
@@ -35,25 +35,15 @@ const NAVIGATION = [
     title: 'Categories',
   },
   {
-    segment: '/category1', 
+    segment: 'sabrina-bio/admin/category1',
     title: 'Category 1',
     icon: <CategoryIcon />,
   },
   {
-    segment: '/category2', 
+    segment: 'sabrina-bio/admin/category2',
     title: 'Category 2',
     icon: <CategoryIcon />,
-  },
-  {
-    segment: '/category3', 
-    title: 'Category 3',
-    icon: <CategoryIcon />,
-  },
-  {
-    segment: '/category4', 
-    title: 'Category 4',
-    icon: <CategoryIcon />,
-  },
+  }
 ];
 
 const demoTheme = extendTheme({
@@ -74,31 +64,7 @@ const demoTheme = extendTheme({
   },
 });
 
-function useDemoRouter(initialPath) {
-  const [pathname, setPathname] = React.useState(initialPath);
-  
-  
-  const router = React.useMemo(() => {
-    
-    var x = {
-      pathname,
-      searchParams: new URLSearchParams(),
-      navigate: (path) => setPathname(String(path)),
-    };
-    console.log(x);
-    return x;
-  }, [pathname]);
-
-  return router;
-}
-
-export default function Dashboard(props) {
-  const { window } = props;
-
-  const router = useDemoRouter('/all-products');
-
-  const demoWindow = window ? window() : undefined;
-
+export default function Dashboard() {
   const [products, setProducts] = React.useState(SAMPLE_PRODUCTS);
   const [openFormModal, setOpenFormModal] = React.useState(false);
   const [openViewModal, setOpenViewModal] = React.useState(false);
@@ -133,16 +99,9 @@ export default function Dashboard(props) {
     setProducts((prev) => prev.filter((product) => product.id !== id));
   };
 
-
-  // Handle navigation item click
-  const handleNavigationClick = (item,event) => {
-    console.log(item,event);
-    return true;
-  };
-
   return (
-    <AppProvider theme={demoTheme} router={router} window={demoWindow} navigation={NAVIGATION}  >
-      <DashboardLayout branding={{ title: '', logo: <AppLogo /> }}  >
+    <AppProvider theme={demoTheme} navigation={NAVIGATION} >
+      <DashboardLayout branding={{ title: '', logo: <AppLogo /> }}>
         <PageContainer>
           <Grid container spacing={2}>
             <Grid item xs={12}>
