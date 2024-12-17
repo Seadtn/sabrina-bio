@@ -31,7 +31,6 @@ function CommandsTable({ commands, onEdit,onView }) {
             <TableCell>Status</TableCell>
             <TableCell>Payment Method</TableCell>
             <TableCell>Total Price</TableCell>
-            <TableCell>Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -45,20 +44,10 @@ function CommandsTable({ commands, onEdit,onView }) {
               </TableCell>
               <TableCell>{`${command.city}, ${command.postalCode}`}</TableCell>
               <TableCell>
-                <Chip label={command.status} color={getStatusColor(command.status)} />
+                <Chip label={command.status}  color={getStatusColor(command.status)}  />
               </TableCell>
               <TableCell>{command.paymentMethod}</TableCell>
               <TableCell>{`$${command.totalPrice.toFixed(2)}`}</TableCell>
-              <TableCell>
-                <IconButton 
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    onEdit(command);
-                  }}
-                >
-                  <EditIcon />
-                </IconButton>
-              </TableCell>
             </TableRow>
           ))}
         </TableBody>
