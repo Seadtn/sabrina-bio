@@ -3,7 +3,7 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-const ProductTable = ({ products, onEdit, onDelete }) => {
+const ProductTable = ({ products, onEdit,onView, onDelete }) => {
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -12,20 +12,34 @@ const ProductTable = ({ products, onEdit, onDelete }) => {
             <TableCell>Name</TableCell>
             <TableCell>Description</TableCell>
             <TableCell>Price</TableCell>
+            <TableCell>Added At</TableCell>
+            <TableCell>At Sold</TableCell>
             <TableCell>Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {products.map((product) => (
-            <TableRow key={product.id}>
+            <TableRow key={product.id} onClick={(event) => onView(product,event)}>
               <TableCell>{product.name}</TableCell>
               <TableCell>{product.description}</TableCell>
               <TableCell>{product.price}</TableCell>
+              <TableCell>{product.creationDate}</TableCell>
+              <TableCell>{product.inSold == true ? 'Yes':'No'}</TableCell>
               <TableCell>
-                <IconButton onClick={() => onEdit(product)}>
+                <IconButton 
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    onEdit(product);
+                  }}
+                >
                   <EditIcon />
                 </IconButton>
-                <IconButton onClick={() => onDelete(product.id)}>
+                <IconButton
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    onDelete(product.id);
+                  }}
+                >
                   <DeleteIcon />
                 </IconButton>
               </TableCell>

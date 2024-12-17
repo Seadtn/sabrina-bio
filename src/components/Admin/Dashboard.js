@@ -7,9 +7,10 @@ import { extendTheme } from '@mui/material/styles';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CategoryIcon from '@mui/icons-material/Category';
 import ProductTable from './pages/ProductTable';
-import ProductFormModal from './pages/ProductFormModal';
-import ProductViewModal from './pages/ProductViewModal';
+import ProductFormModal from './pages/ProductFormModal.js';
+import ProductViewModal from './pages/ProductViewModal.js';
 import BackupTableIcon from '@mui/icons-material/BackupTable';
+import { Link } from "react-router-dom";
 
 const NAVIGATION = [
   {
@@ -56,12 +57,12 @@ const NAVIGATION = [
 ];
 
 const demoTheme = extendTheme({
-    palette: {
-        mode: 'light', 
-        primary: {
-          main: '#2fcb00',  
-        },
+  palette: {
+      mode: 'light', 
+      primary: {
+        main: '#2fcb00',  
       },
+    },
   breakpoints: {
     values: {
       xs: 0,
@@ -93,10 +94,7 @@ export default function Dashboard(props) {
   const router = useDemoRouter('/all-products');
   const demoWindow = window ? window() : undefined;
 
-  const [products, setProducts] = React.useState([
-    { id: 1, name: 'Product 1', description: 'Description 1', price: 100 },
-    { id: 2, name: 'Product 2', description: 'Description 2', price: 150 },
-  ]);
+  const [products, setProducts] = React.useState(SAMPLE_PRODUCTS);
   const [openFormModal, setOpenFormModal] = React.useState(false);
   const [openViewModal, setOpenViewModal] = React.useState(false);
   const [selectedProduct, setSelectedProduct] = React.useState(null);
@@ -120,6 +118,8 @@ export default function Dashboard(props) {
   };
 
   const handleViewProduct = (product) => {
+    console.log(product);
+    
     setSelectedProduct(product);
     setOpenViewModal(true);
   };
@@ -130,9 +130,9 @@ export default function Dashboard(props) {
 
   return (
     <AppProvider  navigation={NAVIGATION} router={router} theme={demoTheme} window={demoWindow}>
-      <DashboardLayout>
+      <DashboardLayout branding={{ title: '', logo: <AppLogo /> }}>
         <PageContainer>
-          <Grid container spacing={3}>
+          <Grid container spacing={2}>
             <Grid item xs={12}>
               <Button variant="contained" style={{background:"#2fcb00"}} onClick={handleAddProduct}>
                 Add Product
@@ -166,3 +166,50 @@ export default function Dashboard(props) {
     </AppProvider>
   );
 }
+
+
+export function AppLogo() {
+  return (
+    <div className="logo">
+      <h4>
+          Sabrina <span>Bio</span>
+      </h4>
+    </div>
+  );
+}
+const SAMPLE_PRODUCTS = [
+  {
+    id: 1,
+    name: "Premium Leather Backpack",
+    description: "Handcrafted genuine leather backpack with multiple compartments. Perfect for daily use or travel. Features adjustable straps and water-resistant coating.",
+    price: 199.99,
+    image: null, // Would be byte array in real data
+    creationDate: "2024-03-01",
+    inSold: true,
+    startDate: "2024-03-15",
+    lastDate: "2024-04-15"
+  },
+  {
+    id: 2,
+    name: "Wireless Noise-Cancelling Headphones",
+    description: "High-quality wireless headphones with active noise cancellation. 30-hour battery life, premium sound quality, and comfortable over-ear design.",
+    price: 299.99,
+    image: null,
+    creationDate: "2024-02-15",
+    inSold: false,
+    startDate: null,
+    lastDate: null
+  },
+  {
+    id: 3,
+    name: "Smart Fitness Watch",
+    description: "Advanced fitness tracker with heart rate monitoring, GPS, sleep tracking, and smartphone notifications. Water-resistant up to 50m.",
+    price: 149.99,
+    image: null,
+    creationDate: "2024-01-20",
+    inSold: true,
+    startDate: "2024-03-10",
+    lastDate: "2024-03-31"
+  }
+];
+
