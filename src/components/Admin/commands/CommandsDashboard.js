@@ -1,32 +1,16 @@
-import { Button, Grid } from '@mui/material'
 import { PageContainer } from '@toolpad/core'
-import React, { useState } from 'react'
-import ProductFormModal from './ProductFormModal'
-import ProductViewModal from './ProductViewModal'
+import React, { useEffect, useState } from 'react'
 import CommandsTable from './CommandsTable'
+import CommandViewModal from './CommandViewModal'
 
 function CommandsDashboard() {
     const [commands, setCommands] = useState([])
-    const [openFormModal, setOpenFormModal] = useState(false);
     const [openViewModal, setOpenViewModal] = useState(false);
     const [selectedCommand, setSelectedCommand] = useState(null);
 
-    const handleAddProduct = () => setOpenFormModal(true);
-
     const handleEditCommand = (command) => {
         setSelectedCommand(command);
-        setOpenFormModal(true);
-    };
-
-    const handleSaveCommand = (commandData) => {
-        if (selectedCommand) {
-            setCommands((prev) =>
-            prev.map((prod) => (prod.id === selectedCommand.id ? { ...prod, ...commandData } : prod))
-        );
-        } else {
-            setCommands((prev) => [...prev, { ...commandData, id: Date.now() }]);
-        }
-        setSelectedCommand(null);
+        openViewModal(true);
     };
 
     const handleViewCommand = (command) => {
@@ -34,6 +18,14 @@ function CommandsDashboard() {
         
         setSelectedCommand(command);
         setOpenViewModal(true);
+    };
+
+    useEffect(() => {
+      setCommands([]);
+    }, [])
+    
+    const handleEditCommandStatus = (command) => {
+        // submit changes to the server
     };
 
   return (
@@ -45,15 +37,10 @@ function CommandsDashboard() {
             onView={handleViewCommand}
         />
         {/* Modals */}
-        <ProductFormModal
-            open={openFormModal}
-            onClose={() => setOpenFormModal(false)}
-            product={selectedCommand}
-            onSave={handleSaveCommand}
-        />
-        <ProductViewModal
+        <CommandViewModal
             open={openViewModal}
             onClose={() => setOpenViewModal(false)}
+            onEditStatus = {handleEditCommandStatus}
             product={selectedCommand}
         />
     </PageContainer>

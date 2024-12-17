@@ -6,11 +6,11 @@ import { PageContainer } from '@toolpad/core/PageContainer';
 import { extendTheme } from '@mui/material/styles';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CategoryIcon from '@mui/icons-material/Category';
-import ProductTable from './pages/ProductTable';
-import ProductFormModal from './pages/ProductFormModal.js';
-import ProductViewModal from './pages/ProductViewModal.js';
+import ProductTable from './product/ProductTable.js';
+import ProductFormModal from './product/ProductFormModal.js';
+import ProductViewModal from './product/ProductViewModal.js';
 import BackupTableIcon from '@mui/icons-material/BackupTable';
-import CommandsDashboard from './pages/CommandsDashboard.js';
+import CommandsDashboard from './commands/CommandsDashboard.js';
 const NAVIGATION = [
   {
     kind: 'header',
