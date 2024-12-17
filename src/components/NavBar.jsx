@@ -62,7 +62,7 @@ const NavBar = () => {
       </div>
       <div className="navbar">
         <div className="logo">
-          <Link to="/sabrine-bio">
+          <Link to="/sabrina-bio">
             <h4>
               Sabrina <span>Bio</span>
             </h4>
@@ -74,7 +74,7 @@ const NavBar = () => {
             onClick={() => setIsMobile(false)}
           >
             <li className="nav-element">
-              <Link to="/sabrine-bio">{t("homePage.menu.home")}</Link>
+              <Link to="/sabrina-bio">{t("homePage.menu.home")}</Link>
             </li>
             <li className="nav-element">
               <Link to="/sabrine-bio/products">
@@ -82,13 +82,13 @@ const NavBar = () => {
               </Link>
             </li>
             <li className="nav-element">
-              <Link to="/sabrine-bio/contact">
+              <Link to="/sabrina-bio/contact">
                 {t("homePage.menu.contact")}
               </Link>
             </li>
             <li>
               {/* Favorite Icon */}
-              <Link to="/sabrine-bio/favorite">
+              <Link to="/sabrina-bio/favorite">
                 <i className="fas fa-heart ">
                   <span id="itemsNum">{totalFavoritesAmount}</span>
                 </i>
@@ -96,7 +96,7 @@ const NavBar = () => {
             </li>
             <li>
               {/* Cart Icon */}
-              <Link to="/sabrine-bio/cart">
+              <Link to="/sabrina-bio/cart">
                 <i className="fas fa-shopping-cart ">
                   <span id="itemsNum">{totalCartAmount}</span>
                 </i>

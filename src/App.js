@@ -27,16 +27,16 @@ function AppContent() {
     {!isDashboardRoute && <NavBar />}
       <Suspense fallback={<Loader />}>
         <Routes>
-          <Route path="/sabrine-bio" element={<Home />} />
-          <Route path="/sabrine-bio/cart" element={<Cart />} />
-          <Route path="/sabrine-bio/favorite" element={<Favorite />} />
-          <Route path="/sabrine-bio/products" element={<Products />} />
-          <Route path="/sabrine-bio/product/:id" element={<Product />} />
-          <Route path="/sabrine-bio/sign-in" element={<SignIn />} />
-          <Route path="/sabrine-bio/sign-up" element={<SignUp />} />
-          <Route path="/sabrine-bio/profile" element={<Profile />} />
-          <Route path="/sabrine-bio/contact" element={<Contact />} />
-          <Route path="/sabrine-bio/admin" element={<Dashboard />} />
+          <Route path="/sabrina-bio" element={<Home />} />
+          <Route path="/sabrina-bio/cart" element={<Cart />} />
+          <Route path="/sabrina-bio/favorite" element={<Favorite />} />
+          <Route path="/sabrina-bio/products" element={<Products />} />
+          <Route path="/sabrina-bio/product/:id" element={<Product />} />
+          <Route path="/sabrina-bio/sign-in" element={<SignIn />} />
+          <Route path="/sabrina-bio/sign-up" element={<SignUp />} />
+          <Route path="/sabrina-bio/profile" element={<Profile />} />
+          <Route path="/sabrina-bio/contact" element={<Contact />} />
+          <Route path="/sabrina-bio/admin" element={<Dashboard />} />
         </Routes>
       </Suspense>
       {!isDashboardRoute && <Footer />}
