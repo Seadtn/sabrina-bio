@@ -168,6 +168,7 @@ const SAMPLE_PRODUCTS = [
     image: null, // Would be byte array in real data
     creationDate: "2024-03-01",
     inSold: true,
+    isNew: false,
     startDate: "2024-03-15",
     lastDate: "2024-04-15",
     soldRatio : 30,
@@ -180,6 +181,7 @@ const SAMPLE_PRODUCTS = [
     image: null,
     creationDate: "2024-02-15",
     inSold: false,
+    isNew: true,
     startDate: null,
     lastDate: null,
     soldRatio : 20,
@@ -192,6 +194,7 @@ const SAMPLE_PRODUCTS = [
     image: null,
     creationDate: "2024-01-20",
     inSold: true,
+    isNew: true,
     startDate: "2024-03-10",
     lastDate: "2024-03-31",
     soldRatio : 20,

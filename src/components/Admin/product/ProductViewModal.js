@@ -67,6 +67,21 @@ const ProductViewModal = ({ open, onClose, product }) => {
                   color={product?.inSold ? "error" : "default"}
                   size="small"
                 />
+                {product?.isNew === true && 
+                  <Chip
+                    label="New"
+                    color="success"
+                    size="small"
+                    sx={{ 
+                      "&.MuiChip-colorSuccess": {
+                        "& .MuiChip-label": {
+                          color: "white"
+                        }
+                      },
+                      marginLeft: 1
+                    }}
+                  />
+                }
               </Box>
 
               <Box>

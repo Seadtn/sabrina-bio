@@ -19,6 +19,7 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
     image: null,
     creationDate: new Date().toISOString().split('T')[0],
     inSold: false,
+    isNew: false,
     soldRatio: 0,
     startDate: '',
     lastDate: ''
@@ -34,6 +35,7 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
         image: product.image,
         creationDate: product.creationDate,
         inSold: product.inSold,
+        isNew: product.isNew,
         startDate: product.startDate || '',
         lastDate: product.lastDate || ''
       });
@@ -94,7 +96,7 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
               />
             </Button>
         </Box>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2,minWidth: '400px',paddingTop: '20px'  }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, minWidth: '400px',marginTop: '100px'  }}>
           <TextField
             name="name"
             label="Name"
@@ -119,6 +121,28 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
             value={formData.price}
             onChange={handleInputChange}
           />
+          <Box sx={{ display: 'flex', gap: 2}}>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={formData.isNew}
+                  onChange={handleInputChange}
+                  name="isNew"
+                />
+              }
+              label="Is New"
+            />
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={formData.inSold}
+                  onChange={handleInputChange}
+                  name="inSold"
+                />
+              }
+              label="In Promotion"
+            />
+          </Box>
            { formData.inSold && (<TextField
             name="soldRatio"
             label="Sold ratio"
@@ -145,16 +169,6 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
             value={formData.lastDate}
             onChange={handleInputChange}
           />)}
-          <FormControlLabel
-            control={
-              <Switch
-                checked={formData.inSold}
-                onChange={handleInputChange}
-                name="inSold"
-              />
-            }
-            label="In Promotion"
-          />
         </Box>
       </DialogContent>
       <DialogActions>
