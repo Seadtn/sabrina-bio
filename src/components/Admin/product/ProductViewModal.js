@@ -114,6 +114,7 @@ const ProductViewModal = ({ open, onClose, product }) => {
         <Button
           onClick={onClose}
           variant="contained"
+          style={{background:"#2fcb00"}}
           sx={{
             borderRadius: 2,
             textTransform: "none",

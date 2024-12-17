@@ -84,7 +84,7 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
                 style={{ width: '200px', height: '200px', objectFit: 'cover' }} 
               />
             )}
-            <Button variant="contained" component="label">
+            <Button variant="contained" style={{background:"#2fcb00"}} component="label">
               Upload Image
               <input
                 type="file"
@@ -158,8 +158,8 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
-        <Button onClick={handleSubmit} variant="contained">Save</Button>
+        <Button onClick={onClose} style={{color:"#2fcb00"}}>Cancel</Button>
+        <Button onClick={handleSubmit} variant="contained" style={{background:"#2fcb00"}}>Save</Button>
       </DialogActions>
     </Dialog>
   );

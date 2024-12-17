@@ -71,31 +71,36 @@ const CommandViewModal = ({ open, onClose, command,onEditStatus }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {command?.products.map((product) => (
-                <TableRow key={product.id}>
-                  <TableCell>{product.name}</TableCell>
-                  <TableCell>{product.quantity}</TableCell>
-                  <TableCell align="right">${product.price.toFixed(2)}</TableCell>
+              {command?.commandProducts.map((commandProduct) => (
+                <TableRow key={commandProduct.product.id}>
+                  <TableCell>{commandProduct.product.name}</TableCell>
+                  <TableCell>{commandProduct.quantity}</TableCell>
+                  <TableCell align="right">TND{commandProduct.product.price.toFixed(2)}</TableCell>
                 </TableRow>
               ))}
               <TableRow>
                 <TableCell colSpan={2}><strong>Total</strong></TableCell>
                 <TableCell align="right">
-                  <strong>${command?.totalPrice.toFixed(2)}</strong>
+                  <strong>TND{command?.totalPrice.toFixed(2)}</strong>
                 </TableCell>
               </TableRow>
             </TableBody>
           </Table>
-          {command?.status === Status.Pending && 
-            <Box sx={{ mt: 3,ml:1,display: 'flex',justifyContent:'center' }}>
-              <Button onClick={onClickRejectCommand}>
+         
+          <Box sx={{ mt: 3, display: 'flex',justifyContent:'space-between' , px: 2}}>
+            <Button onClick={()=>onClose()} style={{color:"#2fcb00"}}>
+              Close
+            </Button>
+            {command?.status === Status.Pending && <Box sx={{ display: 'flex',justifyContent:'evenly', gap: 2}}>
+              <Button onClick={onClickRejectCommand} variant="contained" style={{background:"rgba(180, 1, 10, 0.87)"}}>
                 Reject
-              </Button>
-              <Button onClick={onClickAcceptCommand}>
+              </Button> 
+              <Button onClick={onClickAcceptCommand} variant="contained" style={{background:"#2fcb00"}}>
                 Accept
               </Button>
-            </Box>
-          }
+            </Box>}
+          </Box>
+          
         </Grid>
       </Grid>
     </DialogContent>
