@@ -10,6 +10,7 @@ import ProductTable from './pages/ProductTable';
 import ProductFormModal from './pages/ProductFormModal.js';
 import ProductViewModal from './pages/ProductViewModal.js';
 import BackupTableIcon from '@mui/icons-material/BackupTable';
+import CommandsDashboard from './pages/CommandsDashboard.js';
 const NAVIGATION = [
   {
     kind: 'header',
@@ -142,7 +143,7 @@ export default function Dashboard() {
             />
           </PageContainer>)
         }
-        {activePage === 'commands' && (<div>Test commands</div>)}
+        {activePage === 'commands' && (<CommandsDashboard />)}
       </DashboardLayout>
     </AppProvider>
   );
