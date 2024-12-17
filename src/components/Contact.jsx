@@ -1,13 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import "../App.css";
-import { Link } from "react-router-dom";
+import {useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import i18n from "../i18n/i18n";
+import { addNewContact } from "../api/backend";
 
-const Contact = () => {
+const Contact =  () => {
   const { t } = useTranslation();
   const isArabic = i18n.language === "ar";
-
+  const [msg, setMsg] = useState("");
+  const [subject, setSubject] = useState("");
+  const [mail, setMail] = useState("");
+  const [error, setError] = useState(false);
+  const navigation = useNavigate();
+  const sendMessage = (subject,mail,msg) => {
+    if(subject==="" || mail==="" || msg===""){
+      setError(true);
+    }
+    else{ 
+    let contact={
+        subject:subject,
+        mail:mail,
+        msg:msg
+      }
+      setError(false);
+      addNewContact(contact);
+      navigation("/sabrina-bio/")
+    }
+      
+  };
   return (
     <>
       <div
@@ -65,29 +86,39 @@ const Contact = () => {
                     <i className="fa fa-phone-alt"></i> +216 22 547 506
                   </li>
                 </ul>
+                {error && <div style={{ textAlign: "center"}}>
+                    <p style={{color:"red"}}>{t("contactPage.error")}</p>
+                </div>}
                 <div style={{ textAlign: "start" }}>
                   <label>{t("contactPage.subject")} :</label>
                   <input
                     type="text"
                     className="data__input"
                     placeholder={t("contactPage.subject")}
+                    onChange={(e) => {
+                      setSubject(e.target.value);
+                    }}
                   />
                   <label>{t("contactPage.email")} :</label>
                   <input
                     type="text"
                     className="data__input"
                     placeholder={t("contactPage.email")}
+                    onChange={(e) => {
+                      setMail(e.target.value);
+                    }}
                   />
                   <label>{t("contactPage.message")} :</label>
                   <textarea
                     type="text"
                     className="data__input"
                     placeholder={t("contactPage.message")}
+                    onChange={(e) => {
+                      setMsg(e.target.value);
+                    }}
                   />
-                  <button className="btn-primary">
-                    <Link to="/products" className="btn-link">
+                  <button className="btn-primary btn-link" onClick={()=>sendMessage(subject,mail,msg)}>
                       {t("contactPage.btn")}
-                    </Link>
                   </button>
                 </div>
               </div>

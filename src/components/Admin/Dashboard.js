@@ -10,7 +10,6 @@ import ProductTable from './pages/ProductTable';
 import ProductFormModal from './pages/ProductFormModal.js';
 import ProductViewModal from './pages/ProductViewModal.js';
 import BackupTableIcon from '@mui/icons-material/BackupTable';
-import { Link } from "react-router-dom";
 
 const NAVIGATION = [
   {
