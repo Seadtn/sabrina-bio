@@ -18,7 +18,7 @@ const ProductViewModal = ({ open, onClose, product }) => {
       >
         {product?.name}
       </DialogTitle>
-      <DialogContent sx={{ p: 4 }}>
+      <DialogContent sx={{ p: 4,mt:2 }}>
         <Grid container spacing={4}>
           <Grid item xs={12} md={6}>
             {product?.image ? (

@@ -187,7 +187,8 @@ const SAMPLE_PRODUCTS = [
     creationDate: "2024-03-01",
     inSold: true,
     startDate: "2024-03-15",
-    lastDate: "2024-04-15"
+    lastDate: "2024-04-15",
+    soldRation : 30,
   },
   {
     id: 2,
@@ -198,7 +199,8 @@ const SAMPLE_PRODUCTS = [
     creationDate: "2024-02-15",
     inSold: false,
     startDate: null,
-    lastDate: null
+    lastDate: null,
+    soldRation : 20,
   },
   {
     id: 3,
@@ -209,7 +211,8 @@ const SAMPLE_PRODUCTS = [
     creationDate: "2024-01-20",
     inSold: true,
     startDate: "2024-03-10",
-    lastDate: "2024-03-31"
+    lastDate: "2024-03-31",
+    soldRation : 20,
   }
 ];
 

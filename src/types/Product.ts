@@ -8,6 +8,7 @@ export interface Product {
   inSold: boolean;
   startDate: string;
   lastDate: string;
+  soldRation : number;
 }
 
 export interface Command {
