@@ -26,7 +26,7 @@ const ProductTable = ({ products, onEdit,onView, onDelete }) => {
               <TableCell>{product.price}</TableCell>
               <TableCell>{product.quantity}</TableCell>
               <TableCell>{product.creationDate}</TableCell>
-              <TableCell>{product.inSold == true && product.soldRation > 0 ? `Yes (${product.soldRation}%)`:'No'}</TableCell>
+              <TableCell>{product.inSold === true && product.soldRation > 0 ? `Yes (${product.soldRation}%)`:'No'}</TableCell>
               <TableCell>
                 <IconButton 
                   onClick={(event) => {
