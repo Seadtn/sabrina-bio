@@ -76,13 +76,17 @@ const demoTheme = extendTheme({
 
 function useDemoRouter(initialPath) {
   const [pathname, setPathname] = React.useState(initialPath);
-
+  
+  
   const router = React.useMemo(() => {
-    return {
+    
+    var x = {
       pathname,
       searchParams: new URLSearchParams(),
       navigate: (path) => setPathname(String(path)),
     };
+    console.log(x);
+    return x;
   }, [pathname]);
 
   return router;
@@ -92,6 +96,7 @@ export default function Dashboard(props) {
   const { window } = props;
 
   const router = useDemoRouter('/all-products');
+
   const demoWindow = window ? window() : undefined;
 
   const [products, setProducts] = React.useState(SAMPLE_PRODUCTS);
@@ -128,9 +133,16 @@ export default function Dashboard(props) {
     setProducts((prev) => prev.filter((product) => product.id !== id));
   };
 
+
+  // Handle navigation item click
+  const handleNavigationClick = (item,event) => {
+    console.log(item,event);
+    return true;
+  };
+
   return (
-    <AppProvider  navigation={NAVIGATION} router={router} theme={demoTheme} window={demoWindow}>
-      <DashboardLayout branding={{ title: '', logo: <AppLogo /> }}>
+    <AppProvider theme={demoTheme} router={router} window={demoWindow} navigation={NAVIGATION}  >
+      <DashboardLayout branding={{ title: '', logo: <AppLogo /> }}  >
         <PageContainer>
           <Grid container spacing={2}>
             <Grid item xs={12}>
