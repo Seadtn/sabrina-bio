@@ -1,3 +1,4 @@
+import axios from "axios";
 import { getRequest, postRequest } from "./Request";
 
 
@@ -16,15 +17,25 @@ export const getAllProducts = async () => {
   }
 };
 
-export const addNewProduct = async (product) => {
-    try {
-      const response = await postRequest(Product_URL+"newProduct", product);
-      return response;
-    } catch (error) {
-      console.error("Error adding new product:", error.message);
-      throw error; 
-    }
-  };
+export const addNewProduct = async (product, imageFile) => {
+  try {
+
+    const formData = new FormData();
+    formData.append("image", imageFile);
+    formData.append("productJson", JSON.stringify(product)); 
+
+    const response = await axios.post(Product_URL + "newProduct", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Error adding new product:", error.message);
+    throw error;
+  }
+};
 
   export const getAllCommands = async () => {
     try {
