@@ -81,7 +81,7 @@ const ProductCard = ({ product }) => {
         >
           {t("homePage.products.newLabel")}
         </div>
-        <Link to={`/sabrine-bio/product/${product.id}`} className="product-link">
+        <Link to={`/sabrina-bio/product/${product.id}`} className="product-link">
           <img src={`${process.env.PUBLIC_URL}/images/slider/slide-${Math.floor(Math.random() * 3) + 1}.png`} alt={product.title.substring(0, 25)} />
         </Link>
         <div

@@ -22,7 +22,7 @@ const FavoritesEmpty = () => {
             <br />
             {t("cartPage.order.empty.desc2")}
           </p>
-          <Link to="/sabrine-bio/products" className="favorites__button-back">
+          <Link to="/sabrina-bio/products" className="favorites__button-back">
             <span>{t("cartPage.order.empty.btn")}</span>
           </Link>
         </div>

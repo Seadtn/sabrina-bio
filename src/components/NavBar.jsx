@@ -77,7 +77,7 @@ const NavBar = () => {
               <Link to="/sabrina-bio">{t("homePage.menu.home")}</Link>
             </li>
             <li className="nav-element">
-              <Link to="/sabrine-bio/products">
+              <Link to="/sabrina-bio/products">
                 {t("homePage.menu.products")}
               </Link>
             </li>

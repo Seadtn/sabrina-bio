@@ -45,7 +45,7 @@ const ModalCart = () => {
             <Link to={`#`}>{t("Modals.modalCart.btn1")}</Link>
           </button>
           <button className="button__right" onClick={toggleSwitchOk}>
-            <Link to={`/sabrine-bio/cart`}>{t("Modals.modalCart.btn2")}</Link>
+            <Link to={`/sabrina-bio/cart`}>{t("Modals.modalCart.btn2")}</Link>
           </button>
         </div>
       </div>

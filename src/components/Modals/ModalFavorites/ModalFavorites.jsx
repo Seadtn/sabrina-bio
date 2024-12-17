@@ -43,7 +43,7 @@ const ModalFavorites = () => {
           {t("Modals.ModalFavorites.btn1")}
           </button>
           <button className="button__right" onClick={toggleFavSwitchOk}>
-            <Link to={`/sabrine-bio/favorite`}>{t("Modals.ModalFavorites.btn2")}</Link>
+            <Link to={`/sabrina-bio/favorite`}>{t("Modals.ModalFavorites.btn2")}</Link>
           </button>
         </div>
       </div>

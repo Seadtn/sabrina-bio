@@ -20,7 +20,7 @@ const Favorite = React.lazy(() => import("./components/Favorite/Favorites"));
 
 function AppContent() {
   const location = useLocation();
-  const isDashboardRoute = location.pathname === "/sabrine-bio/admin";
+  const isDashboardRoute = location.pathname === "/sabrina-bio/admin";
 
   return (
     <>      
