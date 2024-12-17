@@ -10,7 +10,7 @@ import ProductTable from './pages/ProductTable';
 import ProductFormModal from './pages/ProductFormModal.js';
 import ProductViewModal from './pages/ProductViewModal.js';
 import BackupTableIcon from '@mui/icons-material/BackupTable';
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const NAVIGATION = [
   {
@@ -18,12 +18,12 @@ const NAVIGATION = [
     title: 'All',
   },
   {
-    segment: 'sabrina-bio/admin/products',
+    segment: 'products',
     title: 'Products',
     icon: <ShoppingCartIcon />,
   },
   {
-    segment: 'sabrina-bio/admin/commands',
+    segment: 'commands',
     title: 'Commands',
     icon: <BackupTableIcon /> 
   },
@@ -35,12 +35,12 @@ const NAVIGATION = [
     title: 'Categories',
   },
   {
-    segment: 'sabrina-bio/admin/category1',
+    segment: 'category1',
     title: 'Category 1',
     icon: <CategoryIcon />,
   },
   {
-    segment: 'sabrina-bio/admin/category2',
+    segment: 'category2',
     title: 'Category 2',
     icon: <CategoryIcon />,
   }
@@ -65,6 +65,7 @@ const demoTheme = extendTheme({
 });
 
 export default function Dashboard() {
+  const [activePage, setActivePage] = React.useState('products');
   const [products, setProducts] = React.useState(SAMPLE_PRODUCTS);
   const [openFormModal, setOpenFormModal] = React.useState(false);
   const [openViewModal, setOpenViewModal] = React.useState(false);
@@ -99,40 +100,51 @@ export default function Dashboard() {
     setProducts((prev) => prev.filter((product) => product.id !== id));
   };
 
+  const customRouter = {
+    navigate: (to) => {
+      setActivePage(to.slice(1)); // remove the / at the start of the string
+      return false;
+    },
+    pathname: '',
+    searchParams: new URLSearchParams(),
+  };
   return (
-    <AppProvider theme={demoTheme} navigation={NAVIGATION} >
+    <AppProvider theme={demoTheme} router={customRouter} navigation={NAVIGATION} >
       <DashboardLayout branding={{ title: '', logo: <AppLogo /> }}>
-        <PageContainer>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Button variant="contained" style={{background:"#2fcb00"}} onClick={handleAddProduct}>
-                Add Product
-              </Button>
+        {activePage === 'products' && 
+          (<PageContainer>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Button variant="contained" style={{background:"#2fcb00"}} onClick={handleAddProduct}>
+                  Add Product
+                </Button>
+              </Grid>
+
+              <Grid item xs={12}>
+                <ProductTable
+                  products={products}
+                  onEdit={handleEditProduct}
+                  onDelete={handleDeleteProduct}
+                  onView={handleViewProduct}
+                />
+              </Grid>
             </Grid>
 
-            <Grid item xs={12}>
-              <ProductTable
-                products={products}
-                onEdit={handleEditProduct}
-                onDelete={handleDeleteProduct}
-                onView={handleViewProduct}
-              />
-            </Grid>
-          </Grid>
-
-          {/* Modals */}
-          <ProductFormModal
-            open={openFormModal}
-            onClose={() => setOpenFormModal(false)}
-            product={selectedProduct}
-            onSave={handleSaveProduct}
-          />
-          <ProductViewModal
-            open={openViewModal}
-            onClose={() => setOpenViewModal(false)}
-            product={selectedProduct}
-          />
-        </PageContainer>
+            {/* Modals */}
+            <ProductFormModal
+              open={openFormModal}
+              onClose={() => setOpenFormModal(false)}
+              product={selectedProduct}
+              onSave={handleSaveProduct}
+            />
+            <ProductViewModal
+              open={openViewModal}
+              onClose={() => setOpenViewModal(false)}
+              product={selectedProduct}
+            />
+          </PageContainer>)
+        }
+        {activePage === 'commands' && (<div>Test commands</div>)}
       </DashboardLayout>
     </AppProvider>
   );
