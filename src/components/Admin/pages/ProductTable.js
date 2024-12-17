@@ -12,6 +12,7 @@ const ProductTable = ({ products, onEdit,onView, onDelete }) => {
             <TableCell>Name</TableCell>
             <TableCell>Description</TableCell>
             <TableCell>Price</TableCell>
+            <TableCell>Quantity</TableCell>
             <TableCell>Added At</TableCell>
             <TableCell>At Sold</TableCell>
             <TableCell>Actions</TableCell>
@@ -23,6 +24,7 @@ const ProductTable = ({ products, onEdit,onView, onDelete }) => {
               <TableCell>{product.name}</TableCell>
               <TableCell>{product.description}</TableCell>
               <TableCell>{product.price}</TableCell>
+              <TableCell>{product.quantity}</TableCell>
               <TableCell>{product.creationDate}</TableCell>
               <TableCell>{product.inSold == true && product.soldRation > 0 ? `Yes (${product.soldRation}%)`:'No'}</TableCell>
               <TableCell>

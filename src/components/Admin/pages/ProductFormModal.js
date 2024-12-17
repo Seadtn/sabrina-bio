@@ -72,7 +72,7 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
   };
 
   return (
-    <Dialog open={open} onClose={onClose} maxWidth={true}>
+    <Dialog open={open} onClose={onClose} maxWidth={"lg"}>
       <DialogTitle>{product ? 'Edit Product' : 'Add Product'}</DialogTitle>
       <DialogContent sx={{ display: 'flex', flexDirection: 'row',alignItems: 'center',justifyContent:'space-evenly', gap: 2, my: 2 ,minWidth: '800px' }}>
         <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2}}>
