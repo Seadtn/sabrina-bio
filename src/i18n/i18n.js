@@ -145,6 +145,7 @@ const resources = {
         message:"Message",
         description:"Sabrina Bio is a Tunisian small business offering natural cosmetic products like oils and herbs. We believe in the power of nature to enhance beauty and well-being",
         btn:"Send",
+        error:"Please fill in all fields"
       },
       Modals:{
         modalCart:{
@@ -300,7 +301,8 @@ const resources = {
         email: "بريدك الإلكتروني",
         message: "الرسالة",
         description: "سابرينا بايو هي شركة صغيرة تونسية تقدم منتجات تجميل طبيعية مثل الزيوت والأعشاب. نحن نؤمن بقوة الطبيعة في تعزيز الجمال والرفاهية.",
-        btn: "إرسال"
+        btn: "إرسال",
+        error:"الرجاء ملء جميع البيانات "
       },
       Modals: {
         modalCart: {
@@ -461,7 +463,8 @@ const resources = {
         email: "Votre Email",
         message: "Message",
         description: "Sabrina Bio est une petite entreprise tunisienne qui propose des produits cosmétiques naturels comme des huiles et des herbes. Nous croyons au pouvoir de la nature pour sublimer la beauté et le bien-être.",
-        btn: "Envoyer"
+        btn: "Envoyer",
+        error:"Veuillez remplir tous les champs"
       },
       Modals: {
         modalCart: {
