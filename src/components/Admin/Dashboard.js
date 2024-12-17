@@ -26,23 +26,23 @@ const NAVIGATION = [
     title: 'Commands',
     icon: <BackupTableIcon /> 
   },
-  {
-    kind: 'divider',
-  },
-  {
-    kind: 'header',
-    title: 'Categories',
-  },
-  {
-    segment: 'category1',
-    title: 'Category 1',
-    icon: <CategoryIcon />,
-  },
-  {
-    segment: 'category2',
-    title: 'Category 2',
-    icon: <CategoryIcon />,
-  }
+  // {
+  //   kind: 'divider',
+  // },
+  // {
+  //   kind: 'header',
+  //   title: 'Categories',
+  // },
+  // {
+  //   segment: 'category1',
+  //   title: 'Category 1',
+  //   icon: <CategoryIcon />,
+  // },
+  // {
+  //   segment: 'category2',
+  //   title: 'Category 2',
+  //   icon: <CategoryIcon />,
+  // }
 ];
 
 const demoTheme = extendTheme({
