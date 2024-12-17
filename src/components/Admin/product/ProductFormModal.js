@@ -15,10 +15,11 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
   const [formData, setFormData] = useState({
     name: '',
     description: '',
-    price: '',
+    price: 0,
     image: null,
     creationDate: new Date().toISOString().split('T')[0],
     inSold: false,
+    soldRatio: 0,
     startDate: '',
     lastDate: ''
   });
@@ -118,6 +119,14 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
             value={formData.price}
             onChange={handleInputChange}
           />
+           { formData.inSold && (<TextField
+            name="soldRatio"
+            label="Sold ratio"
+            type="number"
+            fullWidth
+            value={formData.soldRatio}
+            onChange={handleInputChange}
+          />)}
           { formData.inSold && (<TextField
             name="startDate"
             label="Start Date"

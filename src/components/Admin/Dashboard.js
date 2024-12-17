@@ -6,23 +6,23 @@ import { PageContainer } from '@toolpad/core/PageContainer';
 import { extendTheme } from '@mui/material/styles';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CategoryIcon from '@mui/icons-material/Category';
-import ProductTable from './pages/ProductTable';
-import ProductFormModal from './pages/ProductFormModal.js';
-import ProductViewModal from './pages/ProductViewModal.js';
+import ProductTable from './product/ProductTable.js';
+import ProductFormModal from './product/ProductFormModal.js';
+import ProductViewModal from './product/ProductViewModal.js';
 import BackupTableIcon from '@mui/icons-material/BackupTable';
-
+import CommandsDashboard from './commands/CommandsDashboard.js';
 const NAVIGATION = [
   {
     kind: 'header',
     title: 'All',
   },
   {
-    segment: '/all-products', 
+    segment: 'products',
     title: 'Products',
     icon: <ShoppingCartIcon />,
   },
   {
-    segment: '/all-commands', 
+    segment: 'commands',
     title: 'Commands',
     icon: <BackupTableIcon /> 
   },
@@ -34,25 +34,15 @@ const NAVIGATION = [
     title: 'Categories',
   },
   {
-    segment: '/category1', 
+    segment: 'category1',
     title: 'Category 1',
     icon: <CategoryIcon />,
   },
   {
-    segment: '/category2', 
+    segment: 'category2',
     title: 'Category 2',
     icon: <CategoryIcon />,
-  },
-  {
-    segment: '/category3', 
-    title: 'Category 3',
-    icon: <CategoryIcon />,
-  },
-  {
-    segment: '/category4', 
-    title: 'Category 4',
-    icon: <CategoryIcon />,
-  },
+  }
 ];
 
 const demoTheme = extendTheme({
@@ -73,26 +63,8 @@ const demoTheme = extendTheme({
   },
 });
 
-function useDemoRouter(initialPath) {
-  const [pathname, setPathname] = React.useState(initialPath);
-
-  const router = React.useMemo(() => {
-    return {
-      pathname,
-      searchParams: new URLSearchParams(),
-      navigate: (path) => setPathname(String(path)),
-    };
-  }, [pathname]);
-
-  return router;
-}
-
-export default function Dashboard(props) {
-  const { window } = props;
-
-  const router = useDemoRouter('/all-products');
-  const demoWindow = window ? window() : undefined;
-
+export default function Dashboard() {
+  const [activePage, setActivePage] = React.useState('products');
   const [products, setProducts] = React.useState(SAMPLE_PRODUCTS);
   const [openFormModal, setOpenFormModal] = React.useState(false);
   const [openViewModal, setOpenViewModal] = React.useState(false);
@@ -127,40 +99,51 @@ export default function Dashboard(props) {
     setProducts((prev) => prev.filter((product) => product.id !== id));
   };
 
+  const customRouter = {
+    navigate: (to) => {
+      setActivePage(to.slice(1)); // remove the / at the start of the string
+      return false;
+    },
+    pathname: '',
+    searchParams: new URLSearchParams(),
+  };
   return (
-    <AppProvider  navigation={NAVIGATION} router={router} theme={demoTheme} window={demoWindow}>
+    <AppProvider theme={demoTheme} router={customRouter} navigation={NAVIGATION} >
       <DashboardLayout branding={{ title: '', logo: <AppLogo /> }}>
-        <PageContainer>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <Button variant="contained" style={{background:"#2fcb00"}} onClick={handleAddProduct}>
-                Add Product
-              </Button>
+        {activePage === 'products' && 
+          (<PageContainer>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <Button variant="contained" style={{background:"#2fcb00"}} onClick={handleAddProduct}>
+                  Add Product
+                </Button>
+              </Grid>
+
+              <Grid item xs={12}>
+                <ProductTable
+                  products={products}
+                  onEdit={handleEditProduct}
+                  onDelete={handleDeleteProduct}
+                  onView={handleViewProduct}
+                />
+              </Grid>
             </Grid>
 
-            <Grid item xs={12}>
-              <ProductTable
-                products={products}
-                onEdit={handleEditProduct}
-                onDelete={handleDeleteProduct}
-                onView={handleViewProduct}
-              />
-            </Grid>
-          </Grid>
-
-          {/* Modals */}
-          <ProductFormModal
-            open={openFormModal}
-            onClose={() => setOpenFormModal(false)}
-            product={selectedProduct}
-            onSave={handleSaveProduct}
-          />
-          <ProductViewModal
-            open={openViewModal}
-            onClose={() => setOpenViewModal(false)}
-            product={selectedProduct}
-          />
-        </PageContainer>
+            {/* Modals */}
+            <ProductFormModal
+              open={openFormModal}
+              onClose={() => setOpenFormModal(false)}
+              product={selectedProduct}
+              onSave={handleSaveProduct}
+            />
+            <ProductViewModal
+              open={openViewModal}
+              onClose={() => setOpenViewModal(false)}
+              product={selectedProduct}
+            />
+          </PageContainer>)
+        }
+        {activePage === 'commands' && (<CommandsDashboard />)}
       </DashboardLayout>
     </AppProvider>
   );
@@ -187,7 +170,7 @@ const SAMPLE_PRODUCTS = [
     inSold: true,
     startDate: "2024-03-15",
     lastDate: "2024-04-15",
-    soldRation : 30,
+    soldRatio : 30,
   },
   {
     id: 2,
@@ -199,7 +182,7 @@ const SAMPLE_PRODUCTS = [
     inSold: false,
     startDate: null,
     lastDate: null,
-    soldRation : 20,
+    soldRatio : 20,
   },
   {
     id: 3,
@@ -211,7 +194,7 @@ const SAMPLE_PRODUCTS = [
     inSold: true,
     startDate: "2024-03-10",
     lastDate: "2024-03-31",
-    soldRation : 20,
+    soldRatio : 20,
   }
 ];
 

@@ -33,6 +33,6 @@ export interface Category {
 
 export enum Status {
     Pending = 'Pending',
-    Accepted = 'CONFIRMED',
-    Rejected = 'SHIPPED'
+    Accepted = 'Accepted',
+    Rejected = 'Rejected'
 }
