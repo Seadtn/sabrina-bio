@@ -16,7 +16,7 @@ const resources = {
           welcome: "Welcome",
           home: "Home",
           products: "Products",
-          contact: "Contact",
+          contact: "Contact Us",
           livraisonText: "Free delivery starting from ",
           livraisonPrix: "300 DT",
         },
@@ -54,6 +54,7 @@ const resources = {
           viewAllBtn: "View All",
           viewBtn: "Fast View",
           buyBtn: "Buy",
+         related:"Related Products"
         },
         deliverySection: {
           delivery: {
@@ -138,6 +139,27 @@ const resources = {
       favorites: {
         title: "Favorites",
       },
+      contactPage:{
+        subject : "Subject",
+        email:"Your Email",
+        message:"Message",
+        description:"Sabrina Bio is a Tunisian small business offering natural cosmetic products like oils and herbs. We believe in the power of nature to enhance beauty and well-being",
+        btn:"Send",
+      },
+      Modals:{
+        modalCart:{
+          title:"Performed",
+          msg:"The product has been successfully added to the cart",
+          btn1:"Continue shopping",
+          btn2:"Go to cart"
+        },
+        ModalFavorites:{
+          title:"Performed",
+          msg:"The product has been successfully added to favorites",
+          btn1:"Continue shopping",
+          btn2:"Go to favorites"
+        }
+      }
       // Add more translations here
     },
   },
@@ -192,6 +214,7 @@ const resources = {
           viewAllBtn: "عرض الكل",
           viewBtn: "عرض سريع",
           buyBtn: "شراء",
+          related: "منتجات ذات صلة"
         },
         deliverySection: {
           delivery: {
@@ -272,6 +295,27 @@ const resources = {
       favorites: {
         title: "المفضلة",
       },
+      contactPage: {
+        subject: "الموضوع",
+        email: "بريدك الإلكتروني",
+        message: "الرسالة",
+        description: "سابرينا بايو هي شركة صغيرة تونسية تقدم منتجات تجميل طبيعية مثل الزيوت والأعشاب. نحن نؤمن بقوة الطبيعة في تعزيز الجمال والرفاهية.",
+        btn: "إرسال"
+      },
+      Modals: {
+        modalCart: {
+          title: "تم بنجاح",
+          msg: "تمت إضافة المنتج إلى السلة بنجاح",
+          btn1: "متابعة التسوق",
+          btn2: "الذهاب إلى السلة"
+        },
+        ModalFavorites: {
+          title: "تم بنجاح",
+          msg: "تمت إضافة المنتج إلى المفضلة بنجاح",
+          btn1: "متابعة التسوق",
+          btn2: "الذهاب إلى المفضلة"
+        }
+      }
       // Add more translations here
     },
   },
@@ -288,7 +332,7 @@ const resources = {
           welcome: "Bienvenue",
           home: "Accueil",
           products: "Produits",
-          contact: "Contactez",
+          contact: "Nos Contacts",
           livraisonText: "Livraison gratuite à partir de ",
           livraisonPrix: "300 DT",
         },
@@ -326,6 +370,7 @@ const resources = {
           viewAllBtn: "Voir tout",
           viewBtn: "Vue rapide",
           buyBtn: "Acheter",
+          related: "Produits Connexes"
         },
         deliverySection: {
           delivery: {
@@ -411,6 +456,27 @@ const resources = {
       favorites: {
         title: "Favoris",
       },
+      contactPage: {
+        subject: "Sujet",
+        email: "Votre Email",
+        message: "Message",
+        description: "Sabrina Bio est une petite entreprise tunisienne qui propose des produits cosmétiques naturels comme des huiles et des herbes. Nous croyons au pouvoir de la nature pour sublimer la beauté et le bien-être.",
+        btn: "Envoyer"
+      },
+      Modals: {
+        modalCart: {
+          title: "Effectué",
+          msg: "Le produit a été ajouté avec succès au panier",
+          btn1: "Continuer vos achats",
+          btn2: "Aller au panier"
+        },
+        ModalFavorites: {
+          title: "Effectué",
+          msg: "Le produit a été ajouté avec succès aux favoris",
+          btn1: "Continuer vos achats",
+          btn2: "Aller aux favoris"
+        }
+      }
       // Add more translations here
     },
   },

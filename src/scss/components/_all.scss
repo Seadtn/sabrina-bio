@@ -1,3 +1,14 @@
 @import "./favorites";
 @import "./cart";
 @import "./modal";
+.contact{
+    &__img{
+
+        background: #fff;
+        width: 450px;
+        height: 650px;
+        position: relative;
+        box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+}

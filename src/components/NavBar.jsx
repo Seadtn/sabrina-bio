@@ -14,9 +14,13 @@ const languages = {
 const NavBar = () => {
   const { items } = useSelector((state) => state.cart);
   const { favorites } = useSelector((state) => state.favorite);
+  const [isMobile, setIsMobile] = useState(false);
 
   const totalCartAmount = items.reduce((sum, item) => item.count + sum, 0);
-  const totalFavoritesAmount = favorites.reduce((sum, item) => item.count + sum, 0);
+  const totalFavoritesAmount = favorites.reduce(
+    (sum, item) => item.count + sum,
+    0
+  );
   const [selectedLanguage, setSelectedLanguage] = useState("ar");
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -58,28 +62,50 @@ const NavBar = () => {
       </div>
       <div className="navbar">
         <div className="logo">
-          <Link to="/">
+          <Link to="/sabrine-bio">
             <h4>
               Sabrina <span>Bio</span>
             </h4>
           </Link>
         </div>
-        <nav>
-          <ul className="nav-links">
-            <li>
+        <nav style={{ display: "flex", justifyContent: "flex-end" }}>
+          <ul
+            className={isMobile ? "nav-links-mobile" : "nav-links"}
+            onClick={() => setIsMobile(false)}
+          >
+            <li className="nav-element">
               <Link to="/sabrine-bio">{t("homePage.menu.home")}</Link>
             </li>
-            <li>
+            <li className="nav-element">
               <Link to="/sabrine-bio/products">
                 {t("homePage.menu.products")}
               </Link>
             </li>
-            <li>
+            <li className="nav-element">
               <Link to="/sabrine-bio/contact">
                 {t("homePage.menu.contact")}
               </Link>
             </li>
-            <li className="dropdown" ref={dropdownRef}>
+            <li>
+              {/* Favorite Icon */}
+              <Link to="/sabrine-bio/favorite">
+                <i className="fas fa-heart ">
+                  <span id="itemsNum">{totalFavoritesAmount}</span>
+                </i>
+              </Link>
+            </li>
+            <li>
+              {/* Cart Icon */}
+              <Link to="/sabrine-bio/cart">
+                <i className="fas fa-shopping-cart ">
+                  <span id="itemsNum">{totalCartAmount}</span>
+                </i>
+              </Link>
+            </li>
+          </ul>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            {/* Language Dropdown */}
+            <div className="dropdown" ref={dropdownRef}>
               <div className="selected-language" onClick={toggleDropdown}>
                 <img
                   src={
@@ -102,18 +128,19 @@ const NavBar = () => {
                   ))}
                 </div>
               )}
-            </li>
-            <Link to="/sabrine-bio/favorite">
-              <i class="fas fa-heart cart_icon ">
-                <span id="itemsNum">{totalFavoritesAmount}</span>
-              </i>
-            </Link>
-            <Link to="/sabrine-bio/cart">
-              <i className="fas fa-shopping-cart cart_icon ">
-                <span id="itemsNum">{totalCartAmount}</span>
-              </i>
-            </Link>
-          </ul>
+            </div>
+            {/* Mobile Menu Toggle */}
+            <button
+              className="mobile-icon"
+              onClick={() => setIsMobile(!isMobile)}
+            >
+              {isMobile ? (
+                <i className="fas fa-times menu"></i>
+              ) : (
+                <i className="fas fa-bars menu"></i>
+              )}
+            </button>
+          </div>
         </nav>
       </div>
     </div>

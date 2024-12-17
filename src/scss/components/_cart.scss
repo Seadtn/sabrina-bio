@@ -312,11 +312,12 @@
 .fieldset {
 	border: none;
 
-	input {
-		margin-right: 20px;
+	.input-ar {
 		margin-left: 20px;
+	} 
+	.input-fr {
+		margin-right: 20px;
 	}
-	
 
 	&__item {
 		display: flex;

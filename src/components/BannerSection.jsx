@@ -27,7 +27,7 @@ const BannerSection = () => {
   return (
     <div className="homeSlide" style={{ position: "relative" }}>
       <div
-        className="background-overlay"
+        className="background-overlay img__slider"
         style={{
           backgroundImage: `url(${process.env.PUBLIC_URL}/images/slider/slider-background-${isArabic ? "ar": "fren"}.jpg)`,
           backgroundRepeat: "no-repeat",

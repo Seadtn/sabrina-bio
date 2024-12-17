@@ -23,7 +23,7 @@ const OrderBlock = () => {
             <input
               type="text"
               name="name"
-              className="data__input"
+              className={`data__input ${isArabic ? "input-ar" : "input-fr"}`}
               placeholder={t("cartPage.input.firstName")}
               required
               pattern="[a-zA-Zа-яґєіїА-ЯҐЄІЇ]+"
@@ -32,7 +32,7 @@ const OrderBlock = () => {
             <input
               type="text"
               name="surname"
-              className="data__input"
+              className={`data__input ${isArabic ? "input-ar" : "input-fr"}`}
               placeholder={t("cartPage.input.lastName")}
               required
               pattern="[a-zA-Zа-яґєіїА-ЯҐЄІЇ]+"
@@ -44,7 +44,7 @@ const OrderBlock = () => {
               type="text"
               pattern='^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'
               name="email"
-              className="data__input"
+              className={`data__input ${isArabic ? "input-ar" : "input-fr"}`}
               placeholder={t("cartPage.input.mail")}
               title="The email address must be in example@gmail.com format"
               required
@@ -55,7 +55,7 @@ const OrderBlock = () => {
               dir={isArabic ? "rtl" : "ltr"}
               lang={isArabic ? "ar" : "fr"}
               pattern="[0-9]{8}"
-              className="data__input"
+              className={`data__input ${isArabic ? "input-ar" : "input-fr"}`}
               placeholder={t("cartPage.input.phone")}
               inputMode="numeric"
               minLength="8"
@@ -71,7 +71,7 @@ const OrderBlock = () => {
             <input
               type="text"
               name="city"
-              className="data__input"
+              className={`data__input ${isArabic ? "input-ar" : "input-fr"}`}
               placeholder={t("cartPage.input.city")}
               pattern="[a-zA-Zа-яґєіїА-ЯҐЄІЇ]+"
               title="The city field can only contain letters"
@@ -80,7 +80,7 @@ const OrderBlock = () => {
             <input
               type="number"
               name="Code Postal"
-              className="data__input"
+              className={`data__input ${isArabic ? "input-ar" : "input-fr"}`}
               placeholder={t("cartPage.input.postalCode")}
               title="This field can only contain numbers"
               required
@@ -91,11 +91,11 @@ const OrderBlock = () => {
         <fieldset className="fieldset">
           <div className="data__column">
           <label className="fieldset__item">
-              <input type="radio" className="data__payment" name="payment" />
+              <input type="radio" className={`data__payment ${isArabic ? "input-ar" : "input-fr"}`} name="payment" />
               <div className="text">{t("cartPage.order.phraseTic3")}</div>
             </label>
             <label className="fieldset__item">
-              <input type="radio" className="data__payment" name="payment" />
+              <input type="radio" className={`data__payment ${isArabic ? "input-ar" : "input-fr"}`} name="payment" />
               <div className="text">{t("cartPage.order.phraseTic2")}</div>
             </label>
           </div>

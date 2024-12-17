@@ -170,8 +170,7 @@ const Products = () => {
             <Link to="#" className="btn-link">
               {loadingMore ? (
                 <div className="loading-more">
-                  {/* Custom loader for the "View More" button */}
-                  <span className="loader-circle"></span> {/* Example loader circle */}
+                  <span className="loader-circle"></span> 
                   {t("homePage.products.viewAllBtn")}
                 </div>
               ) : (

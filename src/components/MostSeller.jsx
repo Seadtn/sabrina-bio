@@ -6,8 +6,9 @@ import "../App.css";
 import { useTranslation } from "react-i18next";
 import Arrows from "./arrows";
 import MostSellerCard from "./MostSellerCard";
+
 function MostSeller(props) {
-    const { products } = props;
+  const { products } = props;
   const { t } = useTranslation();
 
   const settings = {
@@ -17,18 +18,38 @@ function MostSeller(props) {
     slidesToScroll: 1,
     autoplay: true,
     arrows: true,
-    prevArrow: <Arrows/>,  
-    nextArrow: <Arrows />,  
+    prevArrow: <Arrows />,
+    nextArrow: <Arrows />,
+    responsive: [
+      {
+        breakpoint: 1200, 
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 992, 
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 768, 
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
   };
 
   return (
     <div>
       <h2 className="title">{t("homePage.mostSellerSection.title")}</h2>
-      <div >
+      <div>
         <Slider {...settings}>
-          {products.map((product) => {
-            return <MostSellerCard product={product}/>
-          })}
+          {products.map((product, index) => (
+            <MostSellerCard key={index} product={product} />
+          ))}
         </Slider>
       </div>
     </div>
