@@ -54,8 +54,8 @@ const Home = () => {
           <h2 className="title">{t("homePage.products.new")}</h2>
           <SearchBar onSearch={handleSearch} />
           <div className="row products">
-            {filter.map((product) => (
-              <ProductCard product={product} key={product.id} />
+            {filter.map((product,index) => (
+              <ProductCard product={product} key={index} />
             ))}
           </div>
           <div className="viewContainer">

@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { setSuccessModal } from "../../../redux/cart/slice.ts";
 import i18n from "../../../i18n/i18n.js";
 import { useTranslation } from "react-i18next";
+import { use } from "react";
 
 const ModalCart = () => {
   const dispatch = useDispatch();
@@ -15,10 +16,13 @@ const ModalCart = () => {
   };
 
   //const { id } = useParams();
-
+  useEffect(() => {
+    const element = document.getElementById("modal-id");
+    document.body.appendChild(element); // Moves the element to the body
+  }, []);
   return (
     <div
-      className="modal"
+      className="modal" id="modal-id"
       dir={isArabic ? "rtl" : "ltr"}
       lang={isArabic ? "ar" : "fr"}
     >
