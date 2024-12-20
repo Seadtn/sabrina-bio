@@ -8,6 +8,7 @@ import {
   TableRow,
   Paper,
   IconButton,
+  Chip,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -25,6 +26,7 @@ const ProductTable = ({ products, onEdit, onView, onDelete }) => {
             <TableCell>Quantity</TableCell>
             <TableCell>Added At</TableCell>
             <TableCell>At Sold</TableCell>
+            <TableCell>New Product</TableCell>
             <TableCell>Actions</TableCell>
           </TableRow>
         </TableHead>
@@ -37,12 +39,7 @@ const ProductTable = ({ products, onEdit, onView, onDelete }) => {
               <TableCell>
                 {" "}
                 <img
-                  src={`data:image/jpeg;base64,${btoa(
-                    new Uint8Array(product.image).reduce(
-                      (data, byte) => data + String.fromCharCode(byte),
-                      ""
-                    )
-                  )}`}
+                  src={`data:image/jpeg;base64,${product.image}`}
                   alt={`product${product.id}`}
                   style={{ width: "50px", height: "50px", objectFit: "cover" }}
                 />
@@ -56,6 +53,20 @@ const ProductTable = ({ products, onEdit, onView, onDelete }) => {
                 {product.inSold === true && product.soldRatio > 0
                   ? `Yes (${product.soldRatio}%)`
                   : "No"}
+              </TableCell>
+              <TableCell>
+                <Chip
+                  label={product.isNew === true ? "New" : "Regular"}
+                  color={product.isNew === true ? "success" : "default"}
+                  size="small"
+                  sx={{ 
+                    "&.MuiChip-colorSuccess": {
+                      "& .MuiChip-label": {
+                        color: "white"
+                      }
+                    }
+                  }}
+                />
               </TableCell>
               <TableCell>
                 <IconButton

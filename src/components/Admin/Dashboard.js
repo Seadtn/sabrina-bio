@@ -5,12 +5,12 @@ import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import { PageContainer } from '@toolpad/core/PageContainer';
 import { extendTheme } from '@mui/material/styles';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import CategoryIcon from '@mui/icons-material/Category';
 import ProductTable from './product/ProductTable.js';
 import ProductFormModal from './product/ProductFormModal.js';
 import ProductViewModal from './product/ProductViewModal.js';
 import BackupTableIcon from '@mui/icons-material/BackupTable';
 import CommandsDashboard from './commands/CommandsDashboard.js';
+import { addNewProduct, getAllProducts } from '../../api/backend.js';
 const NAVIGATION = [
   {
     kind: 'header',
@@ -26,23 +26,23 @@ const NAVIGATION = [
     title: 'Commands',
     icon: <BackupTableIcon /> 
   },
-  {
-    kind: 'divider',
-  },
-  {
-    kind: 'header',
-    title: 'Categories',
-  },
-  {
-    segment: 'category1',
-    title: 'Category 1',
-    icon: <CategoryIcon />,
-  },
-  {
-    segment: 'category2',
-    title: 'Category 2',
-    icon: <CategoryIcon />,
-  }
+  // {
+  //   kind: 'divider',
+  // },
+  // {
+  //   kind: 'header',
+  //   title: 'Categories',
+  // },
+  // {
+  //   segment: 'category1',
+  //   title: 'Category 1',
+  //   icon: <CategoryIcon />,
+  // },
+  // {
+  //   segment: 'category2',
+  //   title: 'Category 2',
+  //   icon: <CategoryIcon />,
+  // }
 ];
 
 const demoTheme = extendTheme({
@@ -65,7 +65,7 @@ const demoTheme = extendTheme({
 
 export default function Dashboard() {
   const [activePage, setActivePage] = React.useState('products');
-  const [products, setProducts] = React.useState(SAMPLE_PRODUCTS);
+  const [products, setProducts] = React.useState([]);
   const [openFormModal, setOpenFormModal] = React.useState(false);
   const [openViewModal, setOpenViewModal] = React.useState(false);
   const [selectedProduct, setSelectedProduct] = React.useState(null);
@@ -76,17 +76,44 @@ export default function Dashboard() {
     setSelectedProduct(product);
     setOpenFormModal(true);
   };
+  React.useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const products = await getAllProducts();
+        setProducts(products); 
+      } catch (error) {
+        console.error("Error fetching products:", error); 
+      }
+    };
+  
+    fetchProducts();
+  }, []); 
+  
 
-  const handleSaveProduct = (productData) => {
-    if (selectedProduct) {
-      setProducts((prev) =>
-        prev.map((prod) => (prod.id === selectedProduct.id ? { ...prod, ...productData } : prod))
-      );
-    } else {
-      setProducts((prev) => [...prev, { ...productData, id: Date.now() }]);
+  const handleSaveProduct = async (productData) => {
+    try {
+      let response;
+  
+      if (productData.id) {
+        response = await addNewProduct({ ...productData });
+      } else {
+        response = await addNewProduct(productData);
+      }
+  
+      setProducts((prev) => {
+        if (productData.id) {
+          return prev.map((prod) =>
+            prod.id === productData.id ? { ...prod, ...response } : prod
+          );
+        } else {
+          return [...prev, response];
+        }
+      });
+      setSelectedProduct(null); 
+    } catch (error) {
+      console.error("Error saving/updating product:", error.message);
     }
-    setSelectedProduct(null);
-  };
+  }
 
   const handleViewProduct = (product) => {
     console.log(product);
@@ -159,42 +186,3 @@ export function AppLogo() {
     </div>
   );
 }
-const SAMPLE_PRODUCTS = [
-  {
-    id: 1,
-    name: "Premium Leather Backpack",
-    description: "Handcrafted genuine leather backpack with multiple compartments. Perfect for daily use or travel. Features adjustable straps and water-resistant coating.",
-    price: 199.99,
-    image: null, // Would be byte array in real data
-    creationDate: "2024-03-01",
-    inSold: true,
-    startDate: "2024-03-15",
-    lastDate: "2024-04-15",
-    soldRatio : 30,
-  },
-  {
-    id: 2,
-    name: "Wireless Noise-Cancelling Headphones",
-    description: "High-quality wireless headphones with active noise cancellation. 30-hour battery life, premium sound quality, and comfortable over-ear design.",
-    price: 299.99,
-    image: null,
-    creationDate: "2024-02-15",
-    inSold: false,
-    startDate: null,
-    lastDate: null,
-    soldRatio : 20,
-  },
-  {
-    id: 3,
-    name: "Smart Fitness Watch",
-    description: "Advanced fitness tracker with heart rate monitoring, GPS, sleep tracking, and smartphone notifications. Water-resistant up to 50m.",
-    price: 149.99,
-    image: null,
-    creationDate: "2024-01-20",
-    inSold: true,
-    startDate: "2024-03-10",
-    lastDate: "2024-03-31",
-    soldRatio : 20,
-  }
-];
-

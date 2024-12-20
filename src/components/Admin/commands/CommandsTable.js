@@ -46,7 +46,7 @@ function CommandsTable({ commands, onEdit,onView }) {
                 <Chip label={command.status}  color={getStatusColor(command.status)}  />
               </TableCell>
               <TableCell>{command.paymentMethod}</TableCell>
-              <TableCell>{`$${command.totalPrice.toFixed(2)}`}</TableCell>
+              <TableCell>{`TND${command.totalPrice.toFixed(2)}`}</TableCell>
             </TableRow>
           ))}
         </TableBody>

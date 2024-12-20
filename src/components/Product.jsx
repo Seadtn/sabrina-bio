@@ -6,6 +6,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import Loader from "./loader/Loader";
 import i18n from "../i18n/i18n";
 import { useTranslation } from "react-i18next";
+import { getProductById } from "../api/backend";
 
 const Product = () => {
   const { id } = useParams();
@@ -25,8 +26,19 @@ const Product = () => {
   useEffect(() => {
     const getProduct = async () => {
       setLoading(true);
-      const response = await fetch(url + `/${id}`);
-      setProduct(await response.json());
+      const getProduct = async () => {
+        setLoading(true);
+        try {
+          const response = await getProductById(id); 
+          console.log(response); 
+          setProduct(response);  
+        } catch (error) {
+          console.error("Error fetching product:", error); 
+        } finally {
+          setLoading(false); 
+        }
+      };
+      getProduct();
       setLoading(false);
     };
 
@@ -44,8 +56,6 @@ const Product = () => {
 
     relatedProducts(window.scrollTo(0, 0));
   }, [single, id, url]);
-
-  if (product && product.id) {
     return (
       <div
         className="container"
@@ -60,15 +70,13 @@ const Product = () => {
               <>
                 <div className="col-single">
                   <img
-                    src={`${process.env.PUBLIC_URL}/images/slider/slide-${
-                      Math.floor(Math.random() * 3) + 1
-                    }.png`}
-                    alt={product.title}
+                    src={`data:image/*;base64,${product.image}`}
+                    alt={product.name}
                     className="product-image"
                   />
                 </div>
                 <div className="col-single">
-                  <h2>{product.title}</h2>
+                  <h2>{product.name}</h2>
                   <h4>{product.price} {!isArabic ? "DT" : "دت"} </h4>
                   <h3 id="details"> {!isArabic ? "Description" : "وصف"}</h3>
                   <p>{product.description}</p>
@@ -94,28 +102,6 @@ const Product = () => {
         </div>
       </div>
     );
-  } else {
-    return (
-      <div className="container">
-        <div className="content">
-          <div className="row row2">
-            {loading ? (
-              <Loader />
-            ) : (
-              <>
-                <div className="product-col4">
-                  <img src={"../images/404.svg"} alt="product" />
-                </div>
-                <div className="col-single">
-                  <h3 id="details">Product was not found.</h3>
-                </div>
-              </>
-            )}
-          </div>
-        </div>
-      </div>
-    );
-  }
 };
 
 export default Product;

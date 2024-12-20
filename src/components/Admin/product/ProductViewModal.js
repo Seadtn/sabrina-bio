@@ -31,7 +31,7 @@ const ProductViewModal = ({ open, onClose, product }) => {
             {product?.image ? (
               <Box
                 component="img"
-                src={`data:image/jpeg;base64,${Buffer.from(product.image).toString("base64")}`}
+                src={`data:image/jpeg;base64,${product.image}`}
                 alt={product?.name}
                 sx={{
                   width: "100%",
@@ -67,6 +67,21 @@ const ProductViewModal = ({ open, onClose, product }) => {
                   color={product?.inSold ? "error" : "default"}
                   size="small"
                 />
+                {product?.isNew === true && 
+                  <Chip
+                    label="New"
+                    color="success"
+                    size="small"
+                    sx={{ 
+                      "&.MuiChip-colorSuccess": {
+                        "& .MuiChip-label": {
+                          color: "white"
+                        }
+                      },
+                      marginLeft: 1
+                    }}
+                  />
+                }
               </Box>
 
               <Box>
@@ -114,6 +129,7 @@ const ProductViewModal = ({ open, onClose, product }) => {
         <Button
           onClick={onClose}
           variant="contained"
+          style={{background:"#2fcb00"}}
           sx={{
             borderRadius: 2,
             textTransform: "none",

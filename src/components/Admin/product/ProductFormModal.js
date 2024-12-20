@@ -19,6 +19,7 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
     image: null,
     creationDate: new Date().toISOString().split('T')[0],
     inSold: false,
+    productNew: false,
     soldRatio: 0,
     startDate: '',
     lastDate: ''
@@ -34,14 +35,15 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
         image: product.image,
         creationDate: product.creationDate,
         inSold: product.inSold,
+        productNew: product.productNew,
         startDate: product.startDate || '',
         lastDate: product.lastDate || ''
       });
       
-      if (product.image) {
+      /*if (product.image) {
         const binary = String.fromCharCode.apply(null, product.image);
         setPreviewUrl(`data:image/jpeg;base64,${window.btoa(binary)}`);
-      }
+      }*/
     }
   }, [product]);
 
@@ -58,18 +60,17 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
     if (file) {
       const reader = new FileReader();
       reader.onload = async (e) => {
-        const arrayBuffer = e.target.result;
-        const uint8Array = new Uint8Array(arrayBuffer);
-        setFormData(prev => ({ ...prev, image: uint8Array }));
-        setPreviewUrl(URL.createObjectURL(file));
+        const base64String = e.target.result.split(',')[1];
+        setFormData(prev => ({ ...prev, image: base64String })); 
+        setPreviewUrl(URL.createObjectURL(file));  
       };
-      reader.readAsArrayBuffer(file);
+      reader.readAsDataURL(file);  
     }
   };
 
   const handleSubmit = () => {
     onSave(formData);
-    //onClose();
+    onClose();
   };
 
   return (
@@ -84,7 +85,7 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
                 style={{ width: '200px', height: '200px', objectFit: 'cover' }} 
               />
             )}
-            <Button variant="contained" component="label">
+            <Button variant="contained" style={{background:"#2fcb00"}} component="label">
               Upload Image
               <input
                 type="file"
@@ -94,7 +95,7 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
               />
             </Button>
         </Box>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2,minWidth: '400px',paddingTop: '20px'  }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, minWidth: '400px',marginTop: '100px'  }}>
           <TextField
             name="name"
             label="Name"
@@ -119,6 +120,28 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
             value={formData.price}
             onChange={handleInputChange}
           />
+          <Box sx={{ display: 'flex', gap: 2}}>
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={formData.productNew}
+                  onChange={handleInputChange}
+                  name="productNew"
+                />
+              }
+              label="Is New"
+            />
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={formData.inSold}
+                  onChange={handleInputChange}
+                  name="inSold"
+                />
+              }
+              label="In Promotion"
+            />
+          </Box>
            { formData.inSold && (<TextField
             name="soldRatio"
             label="Sold ratio"
@@ -145,21 +168,11 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
             value={formData.lastDate}
             onChange={handleInputChange}
           />)}
-          <FormControlLabel
-            control={
-              <Switch
-                checked={formData.inSold}
-                onChange={handleInputChange}
-                name="inSold"
-              />
-            }
-            label="In Promotion"
-          />
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>Cancel</Button>
-        <Button onClick={handleSubmit} variant="contained">Save</Button>
+        <Button onClick={onClose} style={{color:"#2fcb00"}}>Cancel</Button>
+        <Button onClick={handleSubmit} variant="contained" style={{background:"#2fcb00"}}>Save</Button>
       </DialogActions>
     </Dialog>
   );
