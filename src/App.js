@@ -1,13 +1,14 @@
 import "./App.css";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
 import { store } from "./redux/store.ts";
 import React, { Suspense } from "react";
 import Loader from "./components/loader/Loader";
 import Dashboard from "./components/Admin/Dashboard";
-
+import ModalCart from "./components/Modals/ModalCart/ModalCart";
+import ModalFavorites from "./components/Modals/ModalFavorites/ModalFavorites";
 const Home = React.lazy(() => import("./components/Home"));
 const Cart = React.lazy(() => import("./components/Cart/Cart"));
 const Products = React.lazy(() => import("./components/Products"));
@@ -21,7 +22,24 @@ const Favorite = React.lazy(() => import("./components/Favorite/Favorites"));
 function AppContent() {
   const location = useLocation();
   const isDashboardRoute = location.pathname.startsWith("/sabrina-bio/admin");
+  const isMounted = React.useRef(false);
 
+  const { items, successModal, errorModal } = useSelector(
+    (state) => state.cart
+  );
+  // eslint-disable-next-line
+  const { favorites, errorFavModal, successFavModal } = useSelector(
+    (state) => state.favorite
+  );
+  React.useEffect(() => {
+    if (isMounted.current) {
+      const dataCart = JSON.stringify(items);
+      localStorage.setItem("cart", dataCart);
+      const dataFavorites = JSON.stringify(favorites);
+      localStorage.setItem("favorites", dataFavorites);
+    }
+    isMounted.current = true;
+  }, [items, favorites]);
   return (
     <>      
     {!isDashboardRoute && <NavBar />}
@@ -40,6 +58,8 @@ function AppContent() {
         </Routes>
       </Suspense>
       {!isDashboardRoute && <Footer />}
+      {!isDashboardRoute && successModal && <ModalCart/>}
+      {!isDashboardRoute && successFavModal && <ModalFavorites/>}
     </>
   );
 }

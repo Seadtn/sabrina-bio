@@ -8,33 +8,16 @@ import SearchBar from "./SearchBar";
 import Categories from "./Categories";
 import { Link } from "react-router-dom";
 import MostSeller from "./MostSeller";
-import { useSelector } from "react-redux";
-import ModalCart from "./Modals/ModalCart/ModalCart";
-import ModalFavorites from "./Modals/ModalFavorites/ModalFavorites.jsx";
+
 
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [filter, setFilter] = useState(products);
   const { t } = useTranslation();
 
-  const { items, successModal, errorModal } = useSelector(
-    (state) => state.cart
-  );
-  // eslint-disable-next-line
-  const { favorites, errorFavModal, successFavModal } = useSelector(
-    (state) => state.favorite
-  );
-  const isMounted = React.useRef(false);
 
-  React.useEffect(() => {
-    if (isMounted.current) {
-      const dataCart = JSON.stringify(items);
-      localStorage.setItem("cart", dataCart);
-      const dataFavorites = JSON.stringify(favorites);
-      localStorage.setItem("favorites", dataFavorites);
-    }
-    isMounted.current = true;
-  }, [items, favorites]);
+
+
   const handleSearch = (searchTerm) => {
     if (searchTerm) {
       const filteredProducts = products.filter((product) =>
@@ -93,8 +76,6 @@ const Home = () => {
           <MostSeller products={products} />
         </div>
       </div>
-      {successModal && <ModalCart />}
-      {successFavModal && <ModalFavorites />}
     </div>
   );
 };

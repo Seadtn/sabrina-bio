@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import i18n from "../i18n/i18n";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addItems } from "../redux/cart/slice.ts";
 import { addFavoriteItems } from "../redux/favorite/slice.ts";
 
@@ -19,7 +19,7 @@ const ProductCard = ({ product }) => {
     )}&redirect_uri=${encodeURIComponent(window.location.origin)}`;
     window.open(url, "_blank");
   };
-
+  
   const shareOnWhatsApp = () => {
     const url = `https://wa.me/?text=${encodeURIComponent(
       `${product.title} - ${window.location.origin}/product/${product.id}`
