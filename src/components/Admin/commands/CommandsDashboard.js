@@ -2,6 +2,7 @@ import { PageContainer } from '@toolpad/core'
 import React, { useEffect, useState } from 'react'
 import CommandsTable from './CommandsTable'
 import CommandViewModal from './CommandViewModal'
+import { getAllCommands } from '../../../api/backend'
 
 function CommandsDashboard() {
     const [commands, setCommands] = useState([])
@@ -20,9 +21,18 @@ function CommandsDashboard() {
         setOpenViewModal(true);
     };
 
-    useEffect(() => {
-      setCommands(sampleCommands);
-    }, [])
+  React.useEffect(() => {
+    const fetchCommands = async () => {
+      try {
+        const products = await getAllCommands();
+        setCommands(products); 
+      } catch (error) {
+        console.error("Error fetching products:", error); 
+      }
+    };
+  
+    fetchCommands();
+  }, []); 
     
     const handleEditCommandStatus = (command) => {
         // submit changes to the server

@@ -60,28 +60,39 @@ const ProductViewModal = ({ open, onClose, product }) => {
             <Stack spacing={3}>
               <Box>
                 <Typography variant="h4" gutterBottom>
-                  ${product?.price?.toFixed(2)}
+                  {product?.inSold
+                    ? product?.price * (product.soldRatio * 0.01)
+                    : product?.price?.toFixed(2)}{" "}
+                  DT
                 </Typography>
+                {product?.inSold && (
+                  <p className="old-price" style={{ textAlign: "start" }}>
+                    {product?.price} DT
+                  </p>
+                )}
                 <Chip
                   label={product?.inSold ? "On Sale" : "Regular Price"}
-                  color={product?.inSold ? "error" : "default"}
+                  color={product?.inSold ? "error" : "default"} 
+                  sx={{
+                    color: product?.inSold ? "white !important" : "black ", 
+                  }}
                   size="small"
                 />
-                {product?.isNew === true && 
+                {product?.isNew === true && (
                   <Chip
                     label="New"
                     color="success"
                     size="small"
-                    sx={{ 
+                    sx={{
                       "&.MuiChip-colorSuccess": {
                         "& .MuiChip-label": {
-                          color: "white"
-                        }
+                          color: "white",
+                        },
                       },
-                      marginLeft: 1
+                      marginLeft: 1,
                     }}
                   />
-                }
+                )}
               </Box>
 
               <Box>
@@ -105,8 +116,7 @@ const ProductViewModal = ({ open, onClose, product }) => {
                   {product?.inSold && (
                     <>
                       <Typography variant="body2">
-                        <b>Sale Start:</b>{" "}
-                        {new Date(product?.startDate).toLocaleDateString()}
+                        <b>Sale Ratio:</b> {product?.soldRatio}%
                       </Typography>
                       <Typography variant="body2">
                         <b>Sale Start:</b>{" "}
@@ -129,7 +139,7 @@ const ProductViewModal = ({ open, onClose, product }) => {
         <Button
           onClick={onClose}
           variant="contained"
-          style={{background:"#2fcb00"}}
+          style={{ background: "#2fcb00" }}
           sx={{
             borderRadius: 2,
             textTransform: "none",

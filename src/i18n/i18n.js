@@ -34,6 +34,7 @@ const resources = {
           title: "Our Products",
           new: "New Products",
           newLabel: "New",
+          soldLabel:"On Sale",
           category: {
             all: "All",
             herbs: "Herbs and grains",
@@ -195,6 +196,7 @@ const resources = {
           title: "منتجاتنا",
           new: "منتجاتنا الجديدة",
           newLabel: "جديد",
+          soldLabel:"مُخفض",
           category: {
             all: "الكل",
             herbs: "الأعشاب و الحبوب",
@@ -352,6 +354,7 @@ const resources = {
           title: "Nos Produits",
           new: "Nouveaux Produits",
           newLabel: "Nouveau",
+          soldLabel:"Soldé",
           category: {
             all: "Tout",
             herbs: "Herbes et Grains",
