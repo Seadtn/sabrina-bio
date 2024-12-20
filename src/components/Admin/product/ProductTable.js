@@ -39,12 +39,7 @@ const ProductTable = ({ products, onEdit, onView, onDelete }) => {
               <TableCell>
                 {" "}
                 <img
-                  src={`data:image/jpeg;base64,${btoa(
-                    new Uint8Array(product.image).reduce(
-                      (data, byte) => data + String.fromCharCode(byte),
-                      ""
-                    )
-                  )}`}
+                  src={`data:image/jpeg;base64,${product.image}`}
                   alt={`product${product.id}`}
                   style={{ width: "50px", height: "50px", objectFit: "cover" }}
                 />

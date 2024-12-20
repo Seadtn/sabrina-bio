@@ -50,9 +50,9 @@ const ProductCard = ({ product }) => {
       addItems({
         id: product.id ?? 0,
         count: 1,
-        imageUrl: `${process.env.PUBLIC_URL}/images/slider/slide-${Math.floor(Math.random() * 3) + 1}.png`,
+        imageUrl:`data:image/*;base64,${product.image}`,
         price: product.price,
-        title: product.title,
+        title: product.name,
         newId: Math.random(Math.random(1, 50), Math.random(100, 2000)),
       })
     );
@@ -64,10 +64,10 @@ const ProductCard = ({ product }) => {
   };
   const onClickAddFavoriteItems = () => {
     const favoriteItem = {
-      id: product.id ?? 0,
-      title: product.title,
+      id: product.id ,
+      title: product.name,
       price: product.price,
-      imageUrl: `${process.env.PUBLIC_URL}/images/slider/slide-${Math.floor(Math.random() * 3) + 1}.png`,
+      imageUrl: `data:image/*;base64,${product.image}`,
       count: 0,
     };
     dispatch(addFavoriteItems(favoriteItem));
@@ -76,7 +76,7 @@ const ProductCard = ({ product }) => {
     <div className="col4 product">
       <div className="image-container">
         {/* New Label */}
-        {product.inSold === true && (
+        {product.inSold && (
           <div
             className="sold-label"
             dir={isArabic ? "rtl" : "ltr"}
@@ -85,8 +85,7 @@ const ProductCard = ({ product }) => {
             {t("homePage.products.newLabel")}
           </div>
         )}
-        {product.isNew ===
-          true && (
+        {product.productNew && (
             <div
               className="new-label"
               dir={isArabic ? "rtl" : "ltr"}
@@ -101,8 +100,8 @@ const ProductCard = ({ product }) => {
           className="product-link"
         >
           <img
-            src={`${process.env.PUBLIC_URL}/images/slider/slide-${Math.floor(Math.random() * 3) + 1}.png`}
-            alt={product.name.substring(0, 25)}
+            src={`data:image/*;base64,${product.image}`}
+            alt={product.name?.substring(0, 25)}
           />
         </Link>
         <div
@@ -113,16 +112,16 @@ const ProductCard = ({ product }) => {
           <button className="fast-view-button">
             <i className="fas fa-eye"></i> {t("homePage.products.viewBtn")}
           </button>
-          <button className="buy-button" onClick={onClickAddItem}>
+          <button className="buy-button" onClick={()=>onClickAddItem()}>
             <i className="fas fa-shopping-cart"></i>{" "}
             {t("homePage.products.buyBtn")}
           </button>
         </div>
       </div>
       <h2 className="product-title">
-        {product.name.length > 25
-          ? `${product.title.substring(0, 25)}...`
-          : product.title}
+        {product.name?.length > 25
+          ? `${product.name?.substring(0, 25)}...`
+          : product.name}
       </h2>
       <p
         className={product.inSold ? "old-price":"price"}

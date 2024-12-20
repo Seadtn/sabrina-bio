@@ -19,7 +19,7 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
     image: null,
     creationDate: new Date().toISOString().split('T')[0],
     inSold: false,
-    isNew: false,
+    productNew: false,
     soldRatio: 0,
     startDate: '',
     lastDate: ''
@@ -35,15 +35,15 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
         image: product.image,
         creationDate: product.creationDate,
         inSold: product.inSold,
-        isNew: product.isNew,
+        productNew: product.productNew,
         startDate: product.startDate || '',
         lastDate: product.lastDate || ''
       });
       
-      if (product.image) {
+      /*if (product.image) {
         const binary = String.fromCharCode.apply(null, product.image);
         setPreviewUrl(`data:image/jpeg;base64,${window.btoa(binary)}`);
-      }
+      }*/
     }
   }, [product]);
 
@@ -60,18 +60,17 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
     if (file) {
       const reader = new FileReader();
       reader.onload = async (e) => {
-        const arrayBuffer = e.target.result;
-        const uint8Array = new Uint8Array(arrayBuffer);
-        setFormData(prev => ({ ...prev, image: uint8Array }));
-        setPreviewUrl(URL.createObjectURL(file));
+        const base64String = e.target.result.split(',')[1];
+        setFormData(prev => ({ ...prev, image: base64String })); 
+        setPreviewUrl(URL.createObjectURL(file));  
       };
-      reader.readAsArrayBuffer(file);
+      reader.readAsDataURL(file);  
     }
   };
 
   const handleSubmit = () => {
     onSave(formData);
-    //onClose();
+    onClose();
   };
 
   return (
@@ -125,9 +124,9 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
             <FormControlLabel
               control={
                 <Switch
-                  checked={formData.isNew}
+                  checked={formData.productNew}
                   onChange={handleInputChange}
-                  name="isNew"
+                  name="productNew"
                 />
               }
               label="Is New"

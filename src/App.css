@@ -534,8 +534,9 @@ nav ul li a:hover {
   font-size: 14px;
 }
 
-.product-col4 .product-image {
-  width: 50%;
+.col-single .product-image {
+  width: 80%;
+  height: 500px;
 }
 .product img {
   width: 180px;

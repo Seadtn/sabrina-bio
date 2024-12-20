@@ -51,8 +51,7 @@ const Products = () => {
   useEffect(() => {
     let filtered = products.filter((product) => {
       const matchesCategory = category ? product.category === category : true;
-      const matchesSearchTerm = product.title
-        .toLowerCase()
+      const matchesSearchTerm = product.name?.toLowerCase()
         .includes(searchTerm.toLowerCase());
       return matchesCategory && matchesSearchTerm;
     });
@@ -63,7 +62,7 @@ const Products = () => {
     } else if (sortOption === "lowPrice") {
       filtered = filtered.sort((a, b) => a.price - b.price); // Sort by low price
     } else if (sortOption === "name") {
-      filtered = filtered.sort((a, b) => a.title.localeCompare(b.title)); // Sort by name
+      filtered = filtered.sort((a, b) => a.name.localeCompare(b.name)); // Sort by name
     }
 
     setFilteredProducts(filtered);

@@ -31,7 +31,7 @@ const ProductViewModal = ({ open, onClose, product }) => {
             {product?.image ? (
               <Box
                 component="img"
-                src={`data:image/jpeg;base64,${Buffer.from(product.image).toString("base64")}`}
+                src={`data:image/jpeg;base64,${product.image}`}
                 alt={product?.name}
                 sx={{
                   width: "100%",
