@@ -51,7 +51,9 @@ const ProductCard = ({ product }) => {
         id: product.id ?? 0,
         count: 1,
         imageUrl:`data:image/*;base64,${product.image}`,
-        price: product.price,
+        price: product.inSold 
+        ? product.price * (product.soldRatio * 0.01) 
+        : product.price,
         title: product.name,
         newId: Math.random(Math.random(1, 50), Math.random(100, 2000)),
       })
@@ -66,7 +68,9 @@ const ProductCard = ({ product }) => {
     const favoriteItem = {
       id: product.id ,
       title: product.name,
-      price: product.price,
+      price: product.inSold 
+      ? product.price * (product.soldRatio * 0.01) 
+      : product.price,
       imageUrl: `data:image/*;base64,${product.image}`,
       count: 0,
     };
@@ -76,15 +80,6 @@ const ProductCard = ({ product }) => {
     <div className="col4 product">
       <div className="image-container">
         {/* New Label */}
-        {product.inSold && (
-          <div
-            className="sold-label"
-            dir={isArabic ? "rtl" : "ltr"}
-            lang={isArabic ? "ar" : "fr"}
-          >
-            {t("homePage.products.newLabel")}
-          </div>
-        )}
         {product.productNew && (
             <div
               className="new-label"
@@ -94,6 +89,16 @@ const ProductCard = ({ product }) => {
               {t("homePage.products.newLabel")}
             </div>
           )}
+        {product.inSold && (
+          <div
+            className={`${product.productNew ? "sold-label1":"sold-label2"}`}
+            dir={isArabic ? "rtl" : "ltr"}
+            lang={isArabic ? "ar" : "fr"}
+          >
+            {t("homePage.products.soldLabel")}
+          </div>
+        )}
+
 
         <Link
           to={`/sabrina-bio/product/${product.id}`}
