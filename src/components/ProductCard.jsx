@@ -5,8 +5,6 @@ import i18n from "../i18n/i18n";
 import { useDispatch, useSelector } from "react-redux";
 import { addItems } from "../redux/cart/slice.ts";
 import { addFavoriteItems } from "../redux/favorite/slice.ts";
-import ModalCart from "./Modals/ModalCart/ModalCart.jsx";
-import ModalFavorites from "./Modals/ModalFavorites/ModalFavorites.jsx";
 
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
@@ -14,24 +12,7 @@ const ProductCard = ({ product }) => {
   const { t } = useTranslation();
   const isArabic = i18n.language === "ar";
   // eslint-disable-next-line
-  const { items, successModal, errorModal } = useSelector(
-    (state) => state.cart
-  );
-  // eslint-disable-next-line
-  const { favorites, errorFavModal, successFavModal } = useSelector(
-    (state) => state.favorite
-  );
-  const isMounted = React.useRef(false);
-
-  React.useEffect(() => {
-    if (isMounted.current) {
-      const dataCart = JSON.stringify(items);
-      localStorage.setItem("cart", dataCart);
-      const dataFavorites = JSON.stringify(favorites);
-      localStorage.setItem("favorites", dataFavorites);
-    }
-    isMounted.current = true;
-  }, [items, favorites]);
+  
   const shareOnFacebook = () => {
     const url = `https://www.facebook.com/dialog/send?app_id=YOUR_APP_ID&link=${encodeURIComponent(
       window.location.origin + `/product/${product.id}`
@@ -55,7 +36,6 @@ const ProductCard = ({ product }) => {
         ? product.price * (product.soldRatio * 0.01) 
         : product.price,
         title: product.name,
-        newId: Math.random(Math.random(1, 50), Math.random(100, 2000)),
       })
     );
   };
@@ -158,8 +138,6 @@ const ProductCard = ({ product }) => {
           <i className="fab fa-instagram"></i>
         </button>
       </div>
-      {successModal && <ModalCart />}
-      {successFavModal && <ModalFavorites />}
     </div>
   );
 };

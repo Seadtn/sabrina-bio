@@ -15,11 +15,6 @@ const ModalCart = () => {
     dispatch(setSuccessModal());
   };
 
-  //const { id } = useParams();
-  useEffect(() => {
-    const element = document.getElementById("modal-id");
-    document.body.appendChild(element); // Moves the element to the body
-  }, []);
   return (
     <div
       className="modal" id="modal-id"
@@ -46,7 +41,7 @@ const ModalCart = () => {
         </div>
         <div className="modal__buttons button">
           <button className="button__left" onClick={toggleSwitchOk}>
-            <Link to={`#`}>{t("Modals.modalCart.btn1")}</Link>
+            {t("Modals.modalCart.btn1")}
           </button>
           <button className="button__right" onClick={toggleSwitchOk}>
             <Link to={`/sabrina-bio/cart`}>{t("Modals.modalCart.btn2")}</Link>
