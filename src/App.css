@@ -1473,9 +1473,32 @@ form button {
   -ms-transition: color 0.3s ease;
   -o-transition: color 0.3s ease;
 }
-.sold-label {
+.sold-label1{
   position: absolute;
   top: 60px;
+  left: 0px;
+  background: transparent;
+  border: none;
+  padding: 10px;
+  background-color: rgb(255, 162, 0);
+  border-radius: 0 10px 10px 0;
+  color: white;
+  font-size: 10px;
+  cursor: pointer;
+  outline: none;
+  transition: color 0.3s ease;
+  -webkit-border-radius: 0 10px 10px 0;
+  -moz-border-radius: 0 10px 10px 0;
+  -ms-border-radius: 0 10px 10px 0;
+  -o-border-radius: 0 10px 10px 0;
+  -webkit-transition: color 0.3s ease;
+  -moz-transition: color 0.3s ease;
+  -ms-transition: color 0.3s ease;
+  -o-transition: color 0.3s ease;
+}
+.sold-label2 {
+  position: absolute;
+  top: 10px;
   left: 0px;
   background: transparent;
   border: none;
