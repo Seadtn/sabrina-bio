@@ -1,18 +1,58 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import i18n from "../../../i18n/i18n.js";
+import axios from "axios";
+
 const OrderBlock = () => {
-  const { totalPrice } = useSelector((state) => state.cart);
+  const { totalPrice, cartProducts } = useSelector((state) => state.cart); 
   const { t } = useTranslation();
   const isArabic = i18n.language === "ar";
+  const isMountedCart = useRef(false);
+
+  useEffect(() => {
+    if (isMountedCart.current) {
+      const dataCart = JSON.stringify(cartProducts);
+      localStorage.setItem("cart", dataCart);
+    }
+    isMountedCart.current = true;
+  }, [cartProducts]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const orderData = {
+      firstName: formData.get("name"),
+      lastName: formData.get("surname"),
+      email: formData.get("email"),
+      tel: formData.get("tel"),
+      city: formData.get("city"),
+      postalCode: formData.get("Code Postal"),
+      paymentMethod: formData.get("payment"), 
+      commandProducts: cartProducts.map((product) => ({
+        product: {
+          id: product.id, 
+          name: product.name,
+          price: product.price,
+        },
+        quantity: product.quantity,
+      })),
+    };
+
+    try {
+      const response = await axios.post("/api/orders", orderData); 
+      console.log("Order placed successfully:", response.data);
+    } catch (error) {
+      console.error("Error placing order:", error);
+    }
+  };
 
   return (
     <form
       autoComplete="on"
       className="order__row"
-      action=""
-      method="post"
+      onSubmit={handleSubmit}
       dir={isArabic ? "rtl" : "ltr"}
       lang={isArabic ? "ar" : "fr"}
     >
@@ -26,8 +66,6 @@ const OrderBlock = () => {
               className={`data__input ${isArabic ? "input-ar" : "input-fr"}`}
               placeholder={t("cartPage.input.firstName")}
               required
-              pattern="[a-zA-Zа-яґєіїА-ЯҐЄІЇ]+"
-              title="The name field can contain only letters"
             />
             <input
               type="text"
@@ -35,18 +73,14 @@ const OrderBlock = () => {
               className={`data__input ${isArabic ? "input-ar" : "input-fr"}`}
               placeholder={t("cartPage.input.lastName")}
               required
-              pattern="[a-zA-Zа-яґєіїА-ЯҐЄІЇ]+"
-              title="The last name field can only contain letters"
             />
           </div>
           <div className="data__column">
             <input
-              type="text"
-              pattern='^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$'
+              type="email"
               name="email"
               className={`data__input ${isArabic ? "input-ar" : "input-fr"}`}
               placeholder={t("cartPage.input.mail")}
-              title="The email address must be in example@gmail.com format"
               required
             />
             <input
@@ -54,13 +88,8 @@ const OrderBlock = () => {
               name="tel"
               dir={isArabic ? "rtl" : "ltr"}
               lang={isArabic ? "ar" : "fr"}
-              pattern="[0-9]{8}"
               className={`data__input ${isArabic ? "input-ar" : "input-fr"}`}
               placeholder={t("cartPage.input.phone")}
-              inputMode="numeric"
-              minLength="8"
-              maxLength="8"
-              title="00000000"
               required
             />
           </div>
@@ -73,8 +102,6 @@ const OrderBlock = () => {
               name="city"
               className={`data__input ${isArabic ? "input-ar" : "input-fr"}`}
               placeholder={t("cartPage.input.city")}
-              pattern="[a-zA-Zа-яґєіїА-ЯҐЄІЇ]+"
-              title="The city field can only contain letters"
               required
             />
             <input
@@ -82,7 +109,6 @@ const OrderBlock = () => {
               name="Code Postal"
               className={`data__input ${isArabic ? "input-ar" : "input-fr"}`}
               placeholder={t("cartPage.input.postalCode")}
-              title="This field can only contain numbers"
               required
             />
           </div>
@@ -90,31 +116,29 @@ const OrderBlock = () => {
         <h4 className="data__label">{t("cartPage.order.catchPhrase3")}</h4>
         <fieldset className="fieldset">
           <div className="data__column">
-          <label className="fieldset__item">
-              <input type="radio" className={`data__payment ${isArabic ? "input-ar" : "input-fr"}`} name="payment" />
+            <label className="fieldset__item">
+              <input type="radio" name="payment" value="creditCard" required />
               <div className="text">{t("cartPage.order.phraseTic3")}</div>
             </label>
             <label className="fieldset__item">
-              <input type="radio" className={`data__payment ${isArabic ? "input-ar" : "input-fr"}`} name="payment" />
+              <input type="radio" name="payment" value="paypal" required />
               <div className="text">{t("cartPage.order.phraseTic2")}</div>
             </label>
-          </div>
-          <div className="data__column">
           </div>
         </fieldset>
       </div>
       <div className="order__column">
         <div className="order__style">
-        {t("cartPage.order.leftLine11")} : <span>{t("cartPage.order.leftLine12")}</span>
+          {t("cartPage.order.leftLine11")} : <span>{t("cartPage.order.leftLine12")}</span>
         </div>
         <div className="order__style">
           {t("cartPage.order.leftLine2")} : <span>{totalPrice} {!isArabic ? "DT" : "دت"}</span>
         </div>
-        <button className="order__button" type="submit" formMethod="post">
+        <button className="order__button" type="submit">
           <span>{t("cartPage.order.title")}</span>
         </button>
         <div className="order__politics">
-          {t("cartPage.order.closingPhrase")}{" "}
+          {t("cartPage.order.closingPhrase")}
         </div>
       </div>
     </form>

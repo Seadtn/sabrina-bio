@@ -78,7 +78,7 @@ const ProductViewModal = ({ open, onClose, product }) => {
                   }}
                   size="small"
                 />
-                {product?.isNew === true && (
+                {product?.productNew === true && (
                   <Chip
                     label="New"
                     color="success"

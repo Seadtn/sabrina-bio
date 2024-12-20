@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { setSuccessModal } from "../../../redux/cart/slice.ts";
 import i18n from "../../../i18n/i18n.js";
 import { useTranslation } from "react-i18next";
-import { use } from "react";
 
 const ModalCart = () => {
   const dispatch = useDispatch();
