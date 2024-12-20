@@ -1399,7 +1399,7 @@ form button {
 .old-price {
   text-decoration: line-through;
   text-align: center;
-  font-size: large;
+  font-size: medium;
   font-weight: bold;
   color: gray;
 }
