@@ -56,8 +56,8 @@ const ProductTable = ({ products, onEdit, onView, onDelete }) => {
               </TableCell>
               <TableCell>
                 <Chip
-                  label={product.isNew === true ? "New" : "Regular"}
-                  color={product.isNew === true ? "success" : "default"}
+                  label={product.productNew === true ? "New" : "Regular"}
+                  color={product.productNew === true ? "success" : "default"}
                   size="small"
                   sx={{ 
                     "&.MuiChip-colorSuccess": {

@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import { setSuccessModal } from "../../../redux/cart/slice.ts";
 import i18n from "../../../i18n/i18n.js";
 import { useTranslation } from "react-i18next";
-import { use } from "react";
 
 const ModalCart = () => {
   const dispatch = useDispatch();
@@ -46,7 +45,7 @@ const ModalCart = () => {
         </div>
         <div className="modal__buttons button">
           <button className="button__left" onClick={toggleSwitchOk}>
-            <Link to={`#`}>{t("Modals.modalCart.btn1")}</Link>
+            {t("Modals.modalCart.btn1")}
           </button>
           <button className="button__right" onClick={toggleSwitchOk}>
             <Link to={`/sabrina-bio/cart`}>{t("Modals.modalCart.btn2")}</Link>

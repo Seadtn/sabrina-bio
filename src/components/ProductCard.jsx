@@ -158,7 +158,7 @@ const ProductCard = ({ product }) => {
           <i className="fab fa-instagram"></i>
         </button>
       </div>
-      {successModal && <ModalCart />}
+      {successModal && <ModalCart/>}
       {successFavModal && <ModalFavorites />}
     </div>
   );
