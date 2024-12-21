@@ -44,7 +44,7 @@ body {
   margin-right: 0.2rem;
   font-weight: bold;
   animation: fadeInOut 2s ease-in-out infinite;
-
+  -webkit-animation: fadeInOut 2s ease-in-out infinite;
 }
 
 @keyframes fadeInOut {
@@ -767,7 +767,7 @@ input:invalid[focused="true"] {
   border: 1px solid red;
 }
 #details {
-  margin-top: 35px;
+  margin-top: 10px;
 }
 .backProducts,
 .backHome {
@@ -1399,6 +1399,17 @@ form button {
 .old-price {
   text-decoration: line-through;
   text-align: center;
+  font-size: medium;
+  font-weight: bold;
+  color: gray;
+}
+.price-product {
+  font-size: large;
+  color: #25d366;
+  font-weight: bold;
+}
+.old-price-product {
+  text-decoration: line-through;
   font-size: medium;
   font-weight: bold;
   color: gray;

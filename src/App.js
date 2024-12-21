@@ -24,6 +24,7 @@ function AppContent() {
   const isDashboardRoute = location.pathname.startsWith("/sabrina-bio/admin");
   const isMounted = React.useRef(false);
 
+  // eslint-disable-next-line no-unused-vars
   const { items, successModal, errorModal } = useSelector(
     (state) => state.cart
   );

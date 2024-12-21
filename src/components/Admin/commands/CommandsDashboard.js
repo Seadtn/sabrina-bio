@@ -24,10 +24,10 @@ function CommandsDashboard() {
   React.useEffect(() => {
     const fetchCommands = async () => {
       try {
-        const products = await getAllCommands();
-        setCommands(products); 
+        const commands = await getAllCommands();
+        setCommands(commands); 
       } catch (error) {
-        console.error("Error fetching products:", error); 
+        console.error("Error fetching commands:", error); 
       }
     };
   
@@ -46,7 +46,7 @@ function CommandsDashboard() {
 
   return (
     <PageContainer>
-
+        
         <CommandsTable
             commands={commands}
             onEdit={handleEditCommand}

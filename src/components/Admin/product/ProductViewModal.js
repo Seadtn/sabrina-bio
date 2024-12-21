@@ -61,7 +61,7 @@ const ProductViewModal = ({ open, onClose, product }) => {
               <Box>
                 <Typography variant="h4" gutterBottom>
                   {product?.inSold
-                    ? product?.price * (product.soldRatio * 0.01)
+                    ? product?.price-(product?.price * (product.soldRatio * 0.01))
                     : product?.price?.toFixed(2)}{" "}
                   DT
                 </Typography>

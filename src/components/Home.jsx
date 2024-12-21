@@ -8,11 +8,14 @@ import SearchBar from "./SearchBar";
 import Categories from "./Categories";
 import { Link } from "react-router-dom";
 import MostSeller from "./MostSeller";
+import {getBestSellers, getProductsSortedByNew } from "../api/backend";
 
 
 const Home = () => {
-  const [products, setProducts] = useState([]);
-  const [filter, setFilter] = useState(products);
+  const [NewProducts, setNewproducts] = useState([]);
+  const [bestSeller, setBestSeller] = useState([]);
+
+  const [filter, setFilter] = useState(NewProducts);
   const { t } = useTranslation();
 
 
@@ -20,12 +23,12 @@ const Home = () => {
 
   const handleSearch = (searchTerm) => {
     if (searchTerm) {
-      const filteredProducts = products.filter((product) =>
-        product.title.toLowerCase().includes(searchTerm.toLowerCase())
+      const filteredProducts = NewProducts.filter((product) =>
+        product.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setFilter(filteredProducts);
     } else {
-      setFilter(products);
+      setFilter(NewProducts);
     }
   };
 
@@ -33,15 +36,13 @@ const Home = () => {
     let loadProducts = true;
 
     const getProducts = async () => {
-      const res = await fetch("https://fakestoreapi.com/products", {
-        mode: "cors",
-      });
-      
       
       if (loadProducts) {
-        const data = await res.json();
-        setProducts(data.slice(7, 13));
-        setFilter(data.slice(0, 6));
+        const newProduct = await getProductsSortedByNew();
+        setNewproducts(newProduct.slice(0, 6));
+        setFilter(newProduct.slice(0, 6));
+        const bestSellerProducts = await getBestSellers();
+        setBestSeller(bestSellerProducts);
       }
       return () => {
         loadProducts = false;
@@ -65,7 +66,7 @@ const Home = () => {
           </div>
           <div className="viewContainer">
             <button className="btn-primary">
-              <Link to="/products" className="btn-link">
+              <Link to="/sabrina-bio/products" className="btn-link">
                 {t("homePage.products.viewAllBtn")}
               </Link>
             </button>
@@ -73,7 +74,7 @@ const Home = () => {
         </div>
         <DeliveryCards />
         <div className="content">
-          <MostSeller products={products} />
+          <MostSeller products={bestSeller} />
         </div>
       </div>
     </div>

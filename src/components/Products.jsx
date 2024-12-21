@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import Loader from "./loader/Loader";
 import i18n from "../i18n/i18n";
 import { Link } from "react-router-dom";
-import { getAllProducts } from "../api/backend";
+import { getAllCategories, getAllProducts } from "../api/backend";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -14,11 +14,12 @@ const Products = () => {
   const [loading, setLoading] = useState(true);
   const [category, setCategory] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortOption, setSortOption] = useState(""); 
-  const [visibleProductsCount, setVisibleProductsCount] = useState(9); 
-  const [loadingMore, setLoadingMore] = useState(false); 
+  const [sortOption, setSortOption] = useState("");
+  const [visibleProductsCount, setVisibleProductsCount] = useState(9);
+  const [loadingMore, setLoadingMore] = useState(false);
   const { t } = useTranslation();
   const isArabic = i18n.language === "ar";
+  const [categories, setCategories] = useState([]);
 
   useEffect(() => {
     let loadProducts = true;
@@ -26,7 +27,7 @@ const Products = () => {
     const fetchProducts = async () => {
       setLoading(true);
       try {
-        const data = await getAllProducts(); 
+        const data = await getAllProducts();
         if (loadProducts) {
           setProducts(data);
           setFilteredProducts(data);
@@ -50,17 +51,28 @@ const Products = () => {
   // Filter and sort products whenever filters change
   useEffect(() => {
     let filtered = products.filter((product) => {
-      const matchesCategory = category ? product.category === category : true;
-      const matchesSearchTerm = product.name?.toLowerCase()
+      const matchesCategory = category
+        ? product.category?.id + "" === category
+        : true;
+      const matchesSearchTerm = product.name
+        ?.toLowerCase()
         .includes(searchTerm.toLowerCase());
       return matchesCategory && matchesSearchTerm;
     });
 
     // Sorting logic
     if (sortOption === "highPrice") {
-      filtered = filtered.sort((a, b) => b.price - a.price); // Sort by high price
+      filtered = filtered.sort((a, b) => {
+        const priceA = a.inSold ? a.price - (a.price * a.soldRatio * 0.01) : a.price;
+        const priceB = b.inSold ? b.price - (b.price * b.soldRatio * 0.01) : b.price;
+        return priceB - priceA; // Sort by high price
+      });
     } else if (sortOption === "lowPrice") {
-      filtered = filtered.sort((a, b) => a.price - b.price); // Sort by low price
+      filtered = filtered.sort((a, b) => {
+        const priceA = a.inSold ? a.price - (a.price * a.soldRatio * 0.01) : a.price;
+        const priceB = b.inSold ? b.price - (b.price * b.soldRatio * 0.01) : b.price;
+        return priceA - priceB; // Sort by low price
+      });
     } else if (sortOption === "name") {
       filtered = filtered.sort((a, b) => a.name.localeCompare(b.name)); // Sort by name
     }
@@ -82,14 +94,21 @@ const Products = () => {
   };
 
   const handleViewMore = () => {
-    setLoadingMore(true); // Start loading when "View More" is clicked
+    setLoadingMore(true); 
 
     setTimeout(() => {
-      setVisibleProductsCount(visibleProductsCount + 9); // Show 9 more products
-      setLoadingMore(false); // End the loading after products are shown
-    }, 1000); // Simulate loading time
+      setVisibleProductsCount(visibleProductsCount + 9); 
+      setLoadingMore(false); 
+    }, 1000); 
   };
-
+  useEffect(() => {
+    // Fetch categories on mount
+    const fetchCategories = async () => {
+      const categories = await getAllCategories();
+      setCategories(categories);
+    };
+    fetchCategories();
+  }, []);
   return (
     <div
       className="container"
@@ -109,15 +128,11 @@ const Products = () => {
               className="data__input"
             >
               <option value="">{t("homePage.products.category.all")}</option>
-              <option value="electronics">
-                {t("homePage.products.category.herbs")}
-              </option>
-              <option value="jewelery">
-                {t("homePage.products.category.oils")}
-              </option>
-              <option value="men's clothing">
-                {t("homePage.products.category.cosmetic")}
-              </option>
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.id}>
+                  {cat.name}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -140,8 +155,12 @@ const Products = () => {
               className="data__input"
             >
               <option value="">{t("homePage.products.sort.select")}</option>
-              <option value="highPrice">{t("homePage.products.sort.highPrice")}</option>
-              <option value="lowPrice">{t("homePage.products.sort.lowPrice")}</option>
+              <option value="highPrice">
+                {t("homePage.products.sort.highPrice")}
+              </option>
+              <option value="lowPrice">
+                {t("homePage.products.sort.lowPrice")}
+              </option>
               <option value="name">{t("homePage.products.sort.name")}</option>
             </select>
           </div>
@@ -152,29 +171,32 @@ const Products = () => {
           {loading ? (
             <Loader />
           ) : (
-            filteredProducts.slice(0, visibleProductsCount).map((product) => (
-              <ProductCard product={product} key={product.id} />
-            ))
+            filteredProducts
+              .slice(0, visibleProductsCount)
+              .map((product) => (
+                <ProductCard product={product} key={product.id} />
+              ))
           )}
         </div>
 
         {/* "View More" Button */}
         {filteredProducts.length > visibleProductsCount && (
-          <div className="viewContainer" >
+          <div className="viewContainer">
             <button
               className="btn-primary"
               onClick={handleViewMore}
               disabled={loadingMore}
             >
-            <Link to="#" className="btn-link">
-              {loadingMore ? (
-                <div className="loading-more">
-                  <span className="loader-circle"></span> 
-                  {t("homePage.products.viewAllBtn")}
-                </div>
-              ) : (
-                t("homePage.products.viewAllBtn")
-              )}</Link>
+              <Link to="#" className="btn-link">
+                {loadingMore ? (
+                  <div className="loading-more">
+                    <span className="loader-circle"></span>
+                    {t("homePage.products.viewAllBtn")}
+                  </div>
+                ) : (
+                  t("homePage.products.viewAllBtn")
+                )}
+              </Link>
             </button>
           </div>
         )}

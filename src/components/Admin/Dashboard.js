@@ -11,6 +11,8 @@ import ProductViewModal from './product/ProductViewModal.js';
 import BackupTableIcon from '@mui/icons-material/BackupTable';
 import CommandsDashboard from './commands/CommandsDashboard.js';
 import { addNewProduct, getAllProducts } from '../../api/backend.js';
+import CategoryIcon from '@mui/icons-material/Category';
+import CategoriesDashboard from './categories/CategoriesDashboard.js'
 const NAVIGATION = [
   {
     kind: 'header',
@@ -25,6 +27,11 @@ const NAVIGATION = [
     segment: 'commands',
     title: 'Commands',
     icon: <BackupTableIcon /> 
+  },
+  {
+    segment: 'categories',
+    title: 'Categories',
+    icon: <CategoryIcon /> 
   },
   // {
   //   kind: 'divider',
@@ -171,6 +178,7 @@ export default function Dashboard() {
           </PageContainer>)
         }
         {activePage === 'commands' && (<CommandsDashboard />)}
+        {activePage === 'categories' && (<CategoriesDashboard />)}
       </DashboardLayout>
     </AppProvider>
   );

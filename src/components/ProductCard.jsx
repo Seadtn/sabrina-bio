@@ -33,7 +33,7 @@ const ProductCard = ({ product }) => {
         count: 1,
         imageUrl:`data:image/*;base64,${product.image}`,
         price: product.inSold 
-        ? product.price * (product.soldRatio * 0.01) 
+        ? product.price-(product.price * (product.soldRatio * 0.01)) 
         : product.price,
         title: product.name,
       })
@@ -49,7 +49,7 @@ const ProductCard = ({ product }) => {
       id: product.id ,
       title: product.name,
       price: product.inSold 
-      ? product.price * (product.soldRatio * 0.01) 
+      ? product.price-(product.price * (product.soldRatio * 0.01)) 
       : product.price,
       imageUrl: `data:image/*;base64,${product.image}`,
       count: 0,
@@ -120,7 +120,7 @@ const ProductCard = ({ product }) => {
         dir={isArabic ? "rtl" : "ltr"}
         lang={isArabic ? "ar" : "fr"}
       >
-        {product.price*product.soldRatio*0.01} {!isArabic ? "DT" : "دت"}
+        {product.price-(product.price*product.soldRatio*0.01)} {!isArabic ? "DT" : "دت"}
       </p>)}
       <button className="favorite-button" onClick={onClickAddFavoriteItems}>
         <i className="fas fa-heart"></i>

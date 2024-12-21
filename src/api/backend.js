@@ -5,7 +5,7 @@ const localhost = "http://localhost:8080";
 const Product_URL = `${localhost}/api/v1/productManagement/`;
 const Command_URL = `${localhost}/api/v1/commandManagement/`; 
 const Contact_URL = `${localhost}/api/v1/contactManagement/`; 
-
+const Category_URL= `${localhost}/api/v1/categoryManagement/`; 
 export const getAllProducts = async () => {
   try {
     const products = await getRequest(Product_URL+"getAllProducts");
@@ -24,6 +24,47 @@ export const getProductById = async (id) => {
     throw error; 
   }
 };
+
+export const getBestSellers = async () => { 
+  try {
+    const bestSellers = await getRequest(Product_URL + "getBestSellers");
+    return bestSellers;
+  } catch (error) {
+    console.error("Error fetching best sellers:", error.message);
+    throw error; 
+  }
+};
+
+export const getRelatedProducts = async (categoryId) => { 
+  try {
+    const relatedProducts = await getRequest(Product_URL + "getRelatedProducts/" + categoryId);
+    return relatedProducts;
+  } catch (error) {
+    console.error("Error fetching related products:", error.message);
+    throw error; 
+  }
+};
+
+export const getProductsSortedByNew = async () => { 
+  try {
+    const sortedProducts = await getRequest(Product_URL + "getProductsSortedByNew");
+    return sortedProducts;
+  } catch (error) {
+    console.error("Error fetching products sorted by new:", error.message);
+    throw error; 
+  }
+};
+
+export const getLatestMixedProducts = async () => {
+  try {
+    const response = await getRequest(Product_URL + "getLatestMixedProducts");
+    return response;
+  } catch (error) {
+    console.error("Error fetching latest mixed products:", error.message);
+    throw error;
+  }
+};
+
 export const addNewProduct = async (product) => {
   try {
     const response = await postRequest(Product_URL+"newProduct", product);
@@ -73,6 +114,26 @@ export const addNewProduct = async (product) => {
           return response;
         } catch (error) {
           console.error("Error adding new contact:", error.message);
+          throw error; 
+        }
+      };
+
+      export const getAllCategories = async () => {
+        try {
+          const products = await getRequest(Category_URL+"getAllCategories");
+          return products;
+        } catch (error) {
+          console.error("Error fetching all categories:", error.message);
+          throw error; 
+        }
+      };
+
+      export const addNewCategory = async (category) => {
+        try {
+          const response = await postRequest(Category_URL+"newCategory", category);
+          return response;
+        } catch (error) {
+          console.error("Error adding new category:", error.message);
           throw error; 
         }
       };

@@ -21,6 +21,7 @@ const ProductTable = ({ products, onEdit, onView, onDelete }) => {
           <TableRow>
             <TableCell>Image</TableCell>
             <TableCell>Name</TableCell>
+            <TableCell>Category</TableCell>
             <TableCell>Description</TableCell>
             <TableCell>Price</TableCell>
             <TableCell>Quantity</TableCell>
@@ -45,6 +46,7 @@ const ProductTable = ({ products, onEdit, onView, onDelete }) => {
                 />
               </TableCell>
               <TableCell>{product.name}</TableCell>
+              <TableCell>{product.category?.name}</TableCell>
               <TableCell>{product.description}</TableCell>
               <TableCell>{product.price}</TableCell>
               <TableCell>{product.quantity}</TableCell>

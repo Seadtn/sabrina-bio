@@ -28,14 +28,14 @@ const MostSellerCard = ({ product }) => {
   return (
     <div className="col4 product" style={{margin:"10px"}}>
       <div className="image-container">
-        <Link to={`/product/${product.id}`} className="product-link">
-          <img src={`${process.env.PUBLIC_URL}/images/slider/slide-${Math.floor(Math.random() * 3) + 1}.png`} alt={product.title.substring(0, 25)} />
+        <Link to={`/sabrina-bio/product/${product.id}`} className="product-link">
+          <img src={`data:image/*;base64,${product.image}`} alt={product.name.substring(0, 25)} />
         </Link>
       </div>
       <h2 className="product-title">
-        {product.title.length > 25
-          ? `${product.title.substring(0, 25)}...`
-          : product.title}
+        {product.name.length > 25
+          ? `${product.name.substring(0, 25)}...`
+          : product.name}
       </h2>
       <p
         className="price"

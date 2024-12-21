@@ -2,21 +2,22 @@ import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import i18n from "../../../i18n/i18n.js";
-import axios from "axios";
+import { addNewCommand } from "../../../api/backend.js";
 
 const OrderBlock = () => {
-  const { totalPrice, cartProducts } = useSelector((state) => state.cart); 
+  const { totalPrice, items } = useSelector((state) => state.cart);
   const { t } = useTranslation();
   const isArabic = i18n.language === "ar";
   const isMountedCart = useRef(false);
 
   useEffect(() => {
+    console.log(items)
     if (isMountedCart.current) {
-      const dataCart = JSON.stringify(cartProducts);
+      const dataCart = JSON.stringify(items);
       localStorage.setItem("cart", dataCart);
     }
     isMountedCart.current = true;
-  }, [cartProducts]);
+  }, [items]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -25,24 +26,25 @@ const OrderBlock = () => {
     const orderData = {
       firstName: formData.get("name"),
       lastName: formData.get("surname"),
-      email: formData.get("email"),
-      tel: formData.get("tel"),
+      mail: formData.get("email"),
+      phone: formData.get("tel"),
       city: formData.get("city"),
       postalCode: formData.get("Code Postal"),
-      paymentMethod: formData.get("payment"), 
-      commandProducts: cartProducts.map((product) => ({
+      paymentMethod: formData.get("payment"),
+      totalPrice: totalPrice,
+      status:"Pending",
+      commandProducts: items.map((product) => ({
         product: {
           id: product.id, 
           name: product.name,
           price: product.price,
         },
-        quantity: product.quantity,
+        quantity: product.count,
       })),
     };
 
     try {
-      const response = await axios.post("/api/orders", orderData); 
-      console.log("Order placed successfully:", response.data);
+      await addNewCommand(orderData); 
     } catch (error) {
       console.error("Error placing order:", error);
     }

@@ -3,8 +3,6 @@ import React from 'react'
 
 function CommandsTable({ commands, onEdit,onView }) {
 
-  if(commands.length === 0) 
-    return <h4>No commands found</h4>
 
   const getStatusColor = (status) => {
     switch (status) {
