@@ -1,30 +1,13 @@
 import { PageContainer } from "@toolpad/core";
-import React, { useState } from "react";
-import { addNewCategory, getAllCategories } from "../../../api/backend";
+import React from "react";
+import { addNewCategory } from "../../../api/backend";
 import CategoryTable from "./CategoryTable";
 import { Button, Grid } from "@mui/material";
 import CategoryFormModal from './CategoryFormModal'
-function CategoriesDashboard() {
-  const [categories, setCategories] = useState([]);
+function CategoriesDashboard({categories,setCategories}) {
   const [openFormModal, setOpenFormModal] = React.useState(false);
 
   const handleAddProduct = () => setOpenFormModal(true);
-
-
-
-
-  React.useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const categories = await getAllCategories();
-        setCategories(categories);
-      } catch (error) {
-        console.error("Error fetching commands:", error);
-      }
-    };
-
-    fetchCategories();
-  }, []);
 
   const saveCategory= async (category)=>{
     try {

@@ -10,6 +10,8 @@ const resources = {
         facebook: "Facebook",
         instagram: "Instagram",
         tiktok: "Tiktok",
+        btnClose:"Close"
+
       },
       homePage: {
         menu: {
@@ -113,8 +115,8 @@ const resources = {
           catchPhrase3:
             "You can pay for your purchase in one of the following ways",
           phraseTic1: "Full subscription via Privat 24",
-          phraseTic2: "Cash on delivery at the Nova Poshta branch",
-          phraseTic3: "Visa/MasterCard money transfer",
+          phraseTic2: "Cash on delivery",
+          phraseTic3: "Poste money transfer",
           catchPhrase4: "Promo code",
           leftLine11: "Delivery ",
           leftLine12: "At the carrier's rates",
@@ -146,7 +148,10 @@ const resources = {
         message:"Message",
         description:"Sabrina Bio is a Tunisian small business offering natural cosmetic products like oils and herbs. We believe in the power of nature to enhance beauty and well-being",
         btn:"Send",
-        error:"Please fill in all fields"
+        error:"Please fill in all fields",
+        modal:{
+          msg:"Your command has been sent successfully!"
+       }
       },
       Modals:{
         modalCart:{
@@ -172,6 +177,7 @@ const resources = {
         facebook: "فيسبوك",
         instagram: "إنستغرام",
         tiktok: "تيك توك",
+        btnClose:"اغلاق"
       },
       homePage: {
         menu: {
@@ -271,8 +277,8 @@ const resources = {
           linePhrase: "عنوان التوصيل",
           catchPhrase3: "يمكنك الدفع لشرائك بإحدى الطرق التالية",
           phraseTic1: "الاشتراك الكامل عبر Privat 24",
-          phraseTic2: "الدفع نقدًا عند التسليم في فرع Nova Poshta",
-          phraseTic3: "تحويل أموال بواسطة Visa/MasterCard",
+          phraseTic2: "الدفع نقدًا عند التسليم ",
+          phraseTic3: "تحويل أموال بواسطة Poste",
           catchPhrase4: "رمز الخصم",
           leftLine11: " التوصيل",
           leftLine12: " حسب أسعارالناقل",
@@ -304,7 +310,10 @@ const resources = {
         message: "الرسالة",
         description: "سابرينا بايو هي شركة صغيرة تونسية تقدم منتجات تجميل طبيعية مثل الزيوت والأعشاب. نحن نؤمن بقوة الطبيعة في تعزيز الجمال والرفاهية.",
         btn: "إرسال",
-        error:"الرجاء ملء جميع البيانات "
+        error:"الرجاء ملء جميع البيانات ",
+        modal:{
+          msg:"تم إرسال طلبك بنجاح!"
+       }
       },
       Modals: {
         modalCart: {
@@ -330,6 +339,7 @@ const resources = {
         facebook: "Facebook",
         instagram: "Instagram",
         tiktok: "Tiktok",
+        btnClose:"Fermer"
       },
       homePage: {
         menu: {
@@ -434,8 +444,8 @@ const resources = {
           catchPhrase3:
             "Vous pouvez payer votre achat de l'une des manières suivantes",
           phraseTic1: "Abonnement complet via Privat 24",
-          phraseTic2: "Paiement à la livraison à la succursale Nova Poshta",
-          phraseTic3: "Transfert d'argent Visa/MasterCard",
+          phraseTic2: "Paiement à la livraison",
+          phraseTic3: "Transfert d'argent a travers Poste",
           catchPhrase4: "Code promo",
           leftLine11: "Livraison ",
           leftLine12: "Aux tarifs du transporteur",
@@ -467,7 +477,10 @@ const resources = {
         message: "Message",
         description: "Sabrina Bio est une petite entreprise tunisienne qui propose des produits cosmétiques naturels comme des huiles et des herbes. Nous croyons au pouvoir de la nature pour sublimer la beauté et le bien-être.",
         btn: "Envoyer",
-        error:"Veuillez remplir tous les champs"
+        error:"Veuillez remplir tous les champs",
+        modal:{
+           msg:"Votre commande a été envoyée avec succès !" 
+        }
       },
       Modals: {
         modalCart: {

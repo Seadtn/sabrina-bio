@@ -20,6 +20,7 @@ import { getAllCategories } from '../../../api/backend';
 
 const ProductFormModal = ({ open, onClose, product, onSave }) => {
   const [formData, setFormData] = useState({
+    id:null,
     name: '',
     description: '',
     price: 0,
@@ -38,13 +39,14 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const commands = await getAllCategories();
-      setCategories(commands);
+      const categories = await getAllCategories();
+      setCategories(categories);
     };
     fetchCategories();
 
     if (product) {
       setFormData({
+        id:product.id,
         name: product.name,
         description: product.description,
         price: product.price,
@@ -52,9 +54,10 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
         creationDate: product.creationDate,
         inSold: product.inSold,
         productNew: product.productNew,
+        quantity:product.quantity,
         startDate: product.startDate || '',
         lastDate: product.lastDate || '',
-        category: product.category || '' // Set category if editing
+        category: product.category || ''
       });
     }
   }, [product]);

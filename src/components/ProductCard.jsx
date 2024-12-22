@@ -5,6 +5,7 @@ import i18n from "../i18n/i18n";
 import { useDispatch } from "react-redux";
 import { addItems } from "../redux/cart/slice.ts";
 import { addFavoriteItems } from "../redux/favorite/slice.ts";
+import { openFastViewModal } from "../redux/fastView/slice.ts";
 
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
@@ -56,6 +57,9 @@ const ProductCard = ({ product }) => {
     };
     dispatch(addFavoriteItems(favoriteItem));
   };
+  const handleFastView = () => {
+    dispatch(openFastViewModal(product));
+  };
   return (
     <div className="col4 product">
       <div className="image-container">
@@ -94,7 +98,7 @@ const ProductCard = ({ product }) => {
           dir={isArabic ? "rtl" : "ltr"}
           lang={isArabic ? "ar" : "fr"}
         >
-          <button className="fast-view-button">
+          <button className="fast-view-button" onClick={handleFastView}>
             <i className="fas fa-eye"></i> {t("homePage.products.viewBtn")}
           </button>
           <button className="buy-button" onClick={()=>onClickAddItem()}>

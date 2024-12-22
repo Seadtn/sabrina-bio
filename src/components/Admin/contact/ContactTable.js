@@ -10,7 +10,7 @@ import {
   TablePagination,
 } from "@mui/material";
 
-function CategoryTable({ categories }) {
+function ContactTable({ Contacts,onView }) {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
 
@@ -28,19 +28,19 @@ function CategoryTable({ categories }) {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Category ID</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Creation Date</TableCell>
+            <TableCell>Contact ID</TableCell>
+            <TableCell>Email</TableCell>
+            <TableCell>Subject</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {categories
+          {Contacts
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((category) => (
-              <TableRow key={category.id}>
-                <TableCell>#{category.id}</TableCell>
-                <TableCell>{category.name}</TableCell>
-                <TableCell>{category.creationDate}</TableCell>
+            .map((contact) => (
+              <TableRow key={contact?.id} onClick={(event) => onView(contact, event)}>
+                <TableCell>#{contact?.id}</TableCell>
+                <TableCell>{contact?.mail}</TableCell>
+                <TableCell>{contact?.subject}</TableCell>
               </TableRow>
             ))}
         </TableBody>
@@ -48,7 +48,7 @@ function CategoryTable({ categories }) {
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={categories.length}
+        count={Contacts.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}
@@ -58,4 +58,4 @@ function CategoryTable({ categories }) {
   );
 }
 
-export default CategoryTable;
+export default ContactTable;

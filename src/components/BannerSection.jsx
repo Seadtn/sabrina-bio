@@ -1,5 +1,4 @@
-import React from "react";
-import SliderData from "../SliderData";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -7,10 +6,12 @@ import "../App.css";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import i18n from "../i18n/i18n";
+import { getLatestMixedProducts } from "../api/backend";
 
 const BannerSection = () => {
   const { t } = useTranslation();
   const isArabic = i18n.language === "ar";
+  const [sliderData, setSliderData] = useState([]);
 
   const settings = {
     dots: true,
@@ -23,7 +24,31 @@ const BannerSection = () => {
       return <ul style={{ margin: "0px" }}>{dots}</ul>;
     },
   };
+  // Fetch products from the API
+  useEffect(() => {
+    const fetchSliderData = async () => {
+      try {
+        const products = await getLatestMixedProducts(); 
+        
+        const mappedData = products.map((product) => {
+          const slideType = product.inSold ? "sold" : "newProduct"; 
+          console.log(" Products :"+product.inSold);
+          return {
+            id: product.id,
+            name: product.name,
+            type: slideType, 
+            Percent: product.soldRatio, 
+            cover: product.image, 
+          };
+        });
+        setSliderData(mappedData); // Update slider data
+      } catch (error) {
+        console.error("Error fetching products for slider:", error.message);
+      }
+    };
 
+    fetchSliderData();
+  }, []);
   return (
     <div className="homeSlide" style={{ position: "relative" }}>
       <div
@@ -45,7 +70,7 @@ const BannerSection = () => {
       {/* Slider Content */}
       <div style={{ position: "relative", zIndex: 2 }}>
         <Slider {...settings}>
-          {SliderData.map((slider, index) => {
+          {sliderData.map((slider, index) => {
             return (
               <div
                 className="box"
@@ -62,14 +87,14 @@ const BannerSection = () => {
                     </h1>
                     <p>{t("homePage.slider.description")}</p>
                     <button className="btn-primary">
-                      <Link to="/products" className="btn-link">
+                      <Link to="/sabrina-bio/products" className="btn-link">
                         {t("homePage.slider.collectionBtn")}
                       </Link>
                     </button>
                   </div>
 
                   <img
-                    src={process.env.PUBLIC_URL + slider.cover}
+                    src={"data:image/*;base64,"+slider.cover}
                     alt="slider"
                   />
                 </div>

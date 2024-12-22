@@ -9,6 +9,7 @@ import Loader from "./components/loader/Loader";
 import Dashboard from "./components/Admin/Dashboard";
 import ModalCart from "./components/Modals/ModalCart/ModalCart";
 import ModalFavorites from "./components/Modals/ModalFavorites/ModalFavorites";
+import FastViewModal from "./components/Modals/ModalFastView/FastViewModal.js";
 const Home = React.lazy(() => import("./components/Home"));
 const Cart = React.lazy(() => import("./components/Cart/Cart"));
 const Products = React.lazy(() => import("./components/Products"));
@@ -28,6 +29,9 @@ function AppContent() {
   const { items, successModal, errorModal } = useSelector(
     (state) => state.cart
   );
+  // eslint-disable-next-line no-unused-vars
+  const { successFastViewModal, product } = useSelector((state) => state.fastView);
+
   // eslint-disable-next-line
   const { favorites, errorFavModal, successFavModal } = useSelector(
     (state) => state.favorite
@@ -60,6 +64,7 @@ function AppContent() {
       </Suspense>
       {!isDashboardRoute && <Footer />}
       {!isDashboardRoute && successModal && <ModalCart/>}
+      {!isDashboardRoute  && successFastViewModal && <FastViewModal/>}
       {!isDashboardRoute && successFavModal && <ModalFavorites/>}
     </>
   );
