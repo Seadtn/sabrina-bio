@@ -3,10 +3,12 @@ import React, { useState, useEffect } from 'react';
 import CommandsTable from './CommandsTable';
 import CommandViewModal from './CommandViewModal';
 import { Card, CardContent, Typography, Grid } from '@mui/material';
+import { changeCommandStatus } from '../../../api/backend';
 
 function CommandsDashboard({commands,setCommands}) {
   const [openViewModal, setOpenViewModal] = useState(false);
   const [selectedCommand, setSelectedCommand] = useState(null);
+
   const [data, setData] = useState({
     acceptedCommands: { count: 0, money: 0 },
     pendingCommands: { count: 0, money: 0 },
@@ -18,14 +20,14 @@ function CommandsDashboard({commands,setCommands}) {
     setOpenViewModal(true);
   };
 
-  const handleViewCommand = (command) => {
+  const handleViewCommand = (command) => { 
     setSelectedCommand(command);
     setOpenViewModal(true);
   };
 
   const handleEditCommandStatus = (command) => {
-    console.log('Command status updated to:', command.status);
     setCommands(commands.map(c => (c.id === command.id ? command : c)));
+    changeCommandStatus(command);
   };
 
   useEffect(() => {

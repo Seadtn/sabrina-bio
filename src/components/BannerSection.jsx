@@ -31,8 +31,7 @@ const BannerSection = () => {
         const products = await getLatestMixedProducts(); 
         
         const mappedData = products.map((product) => {
-          const slideType = product.inSold ? "sold" : "newProduct"; 
-          console.log(" Products :"+product.inSold);
+          const slideType = product.promotion ? "sold" : "newProduct"; 
           return {
             id: product.id,
             name: product.name,

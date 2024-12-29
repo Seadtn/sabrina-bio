@@ -30,6 +30,8 @@ function CategoryTable({ categories }) {
           <TableRow>
             <TableCell>Category ID</TableCell>
             <TableCell>Name</TableCell>
+            <TableCell>الاسم</TableCell>
+            <TableCell>Nom</TableCell>
             <TableCell>Creation Date</TableCell>
           </TableRow>
         </TableHead>
@@ -39,7 +41,9 @@ function CategoryTable({ categories }) {
             .map((category) => (
               <TableRow key={category.id}>
                 <TableCell>#{category.id}</TableCell>
-                <TableCell>{category.name}</TableCell>
+                <TableCell>{category.englishName}</TableCell>
+                <TableCell>{category.arabicName}</TableCell>
+                <TableCell>{category.frenchName}</TableCell>
                 <TableCell>{category.creationDate}</TableCell>
               </TableRow>
             ))}

@@ -10,6 +10,7 @@ export interface Product {
     image: string;
     description?: string;
     inSold?: boolean;
+    promotion?:boolean;
     soldRatio?: number;
     productNew?: boolean;
     creationDate?: string;

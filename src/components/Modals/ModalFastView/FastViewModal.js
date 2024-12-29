@@ -40,11 +40,11 @@ const FastViewModal = () => {
         }}
       >
         {product?.name}
-        {product?.inSold === true && (
+        {product?.promotion === true && (
           <Chip
             label={t("homePage.products.soldLabel")}
-            color={product?.inSold ? "warning" : "default"}
-            sx={{ color: product?.inSold ? "white" : "black", marginLeft: 1 }}
+            color={product?.promotion ? "warning" : "default"}
+            sx={{ color: product?.promotion ? "white" : "black", marginLeft: 1 }}
             size="small"
           />
         )}
@@ -99,7 +99,7 @@ const FastViewModal = () => {
 
         <Box>
           <Typography variant="h6" gutterBottom>
-            {product?.inSold
+            {product?.promotion
               ? (
                   product?.price -
                   product?.price * (product?.soldRatio * 0.01)
@@ -107,7 +107,7 @@ const FastViewModal = () => {
               : product?.price?.toFixed(2)}{" "}
             DT
           </Typography>
-          {product?.inSold && (
+          {product?.promotion && (
             <Typography
               variant="body2"
               color="text.secondary"
@@ -118,9 +118,7 @@ const FastViewModal = () => {
           )}
         </Box>
         <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
-          {product?.description?.length > 100
-            ? `${product.description.substring(0, 100)}...`
-            : product?.description}
+          {product?.description}
         </Typography>
       </DialogContent>
 

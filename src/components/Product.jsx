@@ -64,13 +64,13 @@ const Product = () => {
               <div className="col-single">
                 <h2>{product.name}</h2>
                 <h4
-                  className={product.inSold ? "old-price-product" : "price-product"}
+                  className={product.promotion ? "old-price-product" : "price-product"}
                   dir={isArabic ? "rtl" : "ltr"}
                   lang={isArabic ? "ar" : "fr"}
                 >
                   {product.price} {!isArabic ? "DT" : "دت"}
                 </h4>
-                {product.inSold === true && (
+                {product.promotion === true && (
                   <h4
                     className="price-product"
                     dir={isArabic ? "rtl" : "ltr"}

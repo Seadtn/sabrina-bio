@@ -67,14 +67,20 @@ const ProductTable = ({ products, onEdit, onView, onDelete }) => {
                 </TableCell>
                 <TableCell>{product.name}</TableCell>
                 <TableCell>{product.category?.name}</TableCell>
-                <TableCell>{product.description}</TableCell>
+                <TableCell>
+                  {product.description.length > 25
+                    ? product.description.substring(0, 25) + "..."
+                    : product.description}
+                </TableCell>
                 <TableCell>{product.price}</TableCell>
                 <TableCell>{product.quantity}</TableCell>
                 <TableCell>{product.creationDate}</TableCell>
                 <TableCell>
-                  {product.inSold === true && product.soldRatio > 0
+                  {product.promotion === true && product.soldRatio > 0
                     ? `Yes (${product.soldRatio}%)`
-                    : "No"}
+                    : product.startDate && product.startDate.trim() !== ""
+                      ? `Promotion will start ${product.startDate}`
+                      : "No"}
                 </TableCell>
                 <TableCell>
                   <Chip

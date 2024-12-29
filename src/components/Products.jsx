@@ -19,6 +19,8 @@ const Products = () => {
   const [loadingMore, setLoadingMore] = useState(false);
   const { t } = useTranslation();
   const isArabic = i18n.language === "ar";
+  const isFrench = i18n.language === "fr";
+
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -63,14 +65,22 @@ const Products = () => {
     // Sorting logic
     if (sortOption === "highPrice") {
       filtered = filtered.sort((a, b) => {
-        const priceA = a.inSold ? a.price - (a.price * a.soldRatio * 0.01) : a.price;
-        const priceB = b.inSold ? b.price - (b.price * b.soldRatio * 0.01) : b.price;
+        const priceA = a.promotion
+          ? a.price - a.price * a.soldRatio * 0.01
+          : a.price;
+        const priceB = b.promotion
+          ? b.price - b.price * b.soldRatio * 0.01
+          : b.price;
         return priceB - priceA; // Sort by high price
       });
     } else if (sortOption === "lowPrice") {
       filtered = filtered.sort((a, b) => {
-        const priceA = a.inSold ? a.price - (a.price * a.soldRatio * 0.01) : a.price;
-        const priceB = b.inSold ? b.price - (b.price * b.soldRatio * 0.01) : b.price;
+        const priceA = a.promotion
+          ? a.price - a.price * a.soldRatio * 0.01
+          : a.price;
+        const priceB = b.promotion
+          ? b.price - b.price * b.soldRatio * 0.01
+          : b.price;
         return priceA - priceB; // Sort by low price
       });
     } else if (sortOption === "name") {
@@ -94,12 +104,12 @@ const Products = () => {
   };
 
   const handleViewMore = () => {
-    setLoadingMore(true); 
+    setLoadingMore(true);
 
     setTimeout(() => {
-      setVisibleProductsCount(visibleProductsCount + 9); 
-      setLoadingMore(false); 
-    }, 1000); 
+      setVisibleProductsCount(visibleProductsCount + 9);
+      setLoadingMore(false);
+    }, 1000);
   };
   useEffect(() => {
     // Fetch categories on mount
@@ -130,7 +140,11 @@ const Products = () => {
               <option value="">{t("homePage.products.category.all")}</option>
               {categories.map((cat) => (
                 <option key={cat.id} value={cat.id}>
-                  {cat.name}
+                  {isArabic
+                    ? cat.arabicName
+                    : isFrench
+                      ? cat.frenchName
+                      : cat.englishName}
                 </option>
               ))}
             </select>

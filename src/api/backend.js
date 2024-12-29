@@ -6,6 +6,8 @@ const Product_URL = `${localhost}/api/v1/productManagement/`;
 const Command_URL = `${localhost}/api/v1/commandManagement/`; 
 const Contact_URL = `${localhost}/api/v1/contactManagement/`; 
 const Category_URL= `${localhost}/api/v1/categoryManagement/`; 
+const USER_URL= `${localhost}/api/v1/authDashbord/`; 
+
 export const getAllProducts = async () => {
   try {
     const products = await getRequest(Product_URL+"getAllProducts");
@@ -75,6 +77,14 @@ export const addNewProduct = async (product) => {
   }
 };
 
+export const deleteProduct = async (id) => {
+  try {
+   await postRequest(Product_URL+"deleteProduct/"+id);
+  } catch (error) {
+    console.error("Error adding new product:", error.message);
+    throw error; 
+  }
+};
   export const getAllCommands = async () => {
     try {
       const commands = await getRequest(Command_URL+"getAllCommands");
@@ -95,7 +105,15 @@ export const addNewProduct = async (product) => {
       }
     };
 
-
+    export const changeCommandStatus = async (command) => {
+      try {
+        const response = await postRequest(Command_URL+"changeCommandStatus",command);
+        return response;
+      } catch (error) {
+        console.error("Error updating new command:", error.message);
+        throw error; 
+      }
+    };
     export const getAllContacts = async () => {
         try {
           const contacts = await getRequest(Contact_URL+"getAllContacts");
@@ -107,10 +125,8 @@ export const addNewProduct = async (product) => {
       };
       
       export const addNewContact = async (contact) => {
-        console.log("Data:", contact);
         try {
           const response = await postRequest(`${Contact_URL}newContact`, contact);
-          console.log("Contact added successfully:", response);
           return response;
         } catch (error) {
           console.error("Error adding new contact:", error.message);
@@ -134,6 +150,16 @@ export const addNewProduct = async (product) => {
           return response;
         } catch (error) {
           console.error("Error adding new category:", error.message);
+          throw error; 
+        }
+      };
+
+      export const login = async (user) => {
+        try {
+          const response = await postRequest(USER_URL+"login", user);
+          return response;
+        } catch (error) {
+          console.error("Authentication error :", error.message);
           throw error; 
         }
       };

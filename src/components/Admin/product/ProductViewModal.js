@@ -60,21 +60,21 @@ const ProductViewModal = ({ open, onClose, product }) => {
             <Stack spacing={3}>
               <Box>
                 <Typography variant="h4" gutterBottom>
-                  {product?.inSold
+                  {product?.promotion
                     ? product?.price-(product?.price * (product.soldRatio * 0.01))
                     : product?.price?.toFixed(2)}{" "}
                   DT
                 </Typography>
-                {product?.inSold && (
+                {product?.promotion && (
                   <p className="old-price" style={{ textAlign: "start" }}>
                     {product?.price} DT
                   </p>
                 )}
                 <Chip
-                  label={product?.inSold ? "On Sale" : "Regular Price"}
-                  color={product?.inSold ? "error" : "default"} 
+                  label={product?.promotion ? "On Sale" : "Regular Price"}
+                  color={product?.promotion ? "error" : "default"} 
                   sx={{
-                    color: product?.inSold ? "white !important" : "black ", 
+                    color: product?.promotion ? "white !important" : "black ", 
                   }}
                   size="small"
                 />

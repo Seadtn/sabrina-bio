@@ -51,7 +51,6 @@ const SignIn = () =>{
         }
 
     }
-    // console.log(values)
     return (
         <div className="content">
         <div className="row row2">   

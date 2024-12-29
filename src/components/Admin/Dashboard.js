@@ -20,6 +20,7 @@ import BackupTableIcon from "@mui/icons-material/BackupTable";
 import CommandsDashboard from "./commands/CommandsDashboard.js";
 import {
   addNewProduct,
+  deleteProduct,
   getAllCategories,
   getAllCommands,
   getAllContacts,
@@ -56,7 +57,6 @@ export default function Dashboard() {
   const [selectedProduct, setSelectedProduct] = React.useState(null);
   const [commands, setCommands] = React.useState([]);
   const [categories, setCategories] = React.useState([]);
-
   // Filter states
   const [category, setCategory] = React.useState("");
   const [searchTerm, setSearchTerm] = React.useState("");
@@ -68,7 +68,10 @@ export default function Dashboard() {
   const handleSearchChange = (e) => setSearchTerm(e.target.value);
   const handleSortChange = (e) => setSortOption(e.target.value);
 
-  const handleAddProduct = () => setOpenFormModal(true);
+  const handleAddProduct = () =>{
+    setSelectedProduct(null);
+    setTimeout(() => setOpenFormModal(true), 0);
+  };
 
   const handleEditProduct = (product) => {
     setSelectedProduct(product);
@@ -90,8 +93,9 @@ export default function Dashboard() {
         console.error("Error fetching products:", error);
       }
     };
+
     fetchProducts();
-  }, []);
+  }, []); 
 
   const handleSaveProduct = async (productData) => {
     try {
@@ -117,25 +121,24 @@ export default function Dashboard() {
   };
 
   const handleViewProduct = (product) => {
-    console.log(product);
     setSelectedProduct(product);
     setOpenViewModal(true);
   };
 
   const handleDeleteProduct = (id) => {
     setProducts((prev) => prev.filter((product) => product.id !== id));
+    deleteProduct(id);
   };
 
   // Filter logic
   const filteredProducts = products.filter((product) => {
-    console.log(category);
     return (
       (!category || product.category.id  === category) &&
       (!searchTerm ||
         product.name.toLowerCase().includes(searchTerm.toLowerCase())) &&
       (!sortOption ||
         (sortOption === "sale"
-          ? product.inSold
+          ? product.promotion
           : sortOption === "new"
             ? product.productNew
             : product.name))
@@ -165,7 +168,7 @@ export default function Dashboard() {
                 <Button
                   variant="contained"
                   style={{ background: "#2fcb00" }}
-                  onClick={handleAddProduct}
+                  onClick={()=>{handleAddProduct()}}
                 >
                   Add Product
                 </Button>
@@ -183,7 +186,7 @@ export default function Dashboard() {
                     <MenuItem value="">All</MenuItem>
                     {categories.map((cat) => (
                       <MenuItem key={cat.id} value={cat.id}>
-                        {cat.name}
+                        {cat.englishName}
                       </MenuItem>
                     ))}
                   </Select>

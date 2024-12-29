@@ -33,7 +33,7 @@ const ProductCard = ({ product }) => {
         id: product.id ?? 0,
         count: 1,
         imageUrl:`data:image/*;base64,${product.image}`,
-        price: product.inSold 
+        price: product.promotion 
         ? product.price-(product.price * (product.soldRatio * 0.01)) 
         : product.price,
         title: product.name,
@@ -49,7 +49,7 @@ const ProductCard = ({ product }) => {
     const favoriteItem = {
       id: product.id ,
       title: product.name,
-      price: product.inSold 
+      price: product.promotion 
       ? product.price-(product.price * (product.soldRatio * 0.01)) 
       : product.price,
       imageUrl: `data:image/*;base64,${product.image}`,
@@ -73,7 +73,7 @@ const ProductCard = ({ product }) => {
               {t("homePage.products.newLabel")}
             </div>
           )}
-        {product.inSold && (
+        {product.promotion && (
           <div
             className={`${product.productNew ? "sold-label1":"sold-label2"}`}
             dir={isArabic ? "rtl" : "ltr"}
@@ -113,13 +113,13 @@ const ProductCard = ({ product }) => {
           : product.name}
       </h2>
       <p
-        className={product.inSold ? "old-price":"price"}
+        className={product.promotion ? "old-price":"price"}
         dir={isArabic ? "rtl" : "ltr"}
         lang={isArabic ? "ar" : "fr"}
       >
         {product.price} {!isArabic ? "DT" : "دت"}
       </p>
-      {product.inSold === true && (<p
+      {product.promotion === true && (<p
         className="price"
         dir={isArabic ? "rtl" : "ltr"}
         lang={isArabic ? "ar" : "fr"}

@@ -14,11 +14,6 @@ function ContactDashboard({contacts,setContacts}) {
     };
 
   const handleEditContactStatus = (contact) => {
-    // submit changes to the server
-    console.log('contact status updated to : ', contact.status);
-    
-    // submit here
-    // then update the state on success
     setContacts(contacts.map(c => c.id === contact.id ? contact : c)); // this line on submit success
 
 };

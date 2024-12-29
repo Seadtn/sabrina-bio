@@ -10,10 +10,12 @@ import { Status } from '../../../types/Product.ts';
 const CommandViewModal = ({ open, onClose, command,onEditStatus }) => {
   const onClickAcceptCommand = () =>{
     command.status = Status.Accepted
+    command.confirmationDate=new Date().toISOString().split('T')[0];
     onEditStatus(command);
   }
   const onClickRejectCommand = () =>{
     command.status = Status.Rejected
+    command.confirmationDate=new Date().toISOString().split('T')[0];
     onEditStatus(command);
   }
 

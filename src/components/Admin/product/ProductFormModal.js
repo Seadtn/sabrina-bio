@@ -27,11 +27,13 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
     image: null,
     creationDate: new Date().toISOString().split('T')[0],
     inSold: false,
+    promotion:false,
     productNew: false,
     soldRatio: 0,
     quantity: 0,
     startDate: '',
     lastDate: '',
+    active:true,
     category: null 
   });
   const [categories, setCategories] = useState([]);
@@ -43,22 +45,51 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
       setCategories(categories);
     };
     fetchCategories();
-
     if (product) {
       setFormData({
-        id:product.id,
+        id: product.id,
         name: product.name,
         description: product.description,
         price: product.price,
         image: product.image,
         creationDate: product.creationDate,
         inSold: product.inSold,
+        promotion:product.promotion,
+        soldRatio:product.soldRatio,
         productNew: product.productNew,
-        quantity:product.quantity,
+        quantity: product.quantity,
         startDate: product.startDate || '',
         lastDate: product.lastDate || '',
-        category: product.category || ''
+        active: product.active || true,
+        category: product.category || '',
       });
+  
+      if (product.image instanceof Blob || product.image instanceof File) {
+        setPreviewUrl(URL.createObjectURL(product.image));
+      } else if (typeof product.image === 'string') {
+        setPreviewUrl(`data:image/jpeg;base64,${product.image}`);
+      } else {
+        setPreviewUrl('');
+      }
+    } else {
+      setFormData({
+        id: null,
+        name: '',
+        description: '',
+        price: 0,
+        image: null,
+        creationDate: new Date().toISOString().split('T')[0],
+        promotion:false,
+        inSold: false,
+        productNew: false,
+        soldRatio: 0,
+        quantity: 0,
+        startDate: '',
+        lastDate: '',
+        active: true,
+        category: null,
+      });
+      setPreviewUrl('');
     }
   }, [product]);
 
@@ -82,6 +113,7 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
       reader.readAsDataURL(file);
     }
   };
+
 
   const handleSubmit = () => {
     onSave(formData);
@@ -159,7 +191,7 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
             >
               {categories.map((category, index) => (
                 <MenuItem key={index} value={category}>
-                  {category.name}
+                  {category.englishName}
                 </MenuItem>
               ))}
             </Select>
