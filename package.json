@@ -2,7 +2,7 @@
   "name": "sabrine-bio",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://seadtn.github.io/sabrina-bio",
+  "homepage": "/",
   "dependencies": {
     "@mui/icons-material": "^6.2.0",
     "@mui/lab": "^6.0.0-beta.19",
