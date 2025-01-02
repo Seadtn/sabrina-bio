@@ -1,7 +1,7 @@
 import { getRequest, postRequest } from "./Request";
 
 
-const localhost = "http://localhost:8080";
+const localhost = "http://backend:8080";
 const Product_URL = `${localhost}/api/v1/productManagement/`;
 const Command_URL = `${localhost}/api/v1/commandManagement/`; 
 const Contact_URL = `${localhost}/api/v1/contactManagement/`; 
