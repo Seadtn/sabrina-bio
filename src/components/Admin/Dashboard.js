@@ -33,8 +33,8 @@ import ContactMailIcon from "@mui/icons-material/ContactMail";
 
 const NAVIGATION = [
   { kind: "header", title: "All" },
-  { segment: "products", title: "Products", icon: <ShoppingCartIcon /> },
-  { segment: "commands", title: "Commands", icon: <BackupTableIcon /> },
+  { segment: "products", title: "Produits", icon: <ShoppingCartIcon /> },
+  { segment: "commands", title: "Commandes", icon: <BackupTableIcon /> },
   { segment: "categories", title: "Categories", icon: <CategoryIcon /> },
   { segment: "contacts", title: "Contacts", icon: <ContactMailIcon /> },
 ];
@@ -86,6 +86,7 @@ export default function Dashboard() {
         const commands = await getAllCommands();
         setCommands(commands.reverse());
         const categories = await getAllCategories();
+        console.log(categories);
         setCategories(categories);
         const Contact = await getAllContacts();
         setContacts(Contact.reverse());

@@ -120,16 +120,16 @@ const Products = () => {
     fetchCategories();
   }, []);
   return (
-    <div
-      className="container"
-      dir={isArabic ? "rtl" : "ltr"}
-      lang={isArabic ? "ar" : "fr"}
-    >
+    <div className="container">
       <div className="content">
         <h2 className="title">{t("homePage.products.title")}</h2>
 
         {/* Filters */}
-        <div className="filters">
+        <div
+          className="filters"
+          dir={isArabic ? "rtl" : "ltr"}
+          lang={isArabic ? "ar" : "fr"}
+        >
           <div className="filter-category">
             <label>{t("homePage.categories.title")} :</label>
             <select

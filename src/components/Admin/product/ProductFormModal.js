@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  Dialog, 
-  DialogActions, 
-  DialogContent, 
-  DialogTitle, 
-  Button, 
+import React, { useState, useEffect } from "react";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  Button,
   TextField,
   Switch,
   FormControlLabel,
@@ -12,32 +12,31 @@ import {
   Select,
   MenuItem,
   InputLabel,
-  FormControl
-} from '@mui/material';
-import { getAllCategories } from '../../../api/backend';
-
-
+  FormControl,
+} from "@mui/material";
+import { getAllCategories } from "../../../api/backend";
 
 const ProductFormModal = ({ open, onClose, product, onSave }) => {
   const [formData, setFormData] = useState({
-    id:null,
-    name: '',
-    description: '',
+    id: null,
+    name: "",
+    description: "",
     price: 0,
     image: null,
-    creationDate: new Date().toISOString().split('T')[0],
+    creationDate: new Date().toISOString().split("T")[0],
     inSold: false,
-    promotion:false,
+    promotion: false,
     productNew: false,
     soldRatio: 0,
     quantity: 0,
-    startDate: '',
-    lastDate: '',
-    active:true,
-    category: null 
+    startDate: "",
+    lastDate: "",
+    active: true,
+    category: null,
   });
   const [categories, setCategories] = useState([]);
-  const [previewUrl, setPreviewUrl] = useState('');
+  const [previewUrl, setPreviewUrl] = useState("");
+  const currentDate = new Date().toISOString().split('T')[0];
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -54,42 +53,42 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
         image: product.image,
         creationDate: product.creationDate,
         inSold: product.inSold,
-        promotion:product.promotion,
-        soldRatio:product.soldRatio,
+        promotion: product.promotion,
+        soldRatio: product.soldRatio,
         productNew: product.productNew,
         quantity: product.quantity,
-        startDate: product.startDate || '',
-        lastDate: product.lastDate || '',
+        startDate: product.startDate || "",
+        lastDate: product.lastDate || "",
         active: product.active || true,
-        category: product.category || '',
+        category: product.category || "",
       });
-  
+
       if (product.image instanceof Blob || product.image instanceof File) {
         setPreviewUrl(URL.createObjectURL(product.image));
-      } else if (typeof product.image === 'string') {
+      } else if (typeof product.image === "string") {
         setPreviewUrl(`data:image/jpeg;base64,${product.image}`);
       } else {
-        setPreviewUrl('');
+        setPreviewUrl("");
       }
     } else {
       setFormData({
         id: null,
-        name: '',
-        description: '',
+        name: "",
+        description: "",
         price: 0,
         image: null,
-        creationDate: new Date().toISOString().split('T')[0],
-        promotion:false,
+        creationDate: new Date().toISOString().split("T")[0],
+        promotion: false,
         inSold: false,
         productNew: false,
         soldRatio: 0,
         quantity: 0,
-        startDate: '',
-        lastDate: '',
+        startDate: "",
+        lastDate: "",
         active: true,
         category: null,
       });
-      setPreviewUrl('');
+      setPreviewUrl("");
     }
   }, [product]);
 
@@ -97,7 +96,7 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
@@ -106,14 +105,13 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
     if (file) {
       const reader = new FileReader();
       reader.onload = async (e) => {
-        const base64String = e.target.result.split(',')[1];
+        const base64String = e.target.result.split(",")[1];
         setFormData((prev) => ({ ...prev, image: base64String }));
         setPreviewUrl(URL.createObjectURL(file));
       };
       reader.readAsDataURL(file);
     }
   };
-
 
   const handleSubmit = () => {
     onSave(formData);
@@ -122,35 +120,61 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="lg">
-      <DialogTitle>{product ? 'Edit Product' : 'Add Product'}</DialogTitle>
+      <DialogTitle>
+        {product ? "Modifier le produit" : "Ajouter un produit"}
+      </DialogTitle>
       <DialogContent
         sx={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-evenly',
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-evenly",
           gap: 2,
           my: 2,
-          minWidth: '800px'
+          minWidth: "800px",
         }}
       >
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 2,
+          }}
+        >
           {previewUrl && (
             <img
               src={previewUrl}
               alt="Preview"
-              style={{ width: '200px', height: '200px', objectFit: 'cover' }}
+              style={{ width: "200px", height: "200px", objectFit: "cover" }}
             />
           )}
-          <Button variant="contained" style={{ background: '#2fcb00' }} component="label">
-            Upload Image
-            <input type="file" hidden accept="image/*" onChange={handleImageChange} />
+          <Button
+            variant="contained"
+            style={{ background: "#2fcb00" }}
+            component="label"
+          >
+            Choisir une image
+            <input
+              type="file"
+              hidden
+              accept="image/*"
+              onChange={handleImageChange}
+            />
           </Button>
         </Box>
-        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, minWidth: '400px', marginTop: '100px' }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 2,
+            minWidth: "400px",
+            marginTop: "100px",
+          }}
+        >
           <TextField
             name="name"
-            label="Name"
+            label="Nom"
             fullWidth
             value={formData.name}
             onChange={handleInputChange}
@@ -166,7 +190,7 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
           />
           <TextField
             name="price"
-            label="Price"
+            label="Prix"
             type="number"
             fullWidth
             value={formData.price}
@@ -174,20 +198,20 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
           />
           <TextField
             name="quantity"
-            label="Quantity"
+            label="Quantité"
             type="number"
             fullWidth
             value={formData.quantity}
             onChange={handleInputChange}
           />
           <FormControl fullWidth>
-            <InputLabel id="category-label">Category</InputLabel>
+            <InputLabel id="category-label">Categorie</InputLabel>
             <Select
               labelId="category-label"
               name="category"
               value={formData.category}
               onChange={handleInputChange}
-              label="Category"
+              label="Catégorie"
             >
               {categories.map((category, index) => (
                 <MenuItem key={index} value={category}>
@@ -196,21 +220,33 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
               ))}
             </Select>
           </FormControl>
-          <Box sx={{ display: 'flex', gap: 2 }}>
+          <Box sx={{ display: "flex", gap: 2 }}>
             <FormControlLabel
-              control={<Switch checked={formData.productNew} onChange={handleInputChange} name="productNew" />}
-              label="Is New"
+              control={
+                <Switch
+                  checked={formData.productNew}
+                  onChange={handleInputChange}
+                  name="productNew"
+                />
+              }
+              label="Nouveau Produit"
             />
             <FormControlLabel
-              control={<Switch checked={formData.inSold} onChange={handleInputChange} name="inSold" />}
-              label="In Promotion"
+              control={
+                <Switch
+                  checked={formData.inSold}
+                  onChange={handleInputChange}
+                  name="inSold"
+                />
+              }
+              label="En Promotion"
             />
           </Box>
           {formData.inSold && (
             <>
               <TextField
                 name="soldRatio"
-                label="Sold ratio"
+                label="Taux de la promotion"
                 type="number"
                 fullWidth
                 value={formData.soldRatio}
@@ -218,32 +254,40 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
               />
               <TextField
                 name="startDate"
-                label="Start Date"
+                label="Début de la promotion"
                 type="date"
                 fullWidth
                 InputLabelProps={{ shrink: true }}
                 value={formData.startDate}
                 onChange={handleInputChange}
+                inputProps={{ min:currentDate}}// Ensure the start date is today or after
               />
+
               <TextField
                 name="lastDate"
-                label="Last Date"
+                label="Fin de la promotion"
                 type="date"
                 fullWidth
                 InputLabelProps={{ shrink: true }}
                 value={formData.lastDate}
                 onChange={handleInputChange}
+                inputProps={{ min:formData.startDate}} // Ensure the end date is after the start date
+                disabled={!formData.startDate} // Disable until start date is selected
               />
             </>
           )}
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose} style={{ color: '#2fcb00' }}>
-          Cancel
+        <Button onClick={onClose} style={{ color: "#2fcb00" }}>
+          Annuler
         </Button>
-        <Button onClick={handleSubmit} variant="contained" style={{ background: '#2fcb00' }}>
-          Save
+        <Button
+          onClick={handleSubmit}
+          variant="contained"
+          style={{ background: "#2fcb00" }}
+        >
+          Enregistrer
         </Button>
       </DialogActions>
     </Dialog>

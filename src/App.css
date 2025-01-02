@@ -1624,3 +1624,19 @@ form button {
 
 
 
+
+
+/* Messenger color */
+.share-button.messenger i {
+  color: #f914c7; /* Messenger blue */
+}
+
+/* WhatsApp color */
+.share-button.whatsapp i {
+  color: #25d366; /* WhatsApp green */
+}
+
+/* Telegram color */
+.share-button.telegram i {
+  color: #0088cc; /* Telegram blue */
+}

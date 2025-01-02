@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogActions,
@@ -9,14 +9,33 @@ import {
   Box,
 } from "@mui/material";
 
-const CategoryFormModal = ({ open, onClose, onSave }) => {
+const CategoryFormModal = ({category,open, onClose, onSave }) => {
   const [formData, setFormData] = useState({
     frenchName: "",
     englishName: "",
     arabicName: "",
     creationDate: new Date().toISOString().split("T")[0],
   });
-  
+    useEffect(() => {
+
+      if(category){
+        console.log(category)
+          setFormData({
+            id:category.id,
+            frenchName:category.frenchName,
+            englishName:category.englishName,
+            arabicName:category.arabicName,
+            creationDate:category.creationDate,
+          })
+      }else{
+        setFormData({
+          frenchName:"",
+          englishName:"",
+          arabicName:"",
+          creationDate:new Date().toISOString().split("T")[0],
+        })
+      }
+    }, [category]);
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -31,7 +50,7 @@ const CategoryFormModal = ({ open, onClose, onSave }) => {
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth={"lg"}>
-      <DialogTitle>{"Add Category"}</DialogTitle>
+      <DialogTitle>{category ? 'Modifier la catégorie' : 'Ajouter une catégorie'}</DialogTitle>
       <DialogContent
         sx={{
           display: "flex",
@@ -77,14 +96,14 @@ const CategoryFormModal = ({ open, onClose, onSave }) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} style={{ color: "#2fcb00" }}>
-          Cancel
+        Annuler
         </Button>
         <Button
           onClick={handleSubmit}
           variant="contained"
           style={{ background: "#2fcb00" }}
         >
-          Save
+          Enregistrer
         </Button>
       </DialogActions>
     </Dialog>

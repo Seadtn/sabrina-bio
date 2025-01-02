@@ -108,7 +108,7 @@ const LoginPage = () => {
             margin="normal"
             required
             fullWidth
-            label="Email Address"
+            label="Adresse E-mail"
             name="email"
             autoComplete="email"
             autoFocus
@@ -139,7 +139,7 @@ const LoginPage = () => {
             margin="normal"
             required
             fullWidth
-            label="Password"
+            label="Mot de passe"
             name="password"
             type="password"
             autoComplete="current-password"
@@ -175,7 +175,7 @@ const LoginPage = () => {
                 style={{ color: "#2fcb00" }}
               />
             }
-            label="Remember me"
+            label="Rester connecté"
           />
           <Button
             type="submit"
@@ -184,7 +184,7 @@ const LoginPage = () => {
             style={{ background: "#2fcb00" }}
             sx={{ marginTop: 3, marginBottom: 2 }}
           >
-            LogIn
+            Se Connecter
           </Button>
         </form>
       </Paper>

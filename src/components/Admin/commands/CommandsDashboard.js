@@ -73,10 +73,10 @@ function CommandsDashboard({commands,setCommands}) {
           {title}
         </Typography>
         <Typography variant="body1">
-          <strong>Number of Commands:</strong> {count}
+          <strong>Nombre de commandes:</strong> {count}
         </Typography>
         <Typography variant="body1">
-          <strong>Total Money:</strong>  {money} TND
+          <strong>Montant total:</strong>  {money} TND
         </Typography>
       </CardContent>
     </Card>
@@ -88,7 +88,7 @@ function CommandsDashboard({commands,setCommands}) {
       <Grid container spacing={3} sx={{ marginBottom: 3 }}>
         <Grid item xs={12} sm={4}>
           <CommandCard
-            title="Accepted Commands"
+            title="Commandes acceptées"
             count={data.acceptedCommands.count}
             money={data.acceptedCommands.money}
             color="#4caf50"
@@ -96,7 +96,7 @@ function CommandsDashboard({commands,setCommands}) {
         </Grid>
         <Grid item xs={12} sm={4}>
           <CommandCard
-            title="Pending Commands"
+            title="Commandes en attente"
             count={data.pendingCommands.count}
             money={data.pendingCommands.money}
             color="#ff9800"
@@ -104,7 +104,7 @@ function CommandsDashboard({commands,setCommands}) {
         </Grid>
         <Grid item xs={12} sm={4}>
           <CommandCard
-            title="Rejected Commands"
+            title="Commandes rejetées"
             count={data.rejectedCommands.count}
             money={data.rejectedCommands.money}
             color="#f44336"

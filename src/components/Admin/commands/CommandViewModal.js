@@ -48,32 +48,32 @@ const CommandViewModal = ({ open, onClose, command, onEditStatus }) => {
           borderBottom: "1px solid #e0e0e0",
         }}
       >
-        Order #{command?.id}
+        Commande #{command?.id}
       </DialogTitle>
       <DialogContent sx={{ p: 4, mt: 2 }}>
         <Grid container spacing={4}>
           {/* Customer Information */}
           <Grid item xs={12} md={6}>
             <Typography variant="h6" gutterBottom>
-              Customer Details
+            Détails du client
             </Typography>
             <Box sx={{ mb: 3 }}>
               <Typography>
-                <strong>Name:</strong> {command?.firstName} {command?.lastName}
+                <strong>Nom:</strong> {command?.firstName} {command?.lastName}
               </Typography>
               <Typography>
-                <strong>Email:</strong> {command?.mail}
+                <strong>E-mail:</strong> {command?.mail}
               </Typography>
               <Typography>
-                <strong>Phone:</strong> {command?.phone}
+                <strong>Téléphone:</strong> {command?.phone}
               </Typography>
               <Typography>
-                <strong>Address:</strong> {command?.city}, {command?.postalCode}
+                <strong>Adresse:</strong> {command?.city}, {command?.postalCode}
               </Typography>
             </Box>
 
             <Typography variant="h6" gutterBottom>
-              Order Status :{" "}
+              Statut de la commande :{" "}
               <Chip
                 label={command?.status}
                 color={getStatusColor(command?.status)}
@@ -84,14 +84,14 @@ const CommandViewModal = ({ open, onClose, command, onEditStatus }) => {
           {/* Order Details */}
           <Grid item xs={12} md={6}>
             <Typography variant="h6" gutterBottom>
-              Order Details
+            Détails de la commande
             </Typography>
             <Table size="small">
               <TableHead>
                 <TableRow>
-                  <TableCell>Product</TableCell>
-                  <TableCell>Quantity</TableCell>
-                  <TableCell align="right">Price</TableCell>
+                  <TableCell>Produit</TableCell>
+                  <TableCell>Quantité</TableCell>
+                  <TableCell align="right">Prix</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -131,7 +131,7 @@ const CommandViewModal = ({ open, onClose, command, onEditStatus }) => {
               }}
             >
               <Button onClick={() => onClose()} style={{ color: "#2fcb00" }}>
-                Close
+                Fermer
               </Button>
               {command?.status === Status.Pending && (
                 <Box sx={{ display: "flex", justifyContent: "evenly", gap: 2 }}>
@@ -140,14 +140,14 @@ const CommandViewModal = ({ open, onClose, command, onEditStatus }) => {
                     variant="contained"
                     style={{ background: "rgba(180, 1, 10, 0.87)" }}
                   >
-                    Reject
+                    Rejeter
                   </Button>
                   <Button
                     onClick={onClickAcceptCommand}
                     variant="contained"
                     style={{ background: "#2fcb00" }}
                   >
-                    Accept
+                    Accepter
                   </Button>
                 </Box>
               )}

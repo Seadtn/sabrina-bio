@@ -35,15 +35,15 @@ function CommandsTable({ commands, onEdit, onView }) {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Order ID</TableCell>
-              <TableCell>Customer</TableCell>
+              <TableCell>ID de la commande</TableCell>
+              <TableCell>Client</TableCell>
               <TableCell>Contact</TableCell>
-              <TableCell>Address</TableCell>
-              <TableCell>Status</TableCell>
-              <TableCell>Creation Date</TableCell>              
-              <TableCell>Payment Method</TableCell>
-              <TableCell>Conf/Rej Date</TableCell>
-              <TableCell>Total Price</TableCell>
+              <TableCell>Adresse</TableCell>
+              <TableCell>Statut</TableCell>
+              <TableCell>Date de création</TableCell>              
+              <TableCell>Méthode de paiement</TableCell>
+              <TableCell>Date de Conf/Rej</TableCell>
+              <TableCell>Montant total</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

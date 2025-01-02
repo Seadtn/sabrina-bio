@@ -106,24 +106,24 @@ const ProductViewModal = ({ open, onClose, product }) => {
 
               <Box>
                 <Typography variant="subtitle2" color="text.secondary">
-                  Product Details
+                Détails du produit
                 </Typography>
                 <Stack spacing={1}>
                   <Typography variant="body2">
-                    <b>Created:</b>{" "}
+                    <b>Créé:</b>{" "}
                     {new Date(product?.creationDate).toLocaleDateString()}
                   </Typography>
                   {product?.inSold && (
                     <>
                       <Typography variant="body2">
-                        <b>Sale Ratio:</b> {product?.soldRatio}%
+                        <b>Taux de la promotion:</b> {product?.soldRatio}%
                       </Typography>
                       <Typography variant="body2">
-                        <b>Sale Start:</b>{" "}
+                        <b>Début de la promotion:</b>{" "}
                         {new Date(product?.startDate).toLocaleDateString()}
                       </Typography>
                       <Typography variant="body2">
-                        <b>Sale End:</b>{" "}
+                        <b>Fin de la promotion:</b>{" "}
                         {new Date(product?.lastDate).toLocaleDateString()}
                       </Typography>
                     </>
@@ -145,7 +145,7 @@ const ProductViewModal = ({ open, onClose, product }) => {
             textTransform: "none",
           }}
         >
-          Close
+          Fermer
         </Button>
       </DialogActions>
     </Dialog>

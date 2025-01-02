@@ -16,6 +16,7 @@ const Product = () => {
   const [loading, setLoading] = useState(false);
   const { t } = useTranslation();
   const isArabic = i18n.language === "ar";
+  const isFrench = i18n.language === "fr";
 
   useEffect(() => {
     const fetchProductAndRelated = async () => {
@@ -64,7 +65,9 @@ const Product = () => {
               <div className="col-single">
                 <h2>{product.name}</h2>
                 <h4
-                  className={product.promotion ? "old-price-product" : "price-product"}
+                  className={
+                    product.promotion ? "old-price-product" : "price-product"
+                  }
                   dir={isArabic ? "rtl" : "ltr"}
                   lang={isArabic ? "ar" : "fr"}
                 >
@@ -81,14 +84,24 @@ const Product = () => {
                   </h4>
                 )}
                 <h3 id="details"> {!isArabic ? "Description" : "وصف"}</h3>
-                <p style={{marginBottom:"10px"}}>{product.description}</p>
-                {/* <input type="number" value="4" min="1" id="cart-input"/> */}
-                <button className="btn-primary ">
-                  <Link to={"/sabrina-bio/products"} className="btn-link">
-                    <i className="fa fa-shopping-cart"></i>{" "}
-                    {t("homePage.products.buyBtn")}
-                  </Link>
-                </button>
+                <p style={{ marginBottom: "10px" }}>{product.description}</p>
+                {/* Product Quantity Check */}
+                {product.quantity === 0 ? (
+                  <div style={{ color: "red", marginBottom: "10px" }}>
+                    {isArabic
+                      ? "المنتج نفذ من المخزون"
+                      : isFrench
+                        ? "Ce produit est épuisé"
+                        : "This product is sold out"}
+                  </div>
+                ) : (
+                  <button className="btn-primary">
+                    <Link to={"/sabrina-bio/products"} className="btn-link">
+                      <i className="fa fa-shopping-cart"></i>{" "}
+                      {t("homePage.products.buyBtn")}
+                    </Link>
+                  </button>
+                )}
               </div>
             </>
           )}

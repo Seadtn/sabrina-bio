@@ -6,9 +6,12 @@ import { Button, Grid } from "@mui/material";
 import CategoryFormModal from './CategoryFormModal'
 function CategoriesDashboard({categories,setCategories}) {
   const [openFormModal, setOpenFormModal] = React.useState(false);
-
-  const handleAddProduct = () => setOpenFormModal(true);
-
+  const [selectedCategory,setSelectedCategory]=React.useState(null);
+  const handleAddProduct = () => {setSelectedCategory(null); setOpenFormModal(true)};
+    const handleEditCategory = (category) => {
+    setSelectedCategory(category);
+    setOpenFormModal(true);
+  };
   const saveCategory= async (category)=>{
     try {
     let response=await addNewCategory(category)
@@ -34,12 +37,12 @@ function CategoriesDashboard({categories,setCategories}) {
           style={{ background: "#2fcb00" }}
           onClick={handleAddProduct}
         >
-          Add Category
+          Ajouter une catégorie
         </Button>
       </Grid>
-      <CategoryTable categories={categories} />
+      <CategoryTable categories={categories} onEdit={handleEditCategory} />
       {/* Modals */}
-        <CategoryFormModal open={openFormModal} onSave={saveCategory} onClose={() => setOpenFormModal(false)}/>
+        <CategoryFormModal category={selectedCategory} open={openFormModal} onSave={saveCategory} onClose={() => setOpenFormModal(false)}/>
     </PageContainer>
   );
 }

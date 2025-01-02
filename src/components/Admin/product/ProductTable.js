@@ -34,14 +34,14 @@ const ProductTable = ({ products, onEdit, onView, onDelete }) => {
           <TableRow>
             <TableCell>ID</TableCell>
             <TableCell>Image</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>Category</TableCell>
+            <TableCell>Nom</TableCell>
+            <TableCell>Catégorie</TableCell>
             <TableCell>Description</TableCell>
-            <TableCell>Price</TableCell>
-            <TableCell>Quantity</TableCell>
-            <TableCell>Added At</TableCell>
-            <TableCell>At Sold</TableCell>
-            <TableCell>New Product</TableCell>
+            <TableCell>Prix</TableCell>
+            <TableCell>Quantité</TableCell>
+            <TableCell>Ajouté le</TableCell>
+            <TableCell>Promotion</TableCell>
+            <TableCell>Nouveau produit</TableCell>
             <TableCell>Actions</TableCell>
           </TableRow>
         </TableHead>
@@ -77,14 +77,14 @@ const ProductTable = ({ products, onEdit, onView, onDelete }) => {
                 <TableCell>{product.creationDate}</TableCell>
                 <TableCell>
                   {product.promotion === true && product.soldRatio > 0
-                    ? `Yes (${product.soldRatio}%)`
+                    ? `Oui (${product.soldRatio}%)`
                     : product.startDate && product.startDate.trim() !== ""
-                      ? `Promotion will start ${product.startDate}`
-                      : "No"}
+                      ? `La promotion commencera ${product.startDate}`
+                      : "Non"}
                 </TableCell>
                 <TableCell>
                   <Chip
-                    label={product.productNew === true ? "New" : "Regular"}
+                    label={product.productNew === true ? "Nouveau" : "Standard"}
                     color={product.productNew === true ? "success" : "default"}
                     size="small"
                     sx={{

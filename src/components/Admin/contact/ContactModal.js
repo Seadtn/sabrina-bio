@@ -20,14 +20,14 @@ const ContactModal = ({ open, onClose, contact }) => {
           borderBottom: "1px solid #e0e0e0",
         }}
       >
-        Contact Details
+        Coordonnées
       </DialogTitle>
 
       <DialogContent sx={{ p: 4, mt: 2 }}>
         <Stack spacing={3}>
           <Box>
             <Typography variant="subtitle2" color="text.secondary">
-              Subject
+              Sujet
             </Typography>
             <Typography variant="h6">{contact?.subject || "N/A"}</Typography>
           </Box>
@@ -36,7 +36,7 @@ const ContactModal = ({ open, onClose, contact }) => {
 
           <Box>
             <Typography variant="subtitle2" color="text.secondary">
-              Email
+              E-mail
             </Typography>
             <Typography variant="body1">{contact?.mail || "N/A"}</Typography>
           </Box>
@@ -62,7 +62,7 @@ const ContactModal = ({ open, onClose, contact }) => {
             textTransform: "none",
           }}
         >
-          Close
+          Fermer
         </Button>
       </DialogActions>
     </Dialog>

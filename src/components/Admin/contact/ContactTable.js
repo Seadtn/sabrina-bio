@@ -28,9 +28,9 @@ function ContactTable({ Contacts,onView }) {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>Contact ID</TableCell>
-            <TableCell>Email</TableCell>
-            <TableCell>Subject</TableCell>
+            <TableCell>ID de contact</TableCell>
+            <TableCell>E-mail</TableCell>
+            <TableCell>Sujet</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

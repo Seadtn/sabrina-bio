@@ -24,7 +24,6 @@ const OrderBlock = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const formData = new FormData(e.target);
     const orderData = {
       firstName: formData.get("name"),
@@ -41,7 +40,7 @@ const OrderBlock = () => {
       commandProducts: items.map((product) => ({
         product: {
           id: product.id,
-          name: product.name,
+          name: product.title,
           price: product.price,
         },
         quantity: product.count,
