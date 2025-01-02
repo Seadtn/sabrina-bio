@@ -3,9 +3,9 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-# Add environment variable for React production build
+# Set the public URL for the React app
+ENV PUBLIC_URL=/
 ENV NODE_ENV=production
-# Add this to prevent potential build issues
 ENV CI=false
 RUN npm run build
 
