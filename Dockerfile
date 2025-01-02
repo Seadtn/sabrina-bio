@@ -1,21 +1,11 @@
-# Dockerfile inside /sabrina-bio
-
-# Step 1: Build the React app
-FROM node:18 AS build
-
+FROM node:18-alpine as build
 WORKDIR /app
-COPY . .  
+COPY package*.json ./
 RUN npm install
+COPY . .
 RUN npm run build
 
-# Step 2: Set up Nginx to serve the React app
 FROM nginx:alpine
-
-# Copy the custom Nginx configuration
-COPY ./nginx.conf /etc/nginx/nginx.conf  
-
-# Copy the React app from the build container to Nginx's serving location
 COPY --from=build /app/build /usr/share/nginx/html
-
-# Expose the Nginx port
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
