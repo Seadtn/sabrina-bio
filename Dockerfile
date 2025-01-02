@@ -1,24 +1,16 @@
-# Use Node.js for building the React app
+# Stage 1: Build React app
 FROM node:18 AS build
 
-# Set the working directory
 WORKDIR /app
-
-# Copy package files and install dependencies
-COPY package*.json ./
+COPY ./sabrina-bio  /app
 RUN npm install
-
-# Copy the application code
-COPY . .
-
-# Build the React app
 RUN npm run build
 
-# Use Nginx to serve the React app
+# Stage 2: Serve app with Nginx
 FROM nginx:alpine
-COPY --from=build /app/build /usr/share/nginx/html
+COPY --from=build /app/build /usr/share/nginx/html  
 
-# Expose the default port for Nginx
+# Copy the nginx configuration file
+COPY ./nginx.conf /etc/nginx/nginx.conf
+
 EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
