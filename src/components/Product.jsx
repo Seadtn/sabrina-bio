@@ -96,7 +96,7 @@ const Product = () => {
                   </div>
                 ) : (
                   <button className="btn-primary">
-                    <Link to={"/sabrina-bio/products"} className="btn-link">
+                    <Link to={"/products"} className="btn-link">
                       <i className="fa fa-shopping-cart"></i>{" "}
                       {t("homePage.products.buyBtn")}
                     </Link>

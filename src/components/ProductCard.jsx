@@ -21,8 +21,8 @@ const ProductCard = ({ product }) => {
   
   // Share on Facebook Messenger
   const shareOnMessenger = () => {
-    const link = `${window.location.origin}/sabrina-bio/product/${product.id}`;
-    const app_id = '611546124893155'; // Replace with your Facebook app ID
+    const link = `${window.location.origin}/product/${product.id}`;
+    const app_id = '504118245453297'; // Replace with your Facebook app ID
   
     if (isMobile()) {
       // Use Messenger deep link for mobile
@@ -37,7 +37,7 @@ const ProductCard = ({ product }) => {
   
   // Share on WhatsApp
   const shareOnWhatsApp = () => {
-    const link = `${window.location.origin}/sabrina-bio/product/${product.id}`;
+    const link = `${window.location.origin}/product/${product.id}`;
   
     if (isMobile()) {
       // WhatsApp deep link for mobile
@@ -52,7 +52,7 @@ const ProductCard = ({ product }) => {
   
   // Share on Telegram
   const shareOnTelegram = () => {
-    const link = `${window.location.origin}/sabrina-bio/product/${product.id}`;
+    const link = `${window.location.origin}/product/${product.id}`;
   
     if (isMobile()) {
       // Telegram deep link for mobile
@@ -116,7 +116,7 @@ const ProductCard = ({ product }) => {
         )}
 
         <Link
-          to={`/sabrina-bio/product/${product.id}`}
+          to={`/product/${product.id}`}
           className="product-link"
         >
           <img

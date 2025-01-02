@@ -25,7 +25,7 @@ const Contact =  () => {
       }
       setError(false);
       addNewContact(contact);
-      navigation("/sabrina-bio/")
+      navigation("/")
     }
       
   };

@@ -32,7 +32,7 @@ function AppContent() {
   const navigate = useNavigate();
 
   const location = useLocation();
-  const isDashboardRoute = location.pathname.startsWith("/sabrina-bio/admin");
+  const isDashboardRoute = location.pathname.startsWith("/admin");
   const isMounted = React.useRef(false);
 
   // Check if user is authenticated and fetch the session data
@@ -69,7 +69,7 @@ function AppContent() {
         localStorage.removeItem("user");
         localStorage.removeItem("cart");
         localStorage.removeItem("favorites");
-        navigate("/sabrina-bio/sign-in");
+        navigate("/admin/login");
       }
     }
   }, [items, favorites, userData, navigate]);
@@ -79,45 +79,43 @@ function AppContent() {
       {!isDashboardRoute && <NavBar />}
       <Suspense fallback={<Loader />}>
         <Routes>
-          <Route path="/sabrina-bio" element={<Home />} />
-          <Route path="/sabrina-bio/cart" element={<Cart />} />
-          <Route path="/sabrina-bio/favorite" element={<Favorite />} />
-          <Route path="/sabrina-bio/products" element={<Products />} />
-          <Route path="/sabrina-bio/product/:id" element={<Product />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/favorite" element={<Favorite />} />
+          <Route path="/products" element={<Products />} />
+          <Route path="/product/:id" element={<Product />} />
           <Route
-            path="/sabrina-bio/sign-in"
+            path="/sign-in"
             element={
               isAuthenticated ? (
-                <Navigate to="/sabrina-bio" replace />
+                <Navigate to="/" replace />
               ) : (
                 <SignIn />
               )
             }
           />
-          <Route path="/sabrina-bio/sign-up" element={<SignUp />} />
-          <Route path="/sabrina-bio/profile" element={<Profile />} />
-          <Route path="/sabrina-bio/contact" element={<Contact />} />
+          <Route path="/contact" element={<Contact />} />
           <Route
-            path="/sabrina-bio/admin/dashboard/*"
+            path="/admin/dashboard/*"
             element={
               isAuthenticated ? (
                 <Dashboard />
               ) : (
-                <Navigate to="/sabrina-bio/admin/login" replace />
+                <Navigate to="/admin/login" replace />
               )
             }
           />
           <Route
-            path="/sabrina-bio/admin/login"
+            path="/admin/login"
             element={
               isAuthenticated ? (
-                <Navigate to="/sabrina-bio/admin/dashboard" replace />
+                <Navigate to="/admin/dashboard" replace />
               ) : (
                 <LoginPage />
               )
             }
           />
-          <Route path="*" element={<Navigate to="/sabrina-bio" replace />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </Suspense>
       {!isDashboardRoute && <Footer />}

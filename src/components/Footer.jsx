@@ -25,13 +25,13 @@ const Footer = () => {
             <h3>{t("homePage.footer.headers.links")}</h3>
             <ul>
               <li>
-                <Link to="/sabrina-bio">{t("homePage.menu.home")}</Link>
+                <Link to="/">{t("homePage.menu.home")}</Link>
               </li>
               <li>
-                <Link to="/sabrina-bio/products">{t("homePage.menu.products")}</Link>
+                <Link to="/products">{t("homePage.menu.products")}</Link>
               </li>
               <li>
-                <Link to="/sabrina-bio/contact">{t("homePage.menu.contact")}</Link>
+                <Link to="/contact">{t("homePage.menu.contact")}</Link>
               </li>
             </ul>
           </div>

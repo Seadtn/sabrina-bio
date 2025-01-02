@@ -43,7 +43,7 @@ const LoginPage = () => {
           date: new Date().toISOString().split("T")[0],
         };
         localStorage.setItem("user",JSON.stringify(localUser));
-        navigation("/sabrina-bio/admin/dashboard");
+        navigation("/admin/dashboard");
       } else {
         setErrorMsg({state:true,msg:response.msg});
       }

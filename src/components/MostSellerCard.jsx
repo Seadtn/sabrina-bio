@@ -12,8 +12,8 @@ const isMobile = () => {
 
 // Share on Facebook Messenger
 const shareOnMessenger = () => {
-  const link = `${window.location.origin}/sabrina-bio/product/${product.id}`;
-  const app_id = '611546124893155'; // Replace with your Facebook app ID
+  const link = `${window.location.origin}/product/${product.id}`;
+  const app_id = '504118245453297'; // Replace with your Facebook app ID
 
   if (isMobile()) {
     // Use Messenger deep link for mobile
@@ -28,7 +28,7 @@ const shareOnMessenger = () => {
 
 // Share on WhatsApp
 const shareOnWhatsApp = () => {
-  const link = `${window.location.origin}/sabrina-bio/product/${product.id}`;
+  const link = `${window.location.origin}/product/${product.id}`;
 
   if (isMobile()) {
     // WhatsApp deep link for mobile
@@ -43,7 +43,7 @@ const shareOnWhatsApp = () => {
 
 // Share on Telegram
 const shareOnTelegram = () => {
-  const link = `${window.location.origin}/sabrina-bio/product/${product.id}`;
+  const link = `${window.location.origin}/product/${product.id}`;
 
   if (isMobile()) {
     // Telegram deep link for mobile
@@ -61,7 +61,7 @@ const shareOnTelegram = () => {
     <div className="col4 product" style={{ margin: "10px" }}>
       <div className="image-container">
         <Link
-          to={`/sabrina-bio/product/${product.id}`}
+          to={`/product/${product.id}`}
           className="product-link"
         >
           <img

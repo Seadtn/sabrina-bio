@@ -66,7 +66,7 @@ const Home = () => {
           </div>
           <div className="viewContainer">
             <button className="btn-primary">
-              <Link to="/sabrina-bio/products" className="btn-link">
+              <Link to="/products" className="btn-link">
                 {t("homePage.products.viewAllBtn")}
               </Link>
             </button>

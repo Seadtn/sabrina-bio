@@ -86,7 +86,7 @@ const BannerSection = () => {
                     </h1>
                     <p>{t("homePage.slider.description")}</p>
                     <button className="btn-primary">
-                      <Link to="/sabrina-bio/products" className="btn-link">
+                      <Link to="/products" className="btn-link">
                         {t("homePage.slider.collectionBtn")}
                       </Link>
                     </button>
