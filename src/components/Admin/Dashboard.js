@@ -86,7 +86,6 @@ export default function Dashboard() {
         const commands = await getAllCommands();
         setCommands(commands.reverse());
         const categories = await getAllCategories();
-        console.log(categories);
         setCategories(categories);
         const Contact = await getAllContacts();
         setContacts(Contact.reverse());

@@ -19,7 +19,6 @@ const CategoryFormModal = ({category,open, onClose, onSave }) => {
     useEffect(() => {
 
       if(category){
-        console.log(category)
           setFormData({
             id:category.id,
             frenchName:category.frenchName,
