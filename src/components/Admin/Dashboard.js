@@ -186,7 +186,7 @@ export default function Dashboard() {
                     <MenuItem value="">All</MenuItem>
                     {categories.map((cat) => (
                       <MenuItem key={cat.id} value={cat.id}>
-                        {cat.englishName}
+                        {cat.frenchName}
                       </MenuItem>
                     ))}
                   </Select>

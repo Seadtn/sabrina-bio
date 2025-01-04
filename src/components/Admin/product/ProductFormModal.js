@@ -215,7 +215,7 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
             >
               {categories.map((category, index) => (
                 <MenuItem key={index} value={category}>
-                  {category.englishName}
+                  {category.frenchName}
                 </MenuItem>
               ))}
             </Select>

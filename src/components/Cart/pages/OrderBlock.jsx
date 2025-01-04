@@ -33,8 +33,8 @@ const OrderBlock = () => {
       city: formData.get("city"),
       postalCode: formData.get("Code Postal"),
       paymentMethod: formData.get("payment"),
-      totalPrice: totalPrice,
-      creationDate:new Date().toISOString().split('T')[0],
+      totalPrice: totalPrice < 100 ? totalPrice + 8 : totalPrice,
+      creationDate: new Date().toISOString().split("T")[0],
       confirmationDate: "",
       status: "Pending",
       commandProducts: items.map((product) => ({
@@ -48,7 +48,7 @@ const OrderBlock = () => {
     };
 
     try {
-      await addNewCommand(orderData); 
+      await addNewCommand(orderData);
       setSuccessModalOpen(true);
     } catch (error) {
       console.error("Error placing order:", error);
@@ -126,22 +126,43 @@ const OrderBlock = () => {
           <fieldset className="fieldset">
             <div className="data__column">
               <label className="fieldset__item">
-                <input type="radio" name="payment" value="Poste" required style={{width:"20px"}} className={`${isArabic ? "input-ar" : "input-fr"}`}/>
+                <input
+                  type="radio"
+                  name="payment"
+                  value="Poste"
+                  required
+                  style={{ width: "20px" }}
+                  className={`${isArabic ? "input-ar" : "input-fr"}`}
+                />
                 <div className="text">{t("cartPage.order.phraseTic3")}</div>
               </label>
               <label className="fieldset__item">
-                <input type="radio" name="payment" value="Especes" required style={{width:"20px"}} className={`${isArabic ? "input-ar" : "input-fr"}`}/>
+                <input
+                  type="radio"
+                  name="payment"
+                  value="Especes"
+                  required
+                  style={{ width: "20px" }}
+                  className={`${isArabic ? "input-ar" : "input-fr"}`}
+                />
                 <div className="text">{t("cartPage.order.phraseTic2")}</div>
               </label>
             </div>
           </fieldset>
         </div>
         <div className="order__column">
-          <div className="order__style">
-            {t("cartPage.order.leftLine11")} : <span>{t("cartPage.order.leftLine12")}</span>
+          <div
+            className="order__style"
+          >
+            {t("cartPage.order.leftLine11")} :{" "}
+            <span style={totalPrice >= 100 ? { textDecoration: "line-through" } : {}}>{t("cartPage.order.leftLine12")}</span>
           </div>
           <div className="order__style">
-            {t("cartPage.order.leftLine2")} : <span>{totalPrice} {!isArabic ? "DT" : "دت"}</span>
+            {t("cartPage.order.leftLine2")} :{" "}
+            <span>
+              {totalPrice < 100 ? totalPrice + 8 : totalPrice}{" "}
+              {!isArabic ? "DT" : "دت"}
+            </span>
           </div>
           <button className="order__button" type="submit">
             <span>{t("cartPage.order.title")}</span>
@@ -155,8 +176,11 @@ const OrderBlock = () => {
       {/* Success Modal */}
       <SuccessModal
         open={successModalOpen}
-        onClose={() => {setSuccessModalOpen(false);   dispatch(resetCart());
-            localStorage.setItem("cart");}   }
+        onClose={() => {
+          setSuccessModalOpen(false);
+          dispatch(resetCart());
+          localStorage.setItem("cart");
+        }}
         message={t("cartPage.order.successMessage")}
       />
     </>

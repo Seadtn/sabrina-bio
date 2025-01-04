@@ -20,7 +20,7 @@ const resources = {
           products: "Products",
           contact: "Contact Us",
           livraisonText: "Free delivery starting from ",
-          livraisonPrix: "300 DT",
+          livraisonPrix: "100 DT",
         },
         slider: {
           collectionBtn: "visit collections",
@@ -119,10 +119,10 @@ const resources = {
           phraseTic3: "Poste money transfer",
           catchPhrase4: "Promo code",
           leftLine11: "Delivery ",
-          leftLine12: "At the carrier's rates",
+          leftLine12: "8 DT",
           leftLine2: "Total price",
           closingPhrase:
-            "By clicking on the 'pay for thethe order' button, I accept the terms of the public offer and policy Privacy",
+            "By clicking on the 'pay for the order' button, I accept the terms of the public offer and policy Privacy",
           empty: {
             title: "Favorites",
             desc1: "THERE ARE NO PRODUCTS IN FAVORITES",
@@ -186,7 +186,7 @@ const resources = {
           products: "المنتجات",
           contact: "اتصل بنا",
           livraisonText: "توصيل مجاني ابتداءً من ",
-          livraisonPrix: "300 د.ت",
+          livraisonPrix: "100 د.ت",
         },
         slider: {
           collectionBtn: "زيارة المجموعات",
@@ -281,7 +281,7 @@ const resources = {
           phraseTic3: "تحويل أموال بواسطة Poste",
           catchPhrase4: "رمز الخصم",
           leftLine11: " التوصيل",
-          leftLine12: " حسب أسعارالناقل",
+          leftLine12: "8 د.ت",
           leftLine2: "السعر الإجمالي",
           closingPhrase:
             "بالنقر على زر 'دفع الطلب'، أوافق على شروط العرض العام وسياسة الخصوصية",
@@ -348,7 +348,7 @@ const resources = {
           products: "Produits",
           contact: "Nos Contacts",
           livraisonText: "Livraison gratuite à partir de ",
-          livraisonPrix: "300 DT",
+          livraisonPrix: "100 DT",
         },
         slider: {
           collectionBtn: " Visiter les collections",
@@ -448,7 +448,7 @@ const resources = {
           phraseTic3: "Transfert d'argent a travers Poste",
           catchPhrase4: "Code promo",
           leftLine11: "Livraison ",
-          leftLine12: "Aux tarifs du transporteur",
+          leftLine12: "8 DT",
           leftLine2: "Prix total",
           closingPhrase:
             "En cliquant sur le bouton 'payer la commande', j'accepte les conditions de l'offre publique et la politique de confidentialité",

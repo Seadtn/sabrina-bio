@@ -55,7 +55,7 @@ const CommandViewModal = ({ open, onClose, command, onEditStatus }) => {
           {/* Customer Information */}
           <Grid item xs={12} md={6}>
             <Typography variant="h6" gutterBottom>
-            Détails du client
+              Détails du client
             </Typography>
             <Box sx={{ mb: 3 }}>
               <Typography>
@@ -84,7 +84,7 @@ const CommandViewModal = ({ open, onClose, command, onEditStatus }) => {
           {/* Order Details */}
           <Grid item xs={12} md={6}>
             <Typography variant="h6" gutterBottom>
-            Détails de la commande
+              Détails de la commande
             </Typography>
             <Table size="small">
               <TableHead>
@@ -111,12 +111,28 @@ const CommandViewModal = ({ open, onClose, command, onEditStatus }) => {
                     </TableCell>
                   </TableRow>
                 ))}
+                {/* Delivery Price Row */}
+                <TableRow>
+                  <TableCell colSpan={2}>Frais de Livraison</TableCell>
+                  <TableCell align="right">
+                    <strong>
+                      TND {command?.totalPrice <= 100 ? "8.00" : "0.00"}
+                    </strong>
+                  </TableCell>
+                </TableRow>
+                {/* Total Price Row */}
                 <TableRow>
                   <TableCell colSpan={2}>
                     <strong>Total</strong>
                   </TableCell>
                   <TableCell align="right">
-                    <strong>TND{command?.totalPrice.toFixed(2)}</strong>
+                    <strong>
+                      TND{" "}
+                      {(
+                        command?.totalPrice +
+                        (command?.totalPrice <= 100 ? 8 : 0)
+                      ).toFixed(2)}
+                    </strong>
                   </TableCell>
                 </TableRow>
               </TableBody>

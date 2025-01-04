@@ -9,11 +9,14 @@ import {
 } from "../../../redux/cart/slice.ts";
 import i18n from "../../../i18n/i18n.js";
 
-const CartItem = ({ id, newId, title, imageUrl, price, count }) => {
+const CartItem = ({ id, newId, title, imageUrl, price, count, maxQuantity }) => {
   const dispatch = useDispatch();
   const isArabic = i18n.language === "ar";
+
   const onClickPlus = () => {
-    dispatch(plusItems(newId));
+    if (count < maxQuantity) {
+      dispatch(plusItems(newId));
+    }
   };
 
   const onClickMinus = () => {
@@ -63,6 +66,7 @@ const CartItem = ({ id, newId, title, imageUrl, price, count }) => {
                 <div className="cart__number">{count}</div>
                 <button
                   aria-label="plusBtn"
+                  disabled={count >= maxQuantity}
                   className="cart__plus"
                   onClick={onClickPlus}
                 >
@@ -103,7 +107,9 @@ const CartItem = ({ id, newId, title, imageUrl, price, count }) => {
                 />
               </svg>
             </button>
-            <div className="cart__price">{price * count} {!isArabic ? "DT" : "دت"}</div>
+            <div className="cart__price">
+              {price * count} {!isArabic ? "DT" : "دت"}
+            </div>
           </div>
         </div>
       </div>

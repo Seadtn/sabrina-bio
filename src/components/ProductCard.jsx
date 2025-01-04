@@ -73,6 +73,7 @@ const ProductCard = ({ product }) => {
         price: product.promotion
           ? product.price - product.price * (product.soldRatio * 0.01)
           : product.price,
+        maxQuantity:product.quantity,
         title: product.name,
       })
     );
