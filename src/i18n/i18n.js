@@ -10,8 +10,7 @@ const resources = {
         facebook: "Facebook",
         instagram: "Instagram",
         tiktok: "Tiktok",
-        btnClose:"Close"
-
+        btnClose: "Close",
       },
       homePage: {
         menu: {
@@ -36,7 +35,7 @@ const resources = {
           title: "Our Products",
           new: "New Products",
           newLabel: "New",
-          soldLabel:"On Sale",
+          soldLabel: "On Sale",
           category: {
             all: "All",
             herbs: "Herbs and grains",
@@ -44,20 +43,25 @@ const resources = {
             cosmetic: "Cosmetics",
           },
           sort: {
-            title:"Sort By",
+            title: "Sort By",
             select: "Select option",
             highPrice: "High Price",
             lowPrice: "Low Price",
             name: "Name,",
           },
-          search:{
-            title:"Search",
-            input:"Search by  name..."
+          search: {
+            title: "Search",
+            input: "Search by  name...",
+          },
+          details: {
+            grammage: "Weight",
+            dosage: "Dose",
+            gouts: "Flavors",
           },
           viewAllBtn: "View All",
           viewBtn: "Fast View",
           buyBtn: "Buy",
-         related:"Related Products"
+          related: "Related Products",
         },
         deliverySection: {
           delivery: {
@@ -142,31 +146,32 @@ const resources = {
       favorites: {
         title: "Favorites",
       },
-      contactPage:{
-        subject : "Subject",
-        email:"Your Email",
-        message:"Message",
-        description:"Sabrina Bio is a Tunisian small business offering natural cosmetic products like oils and herbs. We believe in the power of nature to enhance beauty and well-being",
-        btn:"Send",
-        error:"Please fill in all fields",
-        modal:{
-          msg:"Your command has been sent successfully!"
-       }
-      },
-      Modals:{
-        modalCart:{
-          title:"Performed",
-          msg:"The product has been successfully added to the cart",
-          btn1:"Continue shopping",
-          btn2:"Go to cart"
+      contactPage: {
+        subject: "Subject",
+        email: "Your Email",
+        message: "Message",
+        description:
+          "Sabrina Bio is a Tunisian small business offering natural cosmetic products like oils and herbs. We believe in the power of nature to enhance beauty and well-being",
+        btn: "Send",
+        error: "Please fill in all fields",
+        modal: {
+          msg: "Your command has been sent successfully!",
         },
-        ModalFavorites:{
-          title:"Performed",
-          msg:"The product has been successfully added to favorites",
-          btn1:"Continue shopping",
-          btn2:"Go to favorites"
-        }
-      }
+      },
+      Modals: {
+        modalCart: {
+          title: "Performed",
+          msg: "The product has been successfully added to the cart",
+          btn1: "Continue shopping",
+          btn2: "Go to cart",
+        },
+        ModalFavorites: {
+          title: "Performed",
+          msg: "The product has been successfully added to favorites",
+          btn1: "Continue shopping",
+          btn2: "Go to favorites",
+        },
+      },
       // Add more translations here
     },
   },
@@ -177,7 +182,7 @@ const resources = {
         facebook: "فيسبوك",
         instagram: "إنستغرام",
         tiktok: "تيك توك",
-        btnClose:"اغلاق"
+        btnClose: "اغلاق",
       },
       homePage: {
         menu: {
@@ -202,7 +207,7 @@ const resources = {
           title: "منتجاتنا",
           new: "منتجاتنا الجديدة",
           newLabel: "جديد",
-          soldLabel:"مُخفض",
+          soldLabel: "مُخفض",
           category: {
             all: "الكل",
             herbs: "الأعشاب و الحبوب",
@@ -218,12 +223,17 @@ const resources = {
           },
           search: {
             title: "بحث",
-            input: "ابحث بالاسم..."
+            input: "ابحث بالاسم...",
+          },
+          details: {
+            grammage: "الوزن",
+            dosage: "الجرعة",
+            gouts: "النّكهات",
           },
           viewAllBtn: "عرض الكل",
           viewBtn: "عرض سريع",
           buyBtn: "شراء",
-          related: "منتجات ذات صلة"
+          related: "منتجات ذات صلة",
         },
         deliverySection: {
           delivery: {
@@ -308,27 +318,28 @@ const resources = {
         subject: "الموضوع",
         email: "بريدك الإلكتروني",
         message: "الرسالة",
-        description: "سابرينا بايو هي شركة صغيرة تونسية تقدم منتجات تجميل طبيعية مثل الزيوت والأعشاب. نحن نؤمن بقوة الطبيعة في تعزيز الجمال والرفاهية.",
+        description:
+          "سابرينا بايو هي شركة صغيرة تونسية تقدم منتجات تجميل طبيعية مثل الزيوت والأعشاب. نحن نؤمن بقوة الطبيعة في تعزيز الجمال والرفاهية.",
         btn: "إرسال",
-        error:"الرجاء ملء جميع البيانات ",
-        modal:{
-          msg:"تم إرسال طلبك بنجاح!"
-       }
+        error: "الرجاء ملء جميع البيانات ",
+        modal: {
+          msg: "تم إرسال طلبك بنجاح!",
+        },
       },
       Modals: {
         modalCart: {
           title: "تم بنجاح",
           msg: "تمت إضافة المنتج إلى السلة بنجاح",
           btn1: "متابعة التسوق",
-          btn2: "الذهاب إلى السلة"
+          btn2: "الذهاب إلى السلة",
         },
         ModalFavorites: {
           title: "تم بنجاح",
           msg: "تمت إضافة المنتج إلى المفضلة بنجاح",
           btn1: "متابعة التسوق",
-          btn2: "الذهاب إلى المفضلة"
-        }
-      }
+          btn2: "الذهاب إلى المفضلة",
+        },
+      },
       // Add more translations here
     },
   },
@@ -339,7 +350,7 @@ const resources = {
         facebook: "Facebook",
         instagram: "Instagram",
         tiktok: "Tiktok",
-        btnClose:"Fermer"
+        btnClose: "Fermer",
       },
       homePage: {
         menu: {
@@ -364,28 +375,33 @@ const resources = {
           title: "Nos Produits",
           new: "Nouveaux Produits",
           newLabel: "Nouveau",
-          soldLabel:"Soldé",
+          soldLabel: "Soldé",
           category: {
             all: "Tout",
             herbs: "Herbes et Grains",
             oils: "Huiles Naturelles",
             cosmetic: "Cosmétiques",
           },
-          sort: { 
+          sort: {
             title: "Trier par",
             select: "Sélectionner une option",
             highPrice: "Prix élevé",
             lowPrice: "Prix bas",
-            name: "Nom"
+            name: "Nom",
           },
           search: {
             title: "Rechercher",
-            input: "Rechercher par nom..."
+            input: "Rechercher par nom...",
+          },
+          details: {
+            grammage: "Grammage",
+            dosage: "Dosage",
+            gouts: "Goûts",
           },
           viewAllBtn: "Voir tout",
           viewBtn: "Vue rapide",
           buyBtn: "Acheter",
-          related: "Produits Connexes"
+          related: "Produits Connexes",
         },
         deliverySection: {
           delivery: {
@@ -475,27 +491,28 @@ const resources = {
         subject: "Sujet",
         email: "Votre Email",
         message: "Message",
-        description: "Sabrina Bio est une petite entreprise tunisienne qui propose des produits cosmétiques naturels comme des huiles et des herbes. Nous croyons au pouvoir de la nature pour sublimer la beauté et le bien-être.",
+        description:
+          "Sabrina Bio est une petite entreprise tunisienne qui propose des produits cosmétiques naturels comme des huiles et des herbes. Nous croyons au pouvoir de la nature pour sublimer la beauté et le bien-être.",
         btn: "Envoyer",
-        error:"Veuillez remplir tous les champs",
-        modal:{
-           msg:"Votre commande a été envoyée avec succès !" 
-        }
+        error: "Veuillez remplir tous les champs",
+        modal: {
+          msg: "Votre commande a été envoyée avec succès !",
+        },
       },
       Modals: {
         modalCart: {
           title: "Effectué",
           msg: "Le produit a été ajouté avec succès au panier",
           btn1: "Continuer vos achats",
-          btn2: "Aller au panier"
+          btn2: "Aller au panier",
         },
         ModalFavorites: {
           title: "Effectué",
           msg: "Le produit a été ajouté avec succès aux favoris",
           btn1: "Continuer vos achats",
-          btn2: "Aller aux favoris"
-        }
-      }
+          btn2: "Aller aux favoris",
+        },
+      },
       // Add more translations here
     },
   },

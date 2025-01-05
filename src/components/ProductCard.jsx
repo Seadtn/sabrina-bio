@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import i18n from "../i18n/i18n";
 import { useDispatch } from "react-redux";
@@ -18,7 +18,7 @@ const ProductCard = ({ product }) => {
   const isMobile = () => {
     return /Mobi|Android|iPhone|iPad|iPod|Windows Phone/i.test(navigator.userAgent);
   };
-  
+  const navigate=useNavigate()
   // Share on Facebook Messenger
   const shareOnMessenger = () => {
     const link = `${window.location.origin}/product/${product.id}`;
@@ -78,6 +78,19 @@ const ProductCard = ({ product }) => {
       })
     );
   };
+  const getDisplayPrice = () => {
+    if (product.price === 0 && product.prices) {
+      const priceValues = Object.values(product.prices);
+      return priceValues.length > 0 ? Math.min(...priceValues) : 0;
+    }
+    return product.price;
+  };
+
+  const displayPrice = getDisplayPrice();
+  
+  const promotionalPrice = product.promotion 
+    ? displayPrice - displayPrice * product.soldRatio * 0.01 
+    : null;
   const onClickAddFavoriteItems = () => {
     const favoriteItem = {
       id: product.id,
@@ -133,34 +146,51 @@ const ProductCard = ({ product }) => {
           <button className="fast-view-button" onClick={handleFastView}>
             <i className="fas fa-eye"></i> {t("homePage.products.viewBtn")}
           </button>
-          <button className="buy-button" onClick={() => onClickAddItem()} disabled={product.quantity===0}>
-            <i className="fas fa-shopping-cart"></i>{" "}
-            {t("homePage.products.buyBtn")}
-          </button>
+          {product.productType === "STANDARD" ? (
+        <button
+          className="buy-button"
+          onClick={() => onClickAddItem()}
+          disabled={product.quantity === 0}
+        >
+          <i className="fas fa-shopping-cart"></i>{" "}
+          {t("homePage.products.buyBtn")}
+        </button>
+      ) : (
+        <button
+          className="buy-button"
+          onClick={() => navigate(`/product/${product.id}`)}
+          disabled={product.quantity === 0}
+        >
+          <i className="fas fa-shopping-cart"></i>{" "}
+          {t("homePage.products.buyBtn")}
+        </button>
+      )}
         </div>
       </div>
       <h2 className="product-title">
-        {product.name?.length > 25
-          ? `${product.name?.substring(0, 25)}...`
-          : product.name}
+        {product.name?.length > 20
+          ? `${product.name?.substring(0, 20)}...`
+          : product.name }<small style={{color:"gray"}}> {product.price===0 ? product.availableOptions[0].value +product.availableOptions[0].unit:""}</small>
       </h2>
+      <div className="price-container">
       <p
         className={product.promotion ? "old-price" : "price"}
         dir={isArabic ? "rtl" : "ltr"}
         lang={isArabic ? "ar" : "fr"}
       >
-        {product.price} {!isArabic ? "DT" : "دت"}
+        {displayPrice} {!isArabic ? "DT" : "دت"}
       </p>
-      {product.promotion === true && (
+      
+      {product.promotion && (
         <p
           className="price"
           dir={isArabic ? "rtl" : "ltr"}
           lang={isArabic ? "ar" : "fr"}
         >
-          {product.price - product.price * product.soldRatio * 0.01}{" "}
-          {!isArabic ? "DT" : "دت"}
+          {promotionalPrice} {!isArabic ? "DT" : "دت"}
         </p>
       )}
+    </div>
       {product.quantity === 0 && (
         <div style={{ color: "red", marginBottom: "2px",textAlign:"center" }}>
           {isArabic

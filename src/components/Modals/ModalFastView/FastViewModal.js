@@ -22,8 +22,96 @@ const FastViewModal = () => {
   );
   const { t } = useTranslation();
   const isArabic = i18n.language === "ar";
-  const handleClose = () => { 
+
+  const handleClose = () => {
     dispatch(closeFastViewModal());
+  };
+
+  const [selectedTaste, setSelectedTaste] = React.useState(
+    product?.tastes?.[0] || null
+  );
+  const [selectedOption, setSelectedOption] = React.useState(
+    product?.availableOptions?.[0]?.value || null
+  );
+
+  const getDisplayPrice = () => {
+    if (!product?.hasTaste && !product?.availableOptions?.length) {
+      return product?.price || 0;
+    }
+
+    if (selectedOption && product?.prices) {
+      return product.prices[selectedOption] || 0;
+    }
+
+    return 0;
+  };
+
+  const displayPrice = getDisplayPrice();
+  const promotionalPrice = product?.promotion
+    ? displayPrice - displayPrice * (product?.soldRatio * 0.01)
+    : null;
+
+  const renderOptions = () => {
+    if (!product?.availableOptions?.length) return null;
+
+    return (
+      <div className="options-section">
+        <h3 className="options-title">
+          {product?.productType === "GRAMMAGE"
+            ? t("homePage.products.details.grammage")
+            : t("homePage.products.details.dosage")}
+        </h3>
+        <div className="options-container">
+          {product.availableOptions.map((option) => (
+            <button
+              key={option.value}
+              onClick={() => setSelectedOption(option.value)}
+              className={`option-button ${
+                selectedOption === option.value ? "selected" : ""
+              }`}
+            >
+              {option.value}{" "}
+              {!isArabic
+                ? product?.productType === "GRAMMAGE"
+                  ? "g"
+                  : product?.productType === "DOSAGE"
+                    ? "ml"
+                    : ""
+                : product?.productType === "GRAMMAGE"
+                  ? "غ"
+                  : product?.productType === "DOSAGE"
+                    ? "مل"
+                    : ""}
+            </button>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+  const renderTastes = () => {
+    if (!product?.hasTaste || !product?.tastes?.length) return null;
+
+    return (
+      <div className="options-section">
+        <h3 className="options-title">
+          {t("homePage.products.details.gouts")}
+        </h3>
+        <div className="options-container">
+          {product.tastes.map((taste) => (
+            <button
+              key={taste}
+              onClick={() => setSelectedTaste(taste)}
+              className={`option-button ${
+                selectedTaste === taste ? "selected" : ""
+              }`}
+            >
+              {taste}
+            </button>
+          ))}
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -40,27 +128,20 @@ const FastViewModal = () => {
         }}
       >
         {product?.name}
-        {product?.promotion === true && (
+        {product?.promotion && (
           <Chip
             label={t("homePage.products.soldLabel")}
-            color={product?.promotion ? "warning" : "default"}
-            sx={{ color: product?.promotion ? "white" : "black", marginLeft: 1 }}
+            color="warning"
+            sx={{ color: "white", marginLeft: 1 }}
             size="small"
           />
         )}
-        {product?.productNew === true && (
+        {product?.productNew && (
           <Chip
             label={t("homePage.products.newLabel")}
             color="success"
             size="small"
-            sx={{
-              "&.MuiChip-colorSuccess": {
-                "& .MuiChip-label": {
-                  color: "white",
-                },
-              },
-              marginLeft: 1,
-            }}
+            sx={{ marginLeft: 1 }}
           />
         )}
       </DialogTitle>
@@ -98,28 +179,31 @@ const FastViewModal = () => {
         </Box>
 
         <Box>
-          <Typography variant="h6" gutterBottom>
-            {product?.promotion
-              ? (
-                  product?.price -
-                  product?.price * (product?.soldRatio * 0.01)
-                ).toFixed(2)
-              : product?.price?.toFixed(2)}{" "}
-            DT
+          <Typography
+            variant="h6"
+            gutterBottom
+            className={
+              product.promotion ? "old-price-product" : "price-product"
+            }
+          >
+            {displayPrice} {!isArabic ? "DT" : "دت"}
           </Typography>
-          {product?.promotion && (
+
+          {product.promotion && (
             <Typography
-              variant="body2"
-              color="text.secondary"
-              sx={{ textDecoration: "line-through" }}
+              variant="h6"
+              gutterBottom
+              className="price-product"
             >
-              {product?.price} DT
+              {promotionalPrice?.toFixed(2)} {!isArabic ? "DT" : "دت"}
             </Typography>
           )}
         </Box>
         <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
           {product?.description}
         </Typography>
+        {renderOptions()}
+        {renderTastes()}
       </DialogContent>
 
       <DialogActions

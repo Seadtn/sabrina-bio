@@ -62,7 +62,7 @@ function CommandsTable({ commands, onEdit, onView }) {
                 <TableCell>{command.creationDate}</TableCell>
                 <TableCell>{command.paymentMethod}</TableCell>
                 <TableCell>{command.confirmationDate}</TableCell>
-                <TableCell>{`TND${command.totalPrice.toFixed(2)}`}</TableCell>
+                <TableCell>{`TND${command?.totalPrice}`}</TableCell>
               </TableRow>
             ))}
           </TableBody>

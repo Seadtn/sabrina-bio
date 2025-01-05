@@ -55,7 +55,17 @@ const shareOnTelegram = () => {
     window.open(url, '_blank');
   }
 };
+const getDisplayPrice = () => {
+  if (product.price === 0 && product.prices) {
+    // Get the lowest price from the prices object
+    const priceValues = Object.values(product.prices);
+    return priceValues.length > 0 ? Math.min(...priceValues) : 0;
+  }
+  return product.price;
+};
 
+// Get the actual price to display
+const displayPrice = getDisplayPrice();
 
   return (
     <div className="col4 product" style={{ margin: "10px" }}>
@@ -71,9 +81,9 @@ const shareOnTelegram = () => {
         </Link>
       </div>
       <h2 className="product-title">
-        {product.name.length > 25
-          ? `${product.name.substring(0, 25)}...`
-          : product.name}
+        {product.name.length > 20
+          ? `${product.name.substring(0, 20)}...`
+          : product.name}<small style={{color:"gray"}}> {product.price===0 ? product.availableOptions[0].value +product.availableOptions[0].unit:""}</small>
       </h2>
 
       {product.promotion === true ? (
@@ -82,16 +92,16 @@ const shareOnTelegram = () => {
           dir={isArabic ? "rtl" : "ltr"}
           lang={isArabic ? "ar" : "fr"}
         >
-          {product.price - product.price * product.soldRatio * 0.01}{" "}
+          {displayPrice - displayPrice * product.soldRatio * 0.01}{" "}
           {!isArabic ? "DT" : "دت"}
         </p>
       ) : (
         <p
-          className={"price"}
+          className="price"
           dir={isArabic ? "rtl" : "ltr"}
           lang={isArabic ? "ar" : "fr"}
         >
-          {product.price} {!isArabic ? "DT" : "دت"}
+          {displayPrice} {!isArabic ? "DT" : "دت"}
         </p>
       )}
       <button className="favorite-button">

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   Dialog,
   DialogActions,
@@ -13,8 +13,11 @@ import {
   MenuItem,
   InputLabel,
   FormControl,
+  IconButton,
 } from "@mui/material";
 import { getAllCategories } from "../../../api/backend";
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
 const ProductFormModal = ({ open, onClose, product, onSave }) => {
   const [formData, setFormData] = useState({
@@ -28,15 +31,47 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
     promotion: false,
     productNew: false,
     soldRatio: 0,
-    quantity: 0,
+    quantity: 1,
     startDate: "",
     lastDate: "",
     active: true,
     category: null,
+    productType: "STANDARD",
+    prices: {},
+    availableOptions: [],
+    hasTaste: false,
+    tastes: []
   });
+
   const [categories, setCategories] = useState([]);
   const [previewUrl, setPreviewUrl] = useState("");
-  const currentDate = new Date().toISOString().split('T')[0];
+  const currentDate = new Date().toISOString().split("T")[0];
+
+  const resetForm = useCallback(() => {
+    setFormData({
+      id: null,
+      name: "",
+      description: "",
+      price: 0,
+      image: null,
+      creationDate: currentDate,
+      inSold: false,
+      promotion: false,
+      productNew: false,
+      soldRatio: 0,
+      quantity: 1,
+      startDate: "",
+      lastDate: "",
+      active: true,
+      category: null,
+      productType: "STANDARD",
+      prices: {},
+      availableOptions: [],
+      hasTaste: false,
+      tastes: []
+    });
+    setPreviewUrl("");
+  }, [currentDate]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -44,69 +79,150 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
       setCategories(categories);
     };
     fetchCategories();
+  
     if (product) {
+      const availableOptions = product.productType === "GRAMMAGE" 
+        ? Object.keys(product.prices || {}).map(value => ({ value: parseInt(value), unit: "g" }))
+        : Object.keys(product.prices || {}).map(value => ({ value: parseInt(value), unit: "ml" }));
+  
       setFormData({
-        id: product.id,
-        name: product.name,
-        description: product.description,
-        price: product.price,
-        image: product.image,
-        creationDate: product.creationDate,
-        inSold: product.inSold,
-        promotion: product.promotion,
-        soldRatio: product.soldRatio,
-        productNew: product.productNew,
-        quantity: product.quantity,
-        startDate: product.startDate || "",
-        lastDate: product.lastDate || "",
-        active: product.active || true,
-        category: product.category || "",
+        ...product,
+        productType: product.productType || "STANDARD",
+        prices: product.prices || {},
+        availableOptions,
+        hasTaste: product.hasTaste || false,
+        tastes: product.tastes || []
       });
-
-      if (product.image instanceof Blob || product.image instanceof File) {
-        setPreviewUrl(URL.createObjectURL(product.image));
-      } else if (typeof product.image === "string") {
-        setPreviewUrl(`data:image/jpeg;base64,${product.image}`);
-      } else {
-        setPreviewUrl("");
+  
+      if (product.image) {
+        setPreviewUrl(
+          typeof product.image === "string"
+            ? `data:image/jpeg;base64,${product.image}`
+            : URL.createObjectURL(product.image)
+        );
       }
     } else {
-      setFormData({
-        id: null,
-        name: "",
-        description: "",
-        price: 0,
-        image: null,
-        creationDate: new Date().toISOString().split("T")[0],
-        promotion: false,
-        inSold: false,
-        productNew: false,
-        soldRatio: 0,
-        quantity: 0,
-        startDate: "",
-        lastDate: "",
-        active: true,
-        category: null,
-      });
-      setPreviewUrl("");
+      resetForm();
     }
-  }, [product]);
+  }, [product, resetForm]);
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData((prev) => ({
+    if (name === "productType" && value !== formData.productType) {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value,
+        availableOptions: []
+      }));
+    } else if (name === "hasTaste" && !checked) {
+      setFormData(prev => ({
+        ...prev,
+        hasTaste: checked,
+        tastes: []
+      }));
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: type === "checkbox" ? checked : value,
+      }));
+    }
+  };
+
+  const handlePriceChange = (value, price) => {
+    setFormData(prev => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      prices: {
+        ...prev.prices,
+        [value]: price
+      }
     }));
   };
 
-  const handleImageChange = async (e) => {
+  const addOption = () => {
+    const unit = formData.productType === "GRAMMAGE" ? "g" : "ml";
+    setFormData(prev => ({
+      ...prev,
+      availableOptions: [...prev.availableOptions, { value: "", unit }]
+    }));
+  };
+
+  const removeOption = (index) => {
+    setFormData(prev => {
+      const newOptions = [...prev.availableOptions];
+      const removedOption = newOptions[index];
+      newOptions.splice(index, 1);
+      
+      const newPrices = { ...prev.prices };
+      if (removedOption && removedOption.value) {
+        delete newPrices[removedOption.value];
+      }
+      
+      return {
+        ...prev,
+        availableOptions: newOptions,
+        prices: newPrices
+      };
+    });
+  };
+
+  const handleOptionValueChange = (index, newValue) => {
+    setFormData(prev => {
+      const newOptions = [...prev.availableOptions];
+      const oldValue = newOptions[index].value;
+      newOptions[index] = { ...newOptions[index], value: parseInt(newValue) || "" };
+      
+      const newPrices = { ...prev.prices };
+      if (oldValue in newPrices) {
+        newPrices[newValue] = newPrices[oldValue];
+        delete newPrices[oldValue];
+      }
+      
+      return {
+        ...prev,
+        availableOptions: newOptions,
+        prices: newPrices
+      };
+    });
+  };
+
+  const addTaste = () => {
+    setFormData(prev => ({
+      ...prev,
+      tastes: [...prev.tastes, ""]
+    }));
+  };
+
+  const removeTaste = (index) => {
+    setFormData(prev => {
+      const newTastes = [...prev.tastes];
+      newTastes.splice(index, 1);
+      return {
+        ...prev,
+        tastes: newTastes
+      };
+    });
+  };
+
+  const handleTasteChange = (index, value) => {
+    setFormData(prev => {
+      const newTastes = [...prev.tastes];
+      newTastes[index] = value;
+      return {
+        ...prev,
+        tastes: newTastes
+      };
+    });
+  };
+
+  const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = async (e) => {
-        const base64String = e.target.result.split(",")[1];
-        setFormData((prev) => ({ ...prev, image: base64String }));
+      reader.onload = (event) => {
+        setFormData((prev) => ({
+          ...prev,
+          image: event.target.result.split(",")[1],
+        }));
         setPreviewUrl(URL.createObjectURL(file));
       };
       reader.readAsDataURL(file);
@@ -155,12 +271,7 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
             component="label"
           >
             Choisir une image
-            <input
-              type="file"
-              hidden
-              accept="image/*"
-              onChange={handleImageChange}
-            />
+            <input type="file" hidden accept="image/*" onChange={handleImageChange} />
           </Button>
         </Box>
         <Box
@@ -168,8 +279,10 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
             display: "flex",
             flexDirection: "column",
             gap: 2,
-            minWidth: "400px",
-            marginTop: "100px",
+            marginTop: "50px",
+            overflowY: "auto",
+            maxHeight: "70vh",
+            maxWidth: "400px",
           }}
         >
           <TextField
@@ -189,23 +302,83 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
             onChange={handleInputChange}
           />
           <TextField
-            name="price"
-            label="Prix"
-            type="number"
-            fullWidth
-            value={formData.price}
-            onChange={handleInputChange}
-          />
-          <TextField
             name="quantity"
             label="Quantité"
             type="number"
             fullWidth
             value={formData.quantity}
             onChange={handleInputChange}
+            inputProps={{ min: 1 }}
           />
           <FormControl fullWidth>
-            <InputLabel id="category-label">Categorie</InputLabel>
+            <InputLabel id="product-type-label">Type de produit</InputLabel>
+            <Select
+              labelId="product-type-label"
+              name="productType"
+              value={formData.productType}
+              onChange={handleInputChange}
+              label="Type de produit"
+            >
+              <MenuItem value="STANDARD">Standard</MenuItem>
+              <MenuItem value="GRAMMAGE">Grammage</MenuItem>
+              <MenuItem value="DOSAGE">Dosage</MenuItem>
+            </Select>
+          </FormControl>
+
+          {(formData.productType === "GRAMMAGE" || formData.productType === "DOSAGE") && (
+            <>
+              {formData.availableOptions.map((option, index) => (
+                <Box key={index} sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+                  <TextField
+                    label={formData.productType === "GRAMMAGE" ? "Grammage" : "Dosage"}
+                    type="number"
+                    value={option.value}
+                    onChange={(e) => handleOptionValueChange(index, e.target.value)}
+                    InputProps={{
+                      endAdornment: <span>{option.unit}</span>
+                    }}
+                    sx={{ flex: 1 }}
+                  />
+                  <TextField
+                    label="Prix"
+                    type="number"
+                    value={formData.prices[option.value] || ""}
+                    onChange={(e) => handlePriceChange(option.value, parseFloat(e.target.value) || 0)}
+                    sx={{ flex: 1 }}
+                  />
+                  <IconButton 
+                    onClick={() => removeOption(index)}
+                    sx={{ color: "error.main" }}
+                  >
+                    <RemoveIcon />
+                  </IconButton>
+                </Box>
+              ))}
+              <Button
+                startIcon={<AddIcon />}
+                onClick={addOption}
+                variant="outlined"
+                style={{ color: "#2fcb00", borderColor: "#2fcb00" }}
+              >
+                Ajouter {formData.productType === "GRAMMAGE" ? "un grammage" : "un dosage"}
+              </Button>
+            </>
+          )}
+
+          {formData.productType === "STANDARD" && (
+            <TextField
+              name="price"
+              label="Prix"
+              type="number"
+              fullWidth
+              value={formData.price}
+              onChange={handleInputChange}
+              inputProps={{ min: 5 }}
+            />
+          )}
+
+          <FormControl fullWidth>
+            <InputLabel id="category-label">Catégorie</InputLabel>
             <Select
               labelId="category-label"
               name="category"
@@ -220,7 +393,44 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
               ))}
             </Select>
           </FormControl>
-          <Box sx={{ display: "flex", gap: 2 }}>
+           <FormControlLabel
+              control={
+                <Switch
+                  checked={formData.hasTaste}
+                  onChange={handleInputChange}
+                  name="hasTaste"
+                />
+              }
+              label="Goûts disponibles"
+            />          {formData.hasTaste && (
+              <>
+                {formData.tastes.map((taste, index) => (
+                  <Box key={index} sx={{ display: "flex", gap: 1, alignItems: "center" }}>
+                    <TextField
+                      label="Goût"
+                      value={taste}
+                      onChange={(e) => handleTasteChange(index, e.target.value)}
+                      sx={{ flex: 1 }}
+                    />
+                    <IconButton 
+                      onClick={() => removeTaste(index)}
+                      sx={{ color: "error.main" }}
+                    >
+                      <RemoveIcon />
+                    </IconButton>
+                  </Box>
+                ))}
+                <Button
+                  startIcon={<AddIcon />}
+                  onClick={addTaste}
+                  variant="outlined"
+                  style={{ color: "#2fcb00", borderColor: "#2fcb00" }}
+                >
+                  Ajouter un goût
+                </Button>
+              </>
+            )}     
+          <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
             <FormControlLabel
               control={
                 <Switch
@@ -242,6 +452,9 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
               label="En Promotion"
             />
           </Box>
+
+
+
           {formData.inSold && (
             <>
               <TextField
@@ -251,6 +464,7 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
                 fullWidth
                 value={formData.soldRatio}
                 onChange={handleInputChange}
+                inputProps={{ min: 5, max: 90 }}
               />
               <TextField
                 name="startDate"
@@ -260,9 +474,8 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
                 InputLabelProps={{ shrink: true }}
                 value={formData.startDate}
                 onChange={handleInputChange}
-                inputProps={{ min:currentDate}}// Ensure the start date is today or after
+                inputProps={{ min: currentDate }}
               />
-
               <TextField
                 name="lastDate"
                 label="Fin de la promotion"
@@ -271,8 +484,8 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
                 InputLabelProps={{ shrink: true }}
                 value={formData.lastDate}
                 onChange={handleInputChange}
-                inputProps={{ min:formData.startDate}} // Ensure the end date is after the start date
-                disabled={!formData.startDate} // Disable until start date is selected
+                inputProps={{ min: formData.startDate }}
+                disabled={!formData.startDate}
               />
             </>
           )}

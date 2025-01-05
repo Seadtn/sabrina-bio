@@ -1640,3 +1640,46 @@ form button {
 .share-button.telegram i {
   color: #0088cc; /* Telegram blue */
 }
+
+/* Options and Tastes Section */
+.options-section {
+  margin-bottom: 20px;
+}
+
+.options-title {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.options-container {
+  display: flex;
+  flex-wrap: wrap; /* Enable wrapping */
+  gap: 10px;
+  margin-bottom: 20px;
+  max-width: 300px; /* Limit the total width for 3 buttons per row */
+}
+
+.option-button {
+  padding: 3px 10px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 12px;
+  flex: 1 1 calc(33.333% - 100px); /* 3 buttons per row with gap */
+  text-align: center; /* Center the text in the button */
+  box-sizing: border-box; /* Ensure padding and border don't affect width */
+}
+
+.option-button:hover {
+  border-color: #25d366;
+  color: #25d366;
+}
+
+.option-button.selected {
+  background: #28a745;
+  color: white;
+  border-color: #25d366;
+}

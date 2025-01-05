@@ -22,9 +22,6 @@ const Home = React.lazy(() => import("./components/Home"));
 const Cart = React.lazy(() => import("./components/Cart/Cart"));
 const Products = React.lazy(() => import("./components/Products"));
 const Product = React.lazy(() => import("./components/Product"));
-const SignIn = React.lazy(() => import("./components/SignIn"));
-const SignUp = React.lazy(() => import("./components/SignUp"));
-const Profile = React.lazy(() => import("./components/Profile"));
 const Contact = React.lazy(() => import("./components/Contact"));
 const Favorite = React.lazy(() => import("./components/Favorite/Favorites"));
 
@@ -38,13 +35,15 @@ function AppContent() {
   // Check if user is authenticated and fetch the session data
   const isAuthenticated = Boolean(localStorage.getItem("user"));
   const userData = JSON.parse(localStorage.getItem("user"));
-
+// eslint-disable-next-line
   const { items, successModal, errorModal } = useSelector(
     (state) => state.cart
   );
+  // eslint-disable-next-line
   const { successFastViewModal, product } = useSelector(
     (state) => state.fastView
   );
+  // eslint-disable-next-line
   const { favorites, errorFavModal, successFavModal } = useSelector(
     (state) => state.favorite
   );
@@ -90,7 +89,7 @@ function AppContent() {
               isAuthenticated ? (
                 <Navigate to="/" replace />
               ) : (
-                <SignIn />
+                <LoginPage />
               )
             }
           />

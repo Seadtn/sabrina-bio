@@ -84,6 +84,7 @@ export default function Dashboard() {
         const products = await getAllProducts();
         setProducts(products);
         const commands = await getAllCommands();
+        console.log(commands)
         setCommands(commands.reverse());
         const categories = await getAllCategories();
         setCategories(categories);

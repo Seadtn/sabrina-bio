@@ -17,7 +17,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 const ProductTable = ({ products, onEdit, onView, onDelete }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-
+  console.log(products)
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -66,13 +66,30 @@ const ProductTable = ({ products, onEdit, onView, onDelete }) => {
                   />
                 </TableCell>
                 <TableCell>{product.name}</TableCell>
-                <TableCell>{product.category?.name}</TableCell>
+                <TableCell>{product.category?.frenchName}</TableCell>
                 <TableCell>
                   {product.description.length > 25
                     ? product.description.substring(0, 25) + "..."
                     : product.description}
                 </TableCell>
-                <TableCell>{product.price}</TableCell>
+                <TableCell>
+                  <TableCell>
+                    {product.price === 0 ? (
+                      <>
+                        {product.availableOptions &&
+                        product.availableOptions.length > 0
+                          ? product.availableOptions.map((option, index) => (
+                              <div key={index}>
+                                {product.prices[option.value]}   
+                              </div>
+                            ))
+                          : null}
+                      </>
+                    ) : (
+                      product.price
+                    )}
+                  </TableCell>
+                </TableCell>
                 <TableCell>{product.quantity}</TableCell>
                 <TableCell>{product.creationDate}</TableCell>
                 <TableCell>
