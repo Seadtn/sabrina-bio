@@ -91,6 +91,8 @@ const CommandViewModal = ({ open, onClose, command, onEditStatus }) => {
                 <TableRow>
                   <TableCell>Produit</TableCell>
                   <TableCell>Quantité</TableCell>
+                  <TableCell>Goût</TableCell>
+                  <TableCell>Poids/Volume</TableCell>
                   <TableCell align="right">Prix</TableCell>
                 </TableRow>
               </TableHead>
@@ -99,21 +101,17 @@ const CommandViewModal = ({ open, onClose, command, onEditStatus }) => {
                   <TableRow key={commandProduct.product.id}>
                     <TableCell>{commandProduct.product.name}</TableCell>
                     <TableCell>{commandProduct.quantity}</TableCell>
+                    <TableCell>{commandProduct.taste}</TableCell>
+                    <TableCell>{commandProduct.unit}</TableCell>
                     <TableCell align="right">
                       TND{" "}
-                      {commandProduct.product?.promotion
-                        ? (
-                            commandProduct.product?.price -
-                            commandProduct.product?.price *
-                              (commandProduct.product?.soldRatio * 0.01)
-                          ).toFixed(2)
-                        : commandProduct.product?.price?.toFixed(2)}
+                      {commandProduct.prix?.toFixed(2)}
                     </TableCell>
                   </TableRow>
                 ))}
                 {/* Delivery Price Row */}
                 <TableRow>
-                  <TableCell colSpan={2}>Frais de Livraison</TableCell>
+                  <TableCell colSpan={4}><strong>Frais de Livraison</strong></TableCell>
                   <TableCell align="right">
                     <strong>
                       TND {command?.totalPrice <= 100 ? "8.00" : "0.00"}
@@ -122,7 +120,7 @@ const CommandViewModal = ({ open, onClose, command, onEditStatus }) => {
                 </TableRow>
                 {/* Total Price Row */}
                 <TableRow>
-                  <TableCell colSpan={2}>
+                <TableCell colSpan={4}>
                     <strong>Total</strong>
                   </TableCell>
                   <TableCell align="right">

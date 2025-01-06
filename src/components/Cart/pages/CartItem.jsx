@@ -9,7 +9,18 @@ import {
 } from "../../../redux/cart/slice.ts";
 import i18n from "../../../i18n/i18n.js";
 
-const CartItem = ({ id, newId, title, imageUrl, price, count, maxQuantity }) => {
+const CartItem = ({
+  id,
+  newId,
+  title,
+  imageUrl,
+  price,
+  count,
+  maxQuantity,
+  type,
+  option,
+  taste,
+}) => {
   const dispatch = useDispatch();
   const isArabic = i18n.language === "ar";
 
@@ -39,9 +50,26 @@ const CartItem = ({ id, newId, title, imageUrl, price, count, maxQuantity }) => 
             <div className="cart__img">
               <img src={imageUrl} alt={title} />
             </div>
+
             <div className="cart__info">
               <Link to={`/product/${id}`} className="cart__name">
-                {title}
+                {title} <br />{" "}
+                <small
+                  style={{
+                    fontSize: "20px",
+                    marginRight: "10px",
+                    marginLeft: "10px",
+                    color: "gray",
+                  }}
+                >
+                  {" "}
+                  {type === "GRAMMAGE"
+                    ? option + "g"
+                    : type === "DOSAGE"
+                      ? option + "ml"
+                      : ""}
+                  {taste ? "-" + taste : ""}
+                </small>
               </Link>
               <div className="cart__amount">
                 <button

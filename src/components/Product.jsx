@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import "../App.css";
 import ProductCard from "./ProductCard";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import "react-loading-skeleton/dist/skeleton.css";
 import Loader from "./loader/Loader";
 import i18n from "../i18n/i18n";
 import { useTranslation } from "react-i18next";
 import { getProductById, getRelatedProducts } from "../api/backend";
+import Button from "@mui/material/Button";
+import { useDispatch } from "react-redux";
+import { addItems } from "../redux/cart/slice.ts";
 
 const Product = () => {
   const { id } = useParams();
@@ -18,7 +21,23 @@ const Product = () => {
   const { t } = useTranslation();
   const isArabic = i18n.language === "ar";
   const isFrench = i18n.language === "fr";
-
+  const dispatch = useDispatch();
+  const onClickAddItem = () => {
+  dispatch(
+    addItems({
+      id: product.id ?? 0,
+      count: 1,
+      imageUrl: `data:image/*;base64,${product.image}`,
+      price:product.promotion
+      ? displayPrice - displayPrice * product.soldRatio * 0.01: getDisplayPrice(),
+      maxQuantity:product.quantity,
+      type: product.productType,
+      taste:selectedTaste,
+      option:selectedOption,
+      title: product.name,
+    })
+  );
+};
   useEffect(() => {
     const fetchProductAndRelated = async () => {
       setLoading(true);
@@ -74,7 +93,11 @@ const Product = () => {
 
     return (
       <div className="options-section">
-        <h3 className="options-title">{product.productType === "GRAMMAGE" ? t("homePage.products.details.grammage"):t("homePage.products.details.dosage")}</h3>
+        <h3 className="options-title">
+          {product.productType === "GRAMMAGE"
+            ? t("homePage.products.details.grammage")
+            : t("homePage.products.details.dosage")}
+        </h3>
         <div className="options-container">
           {product.availableOptions.map((option) => (
             <button
@@ -109,7 +132,10 @@ const Product = () => {
 
     return (
       <div className="options-section">
-        <h3 className="options-title"> {t("homePage.products.details.gouts")}</h3>
+        <h3 className="options-title">
+          {" "}
+          {t("homePage.products.details.gouts")}
+        </h3>
         <div className="options-container">
           {product.tastes.map((taste) => (
             <button
@@ -171,7 +197,7 @@ const Product = () => {
 
                 <h3 id="details">{!isArabic ? "Description" : "وصف"}</h3>
                 <p style={{ marginBottom: "10px" }}>{product.description}</p>
-                {(product.hasTaste || product.availableOptions?.length > 0 ) && (
+                {(product.hasTaste || product.availableOptions?.length > 0) && (
                   <>
                     {renderOptions()}
                     {renderTastes()}
@@ -186,18 +212,32 @@ const Product = () => {
                         : "This product is sold out"}
                   </div>
                 ) : (
-                  <button
-                    className="btn-primary"
+                  <Button
+                    variant="outlined"
                     disabled={
                       (product.hasTaste && !selectedTaste) ||
                       (product.availableOptions?.length > 0 && !selectedOption)
                     }
+                    sx={{
+                      padding: "1rem 3rem",
+                      textTransform: "uppercase",
+                      fontSize: "1rem",
+                      letterSpacing: "0.1rem",
+                      backgroundColor: "#2fcb00",
+                      border: "1px solid #2fcb00",
+                      cursor: "pointer",
+                      color: "white",
+                      "&:hover": {
+                        backgroundColor: "white",
+                        color: "#2fcb00", 
+                        borderColor: "#2fcb00",
+                      },
+                    }}
+                    onClick={() => onClickAddItem()}
                   >
-                    <Link to={"/products"} className="btn-link">
-                      <i className="fa fa-shopping-cart"></i>{" "}
-                      {t("homePage.products.buyBtn")}
-                    </Link>
-                  </button>
+                    {"  "}<i className="fa fa-shopping-cart"></i>{"  "}
+                    {t("homePage.products.buyBtn")}
+                  </Button>
                 )}
               </div>
             </>

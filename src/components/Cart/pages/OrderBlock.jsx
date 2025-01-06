@@ -41,9 +41,12 @@ const OrderBlock = () => {
         product: {
           id: product.id,
           name: product.title,
-          price: product.price,
+          productType:product.type,
         },
+        prix: product.price,
         quantity: product.count,
+        taste:product.taste,
+        unit:product.option,
       })),
     };
 

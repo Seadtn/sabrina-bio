@@ -17,7 +17,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 const ProductTable = ({ products, onEdit, onView, onDelete }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  console.log(products)
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };

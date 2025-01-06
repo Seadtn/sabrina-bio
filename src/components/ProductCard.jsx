@@ -74,6 +74,7 @@ const ProductCard = ({ product }) => {
           ? product.price - product.price * (product.soldRatio * 0.01)
           : product.price,
         maxQuantity:product.quantity,
+        type: product.productType,
         title: product.name,
       })
     );
