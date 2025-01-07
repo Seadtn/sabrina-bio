@@ -25,17 +25,20 @@ import {
   getAllCommands,
   getAllContacts,
   getAllProducts,
+  getAllSousCategories,
 } from "../../api/backend.js";
 import CategoryIcon from "@mui/icons-material/Category";
 import CategoriesDashboard from "./categories/CategoriesDashboard.js";
 import ContactDashboard from "./contact/ContactDashboard.js";
 import ContactMailIcon from "@mui/icons-material/ContactMail";
+import SousCategoryDashboard from "./sousCategorie/SousCategoryDashboard.js";
 
 const NAVIGATION = [
   { kind: "header", title: "All" },
   { segment: "products", title: "Produits", icon: <ShoppingCartIcon /> },
   { segment: "commands", title: "Commandes", icon: <BackupTableIcon /> },
   { segment: "categories", title: "Categories", icon: <CategoryIcon /> },
+  { segment: "souscategories", title: "Sous Categories", icon: <CategoryIcon /> },
   { segment: "contacts", title: "Contacts", icon: <ContactMailIcon /> },
 ];
 
@@ -57,6 +60,8 @@ export default function Dashboard() {
   const [selectedProduct, setSelectedProduct] = React.useState(null);
   const [commands, setCommands] = React.useState([]);
   const [categories, setCategories] = React.useState([]);
+  const [Souscategories, setSousCategories] = React.useState([]);
+
   // Filter states
   const [category, setCategory] = React.useState("");
   const [searchTerm, setSearchTerm] = React.useState("");
@@ -84,12 +89,14 @@ export default function Dashboard() {
         const products = await getAllProducts();
         setProducts(products);
         const commands = await getAllCommands();
-        console.log(commands)
         setCommands(commands.reverse());
         const categories = await getAllCategories();
         setCategories(categories);
         const Contact = await getAllContacts();
         setContacts(Contact.reverse());
+        const sousCategories = await getAllSousCategories();
+        console.log(sousCategories)
+        setSousCategories(sousCategories);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -251,6 +258,12 @@ export default function Dashboard() {
           <CategoriesDashboard
             categories={categories}
             setCategories={setCategories}
+          />
+        )}
+                {activePage === "souscategories" && (
+          <SousCategoryDashboard
+            categories={Souscategories}
+            setCategories={setSousCategories}
           />
         )}
         {activePage === "contacts" && (

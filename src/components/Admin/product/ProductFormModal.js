@@ -15,7 +15,7 @@ import {
   FormControl,
   IconButton,
 } from "@mui/material";
-import { getAllCategories } from "../../../api/backend";
+import { getAllCategories, getSousCategoriesbyIdCategory } from "../../../api/backend";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 
@@ -36,6 +36,7 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
     lastDate: "",
     active: true,
     category: null,
+    souscategory: null, // Added souscategory field
     productType: "STANDARD",
     prices: {},
     availableOptions: [],
@@ -46,6 +47,7 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
   const [categories, setCategories] = useState([]);
   const [previewUrl, setPreviewUrl] = useState("");
   const currentDate = new Date().toISOString().split("T")[0];
+  const [subcategories, setSubcategories] = useState([]);
 
   const resetForm = useCallback(() => {
     setFormData({
@@ -64,6 +66,7 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
       lastDate: "",
       active: true,
       category: null,
+      souscategory: null, // Added souscategory field
       productType: "STANDARD",
       prices: {},
       availableOptions: [],
@@ -108,7 +111,13 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
-    if (name === "productType" && value !== formData.productType) {
+    if (name === "category") {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value,
+        souscategory: null 
+      }));
+    } else if (name === "productType" && value !== formData.productType) {
       setFormData(prev => ({
         ...prev,
         [name]: value,
@@ -164,6 +173,31 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
       };
     });
   };
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const categories = await getAllCategories();
+      setCategories(categories);
+    };
+    fetchCategories();
+
+    if (product) {
+      setFormData({
+        ...product,
+        souscategory: product.souscategory || null,
+      });
+      if (product.category?.id) {
+        fetchSubcategories(product.category.id); // Fetch subcategories if editing an existing product
+      }
+    } else {
+      resetForm();
+    }
+  }, [product, resetForm]);
+
+  const fetchSubcategories = async (categoryId) => {
+    const fetchedSubcategories = await getSousCategoriesbyIdCategory(categoryId);
+    setSubcategories(fetchedSubcategories);
+  };
+
 
   const handleOptionValueChange = (index, newValue) => {
     setFormData(prev => {
@@ -393,6 +427,24 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
               ))}
             </Select>
           </FormControl>
+          {subcategories.length > 0 && (
+            <FormControl fullWidth>
+              <InputLabel id="subcategory-label">Sous-catégorie</InputLabel>
+              <Select
+                labelId="subcategory-label"
+                name="souscategory"
+                value={formData?.souscategory}
+                onChange={handleInputChange}
+                label="Sous Catégorie"
+              >
+                {subcategories.map((subcategory) => (
+                  <MenuItem key={subcategory.id} value={subcategory}>
+                    {subcategory.frenchName}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          )}
            <FormControlLabel
               control={
                 <Switch
