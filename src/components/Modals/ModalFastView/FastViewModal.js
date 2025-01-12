@@ -151,7 +151,7 @@ const FastViewModal = () => {
           <Chip
             label={t("homePage.products.soldLabel")}
             color="warning"
-            sx={{ color: "white", marginLeft: 1 }}
+            sx={{ color: "white", marginLeft: 1 ,marginRight:1 }}
             size="small"
           />
         )}

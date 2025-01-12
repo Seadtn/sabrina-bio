@@ -39,7 +39,9 @@ const resources = {
             all: "All",
             herbs: "Herbs and grains",
             oils: "Natural Oils",
-            cosmetic: "Cosmetics",
+            cosmetic: "Health and Beauty",
+            pain:"Pain and Rheumatism",
+            diseases:"Diseases",
           },
           sort: {
             title: "Sort By",
@@ -91,8 +93,8 @@ const resources = {
             followUs: "Follow us",
           },
           aboutUs: {
-            par1: "Sabrina Bio is a Tunisian small business offering natural cosmetic products like oils and herbs. We believe in the power of nature to enhance beauty and well-being.",
-            par2: "Our products are crafted with care, promoting sustainability and the timeless beauty secrets of Tunisia. Choose Sabrina Bio for pure, natural beauty solutions.",
+            par1: "Sabrina Bio is Specialized in natural herbal treatment, offering you therapeutic mixtures, essential oils and cosmetic products",
+            par2: "",
           },
         },
         categories: {
@@ -155,7 +157,7 @@ const resources = {
         email: "Your Email",
         message: "Message",
         description:
-          "Sabrina Bio is a Tunisian small business offering natural cosmetic products like oils and herbs. We believe in the power of nature to enhance beauty and well-being",
+          "Sabrina Bio is Specialized in natural herbal treatment, offering you therapeutic mixtures, essential oils and cosmetic products",
         btn: "Send",
         error: "Please fill in all fields",
         modal: {
@@ -215,7 +217,9 @@ const resources = {
             all: "الكل",
             herbs: "الأعشاب و الحبوب",
             oils: "الزيوت الطبيعية",
-            cosmetic: "مستحضارات تجميل",
+            cosmetic: "الصحة والجمال",
+            pain:"الآلام والبرد	",
+            diseases:"الأمراض	",
           },
           sort: {
             title: "ترتيب حسب",
@@ -265,8 +269,8 @@ const resources = {
             followUs: "تابعنا",
           },
           aboutUs: {
-            par1: "صابرينا بيو هي شركة تونسية صغيرة تقدم منتجات تجميل طبيعية مثل الزيوت والأعشاب. نحن نؤمن بقوة الطبيعة في تعزيز الجمال والرفاهية.",
-            par2: "منتجاتنا مصنوعة بعناية، تروج للاستدامة وأسرار الجمال الخالدة في تونس. اختر صابرينا بيو لحلول الجمال الطبيعية والنقية.",
+            par1: "Sabrina Bio مختصة في العلاج بالأعشاب الطبيعية، تقدم لكم خلطات علاجية، زيوت أساسية و  منتجات تجميلية ...على خاطر نحبوكم بالحويجة الطبيعية والصحية نودوكم",
+            par2: "",
           },
         },
         categories: {
@@ -326,8 +330,7 @@ const resources = {
         subject: "الموضوع",
         email: "بريدك الإلكتروني",
         message: "الرسالة",
-        description:
-          "سابرينا بايو هي شركة صغيرة تونسية تقدم منتجات تجميل طبيعية مثل الزيوت والأعشاب. نحن نؤمن بقوة الطبيعة في تعزيز الجمال والرفاهية.",
+        description: "Sabrina Bio مختصة في العلاج بالأعشاب الطبيعية، تقدم لكم خلطات علاجية، زيوت أساسية و  منتجات تجميلية .. على خاطر نحبوكم بالحويجة الطبيعية والصحية نودوكم",
         btn: "إرسال",
         error: "الرجاء ملء جميع البيانات ",
         modal: {
@@ -387,7 +390,9 @@ const resources = {
             all: "Tout",
             herbs: "Herbes et Grains",
             oils: "Huiles Naturelles",
-            cosmetic: "Cosmétiques",
+            cosmetic: "Santé et Beauté",
+            pain:"Maux et Rhumatismes	",
+            diseases:"Maladies",
           },
           sort: {
             title: "Trier par",
@@ -439,8 +444,8 @@ const resources = {
             followUs: "Suivez-nous",
           },
           aboutUs: {
-            par1: "Sabrina Bio est une petite entreprise tunisienne offrant des produits cosmétiques naturels tels que des huiles et des herbes. Nous croyons au pouvoir de la nature pour sublimer la beauté et le bien-être.",
-            par2: "Nos produits sont soigneusement élaborés, promouvant la durabilité et les secrets de beauté intemporels de la Tunisie. Choisissez Sabrina Bio pour des solutions de beauté pures et naturelles.",
+            par1: "Sabrina Bio est Spécialisé dans les traitements naturels à base de plantes, vous proposant des mélanges thérapeutiques, des huiles essentielles et des produits cosmétiques",
+            par2: "",
           },
         },
         categories: {
@@ -503,8 +508,7 @@ const resources = {
         subject: "Sujet",
         email: "Votre Email",
         message: "Message",
-        description:
-          "Sabrina Bio est une petite entreprise tunisienne qui propose des produits cosmétiques naturels comme des huiles et des herbes. Nous croyons au pouvoir de la nature pour sublimer la beauté et le bien-être.",
+        description:"Sabrina Bio est Spécialisé dans les traitements naturels à base de plantes, vous proposant des mélanges thérapeutiques, des huiles essentielles et des produits cosmétiques",
         btn: "Envoyer",
         error: "Veuillez remplir tous les champs",
         modal: {

@@ -18,10 +18,18 @@ const Categories = () => {
       url: "/images/Categories/cosmetics.jpg", // Replace with a real image URL for cosmetics
       path: "homePage.products.category.cosmetic",
     },
+    {
+      url: "/images/Categories/diseases.jpg", // Replace with a real image URL for cosmetics
+      path: "homePage.products.category.diseases",
+    },
+    {
+      url: "/images/Categories/pain.jpg", // Replace with a real image URL for cosmetics
+      path: "homePage.products.category.pain",
+    },
   ];
 
   return (
-    <div>
+    <div >
       <h2 className="title">{t("homePage.categories.title")}</h2>
       <div
         className="row"

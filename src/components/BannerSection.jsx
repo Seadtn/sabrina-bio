@@ -49,7 +49,7 @@ const BannerSection = () => {
     fetchSliderData();
   }, []);
   return (
-    <div className="homeSlide" style={{ position: "relative" }}>
+    <div className="homeSlide" style={{ position: "relative"}}>
       <div
         className="background-overlay img__slider"
         style={{

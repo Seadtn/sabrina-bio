@@ -70,7 +70,7 @@ const Footer = () => {
         </div>
         <br />
         <p className="copyright">
-          Copyright Sabrine Bio store &copy; {new Date().getFullYear()}
+          Copyright Sabrina Bio store &copy; {new Date().getFullYear()}
         </p>
       </div>
     </div>

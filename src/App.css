@@ -98,6 +98,11 @@ nav ul li a:hover {
 .logo a {
   text-decoration: none;
 }
+.nav-element{
+  display: flex;
+  text-align: center;
+  align-items: center;
+}
 .cart_icon span {
   color: #2fcb00;
   background-color: #fff;
@@ -147,6 +152,9 @@ nav ul li a:hover {
     background-color: none;
   }
   .nav-links {
+    display: none;
+  }
+  nav ul li:first-child{
     display: none;
   }
   nav ul {
@@ -420,6 +428,7 @@ nav ul li a:hover {
   align-items: center;
   flex-wrap: wrap;
   justify-content: space-around;
+  margin-top: 30px;
 }
 .row_contact{
   display: flex;
@@ -1170,7 +1179,7 @@ form button {
   position: absolute;
   top: 100%;
   left: 0;
-  z-index: 3;
+  z-index: 5;
 }
 
 .dropdown {
@@ -1247,7 +1256,6 @@ form button {
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin: 20px 0;
 }
 
 .search-input-fr {
@@ -1257,7 +1265,6 @@ form button {
   border-radius: 25px 0 0 25px;
   font-size: 16px;
   transition: border 0.3s;
-  margin-bottom: 20px;
   outline: none;
   -webkit-border-radius: 25px 0 0 25px;
   -moz-border-radius: 25px 0 0 25px;
@@ -1269,7 +1276,6 @@ form button {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 0 25px 25px 0;
-  margin-bottom: 20px;
   font-size: 16px;
   transition: border 0.3s;
   outline: none;
@@ -1286,8 +1292,6 @@ form button {
 .search-button-fr {
   padding: 10px 15px;
   background-color: #2fcb00;
-  margin-bottom: 20px;
-
   color: #fff;
   width: 50px;
   border: none;
@@ -1303,8 +1307,6 @@ form button {
 .search-button-ar {
   padding: 10px 15px;
   background-color: #2fcb00;
-  margin-bottom: 20px;
-
   color: #fff;
   width: 50px;
   border: none;
@@ -1541,7 +1543,8 @@ form button {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  width: 450px;
+  margin-top: 20px;
+  width: 350px;
   height: 150px;
   border-radius: 5%;
   box-shadow: 0 0px 6px rgba(0, 0, 0, 0.2);
@@ -1721,4 +1724,49 @@ form button {
   .description-expanded {
     -webkit-line-clamp: unset; 
   }
+}
+.search-results {
+  position: absolute;
+  top: 10;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  z-index: 4;
+  max-height: 300px;
+  overflow-y: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-result-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.search-result-item:hover {
+  background-color: #f0f0f0;
+}
+
+.search-result-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.search-result-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.search-result-name {
+  font-size: 14px;
+  font-weight: 500;
 }

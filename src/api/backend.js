@@ -1,7 +1,7 @@
 import { getRequest, postRequest } from "./Request";
 
-const localhost = "http://135.125.1.158:8080";
-//const localhost = "http://localhost:8080";
+//const localhost = "http://135.125.1.158:8080";
+const localhost = "http://localhost:8080";
 const Product_URL = `${localhost}/api/v1/productManagement/`;
 const Command_URL = `${localhost}/api/v1/commandManagement/`;
 const Contact_URL = `${localhost}/api/v1/contactManagement/`;
@@ -93,6 +93,10 @@ export const deleteProduct = async (id) => {
     console.error("Error adding new product:", error.message);
     throw error;
   }
+};
+export const searchProductsByName = async (name) => {
+  const response = await getRequest(`${Product_URL}search?name=${name}`);
+  return response; 
 };
 export const getAllCommands = async () => {
   try {
