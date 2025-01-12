@@ -94,6 +94,7 @@ const NavBar = () => {
           <ul
             className={isMobile ? "nav-links-mobile" : "nav-links"}
             onClick={() => setIsMobile(false)}
+            dir={isArabic ? "rtl" : "ltr"} lang={isArabic ? "ar" : "fr"}
           >
             <li className="nav-element">
               <SearchBar onSearch={handleSearch} />
