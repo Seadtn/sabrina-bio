@@ -20,6 +20,7 @@ const FastViewModal = () => {
   const { successFastViewModal, product } = useSelector(
     (state) => state.fastView
   );
+  const isFrench = i18n.language === "fr";
   const { t } = useTranslation();
   const isArabic = i18n.language === "ar";
 
@@ -70,18 +71,33 @@ const FastViewModal = () => {
                 selectedOption === option.value ? "selected" : ""
               }`}
             >
-              {option.value}{" "}
-              {!isArabic
-                ? product?.productType === "GRAMMAGE"
-                  ? "g"
-                  : product?.productType === "DOSAGE"
-                    ? "ml"
-                    : ""
-                : product?.productType === "GRAMMAGE"
-                  ? "غ"
-                  : product?.productType === "DOSAGE"
-                    ? "مل"
-                    : ""}
+              {option.value >= 1000
+                ? `${option.value / 1000} ${
+                    !isArabic
+                      ? product.productType === "GRAMMAGE"
+                        ? "Kg"
+                        : product.productType === "DOSAGE"
+                          ? "L"
+                          : ""
+                      : product.productType === "GRAMMAGE"
+                        ? "كغ"
+                        : product.productType === "DOSAGE"
+                          ? "ل"
+                          : ""
+                  }`
+                : `${option.value} ${
+                    !isArabic
+                      ? product.productType === "GRAMMAGE"
+                        ? "g"
+                        : product.productType === "DOSAGE"
+                          ? "ml"
+                          : ""
+                      : product.productType === "GRAMMAGE"
+                        ? "غ"
+                        : product.productType === "DOSAGE"
+                          ? "مل"
+                          : ""
+                  }`}
             </button>
           ))}
         </div>
@@ -126,8 +142,11 @@ const FastViewModal = () => {
           backgroundColor: "#f5f5f5",
           borderBottom: "1px solid #e0e0e0",
         }}
+        dir={isArabic ? "rtl" : "ltr"}
+        lang={isArabic ? "ar" : "fr"}
       >
-        {product?.name}
+        {" "}
+        {isArabic ? product.name : isFrench ? product.nameFr : product.nameEng}
         {product?.promotion && (
           <Chip
             label={t("homePage.products.soldLabel")}
@@ -146,7 +165,11 @@ const FastViewModal = () => {
         )}
       </DialogTitle>
 
-      <DialogContent sx={{ p: 4, mt: 2 }}>
+      <DialogContent
+        sx={{ p: 4, mt: 2 }}
+        dir={isArabic ? "rtl" : "ltr"}
+        lang={isArabic ? "ar" : "fr"}
+      >
         <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
           {product?.image ? (
             <Box
@@ -190,20 +213,22 @@ const FastViewModal = () => {
           </Typography>
 
           {product.promotion && (
-            <Typography
-              variant="h6"
-              gutterBottom
-              className="price-product"
-            >
+            <Typography variant="h6" gutterBottom className="price-product">
               {promotionalPrice?.toFixed(2)} {!isArabic ? "DT" : "دت"}
             </Typography>
           )}
         </Box>
-        <Typography variant="body2" color="text.secondary" sx={{ mt: 2 }}>
-          {product?.description}
-        </Typography>
         {renderOptions()}
         {renderTastes()}
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{ mt: 2 }}
+          dir={"rtl"}
+          lang={"ar"}
+        >
+          {product?.description}
+        </Typography>
       </DialogContent>
 
       <DialogActions

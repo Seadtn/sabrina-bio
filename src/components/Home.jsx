@@ -8,7 +8,7 @@ import SearchBar from "./SearchBar";
 import Categories from "./Categories";
 import { Link } from "react-router-dom";
 import MostSeller from "./MostSeller";
-import {getBestSellers, getProductsSortedByNew } from "../api/backend";
+import {getBestSellers, getProductsInHomePage } from "../api/backend";
 
 
 const Home = () => {
@@ -38,9 +38,9 @@ const Home = () => {
     const getProducts = async () => {
       
       if (loadProducts) {
-        const newProduct = await getProductsSortedByNew();
-        setNewproducts(newProduct.slice(0, 6));
-        setFilter(newProduct.slice(0, 6));
+        const newProduct = await getProductsInHomePage();
+        setNewproducts(newProduct);
+        setFilter(newProduct);
         const bestSellerProducts = await getBestSellers();
         setBestSeller(bestSellerProducts);
       }

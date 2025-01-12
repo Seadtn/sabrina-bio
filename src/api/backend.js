@@ -1,7 +1,7 @@
 import { getRequest, postRequest } from "./Request";
 
-const localhost = "http://135.125.1.158:8080";
-//const localhost = "http://localhost:8080";
+//const localhost = "http://135.125.1.158:8080";
+const localhost = "http://localhost:8080";
 const Product_URL = `${localhost}/api/v1/productManagement/`;
 const Command_URL = `${localhost}/api/v1/commandManagement/`;
 const Contact_URL = `${localhost}/api/v1/contactManagement/`;
@@ -16,6 +16,10 @@ export const getAllProducts = async () => {
     console.error("Error fetching all products:", error.message);
     throw error;
   }
+};
+export const getPaginatedProducts = async (offset, limit) => {
+  const response = await getRequest(`${Product_URL}getAllProducts?offset=${offset}&limit=${limit}`);
+  return response;
 };
 export const getProductById = async (id) => {
   try {
@@ -49,14 +53,14 @@ export const getRelatedProducts = async (categoryId) => {
   }
 };
 
-export const getProductsSortedByNew = async () => {
+export const getProductsInHomePage = async () => {
   try {
     const sortedProducts = await getRequest(
-      Product_URL + "getProductsSortedByNew"
+      Product_URL + "getProductsInHomePage"
     );
     return sortedProducts;
   } catch (error) {
-    console.error("Error fetching products sorted by new:", error.message);
+    console.error("Error fetching products Home page:", error.message);
     throw error;
   }
 };

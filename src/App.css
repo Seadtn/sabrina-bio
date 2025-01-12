@@ -534,9 +534,11 @@ nav ul li a:hover {
   font-size: 14px;
 }
 
-.col-single .product-image {
-  width: 80%;
-  height: 500px;
+.col-single .product-image{
+  width: 100%;
+  height: 550px;
+  position: sticky;
+  top: 0;
 }
 .product img {
   width: 180px;
@@ -1682,4 +1684,41 @@ form button {
   background: #28a745;
   color: white;
   border-color: #25d366;
+}
+.description-container {
+  margin-bottom: 10px;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .description-container {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .description-collapsed {
+    -webkit-line-clamp: 7; 
+  }
+
+  .description-expanded {
+    -webkit-line-clamp: unset; 
+  }
+}
+
+/* Desktop styles */
+@media (min-width: 769px) {
+  .description-container {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .description-collapsed {
+    -webkit-line-clamp: 7; 
+  }
+
+  .description-expanded {
+    -webkit-line-clamp: unset; 
+  }
 }

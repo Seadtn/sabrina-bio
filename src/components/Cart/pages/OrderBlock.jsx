@@ -98,6 +98,8 @@ const OrderBlock = () => {
               <input
                 type="tel"
                 name="tel"
+                maxLength={8}
+                max={8}
                 dir={isArabic ? "rtl" : "ltr"}
                 lang={isArabic ? "ar" : "fr"}
                 className={`data__input ${isArabic ? "input-ar" : "input-fr"}`}

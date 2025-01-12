@@ -57,7 +57,6 @@ const SousCategoryFormModal = ({ sousCategory, open, onClose, onSave }) => {
     }));
   };
   const handleSubmit = () => {
-    console.log(formData);
     onSave(formData);
     onClose();
   };

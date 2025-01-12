@@ -63,11 +63,21 @@ const CartItem = ({
                   }}
                 >
                   {" "}
-                  {type === "GRAMMAGE"
-                    ? option + "g"
-                    : type === "DOSAGE"
-                      ? option + "ml"
-                      : ""}
+                  {option}
+                  {" "}
+                  {
+                    !isArabic
+                      ? type === "GRAMMAGE"
+                        ? "Kg"
+                        :type === "DOSAGE"
+                          ? "L"
+                          : ""
+                      : type === "GRAMMAGE"
+                        ? "كغ"
+                        : type === "DOSAGE"
+                          ? "ل"
+                          : ""
+                  }{" "}
                   {taste ? "-" + taste : ""}
                 </small>
               </Link>

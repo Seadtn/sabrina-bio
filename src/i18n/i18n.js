@@ -23,8 +23,7 @@ const resources = {
         },
         slider: {
           collectionBtn: "visit collections",
-          description:
-            "Discover the ultimate online destination for beauty enthusiasts! Explore the latest trends in cosmetics that make a difference. From in-depth reviews to must-have products for women, men, and kids, we have everything you need to elevate your beauty game",
+          description:"Discover the ultimate destination for lovers of nature and beautyExplore the latest trends in the world of natural beauty that are making a difference. Beauty, essential and therapeutic products for men, women and children.We have everything you need for your health and beauty",
           type: {
             firstShop: "{{itm}}% Off For Your First Shopping",
             newProduct: "Check out our new arrivals !",
@@ -57,6 +56,8 @@ const resources = {
             grammage: "Weight",
             dosage: "Dose",
             gouts: "Flavors",
+            showLess:"Show Less",
+            viewAll:"View All",
           },
           viewAllBtn: "View All",
           viewBtn: "Fast View",
@@ -96,6 +97,9 @@ const resources = {
         },
         categories: {
           title: "Our Categories",
+        },
+        subcategories: {
+          title: "Subcategories",
         },
       },
       cartPage: {
@@ -195,8 +199,7 @@ const resources = {
         },
         slider: {
           collectionBtn: "زيارة المجموعات",
-          description:
-            "اكتشف الوجهة النهائية على الإنترنت لعشاق الجمال! استكشف أحدث الاتجاهات في مستحضرات التجميل التي تُحدث فرقًا. من المراجعات المتعمقة إلى المنتجات الأساسية للنساء والرجال والأطفال، لدينا كل ما تحتاجه لتحسين روتينك الجمالي",
+          description:"اكتشف الوجهة النهائية لعشاق الطبيعية والجمال  استكشف أحدث الاتجاهات في عالم الطبيعية والجمال التي تحدث فرقا. منتجات جمالية، أساسية وعلاجية للرجال، النساء والأطفال. لدينا كل ما تحتاجه لصحتك وجمالك",
           type: {
             firstShop: "خصم على تسوقك الأول ٪{{itm}}",
             newProduct: "! تصفح أحدث المنتجات لدينا",
@@ -229,6 +232,8 @@ const resources = {
             grammage: "الوزن",
             dosage: "الجرعة",
             gouts: "النّكهات",
+            showLess:"عرض أقل",
+            viewAll:"عرض الكل",
           },
           viewAllBtn: "عرض الكل",
           viewBtn: "عرض سريع",
@@ -266,6 +271,9 @@ const resources = {
         },
         categories: {
           title: "فئاتنا",
+        },
+        subcategories: {
+          title: "الفئات الفرعية",
         },
       },
       cartPage: {
@@ -363,8 +371,7 @@ const resources = {
         },
         slider: {
           collectionBtn: " Visiter les collections",
-          description:
-            "Découvrez la destination en ligne ultime pour les passionnés de beauté ! Explorez les dernières tendances en cosmétique qui font la différence. Des critiques approfondies aux produits incontournables pour les femmes, les hommes et les enfants, nous avons tout ce qu'il vous faut pour rehausser votre routine beauté",
+          description:"Découvrez la destination ultime pour les amoureux de nature et de beauté Découvrez les dernières tendances dans le monde de la beauté naturelle qui font la différence. Produits de beauté, essentiels et thérapeutiques pour hommes, femmes et enfants.Nous avons tout ce dont vous avez besoin pour votre santé et votre beauté",
           type: {
             firstShop: "{{itm}}% de réduction pour vos premiers achats",
             newProduct: "Découvrez nos nouvelles arrivées !",
@@ -397,6 +404,8 @@ const resources = {
             grammage: "Grammage",
             dosage: "Dosage",
             gouts: "Goûts",
+            showLess:"Voir moins",
+            viewAll:"Voir tout",
           },
           viewAllBtn: "Voir tout",
           viewBtn: "Vue rapide",
@@ -437,6 +446,9 @@ const resources = {
         categories: {
           title: "Nos catégories",
         },
+        subcategories:{
+          title:"Sous-catégories",
+        }
       },
       cartPage: {
         cart: {

@@ -4,6 +4,7 @@ import i18n from "../i18n/i18n";
 
 const MostSellerCard = ({ product }) => {
   const isArabic = i18n.language === "ar";
+  const isFrench = i18n.language === "fr";
 
   // Function to detect if the user is on a mobile device
 const isMobile = () => {
@@ -81,9 +82,54 @@ const displayPrice = getDisplayPrice();
         </Link>
       </div>
       <h2 className="product-title">
-        {product.name.length > 20
-          ? `${product.name.substring(0, 20)}...`
-          : product.name}<small style={{color:"gray"}}> {product.price===0 ? product.availableOptions[0].value +product.availableOptions[0].unit:""}</small>
+      <>
+          {(() => {
+            const name = isArabic
+              ? product.name
+              : isFrench
+                ? product.nameFr
+                : product.nameEng;
+
+            const truncatedName =
+              name?.length > 25 ? `${name.substring(0, 25)}...` : name;
+
+            const unit = product.availableOptions?.[0]?.unit;
+            const value = product.availableOptions?.[0]?.value;
+
+            const localizedUnit =
+              value >= 1000
+                ? unit === "g"
+                  ? isArabic
+                    ? "كغ"
+                    : "Kg"
+                  : unit === "ml"
+                    ? isArabic
+                      ? "ل"
+                      : "L"
+                    : ""
+                : unit === "g"
+                  ? isArabic
+                    ? "غ"
+                    : "g"
+                  : unit === "ml"
+                    ? isArabic
+                      ? "مل"
+                      : "ml"
+                    : "";
+
+            const optionDisplay =
+              product.productType !== "STANDARD" && value
+                ? ` ${value >= 1000 ? value / 1000 : value} ${localizedUnit} `
+                : "";
+
+            return (
+              <>
+                {truncatedName}
+                <small style={{ color: "gray" }}>{optionDisplay}</small>
+              </>
+            );
+          })()}
+        </>
       </h2>
 
       {product.promotion === true ? (

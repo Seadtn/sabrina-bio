@@ -95,7 +95,6 @@ export default function Dashboard() {
         const Contact = await getAllContacts();
         setContacts(Contact.reverse());
         const sousCategories = await getAllSousCategories();
-        console.log(sousCategories)
         setSousCategories(sousCategories);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -178,20 +177,20 @@ export default function Dashboard() {
                   style={{ background: "#2fcb00" }}
                   onClick={()=>{handleAddProduct()}}
                 >
-                  Add Product
+                  Ajouter un  Produit
                 </Button>
               </Grid>
 
               {/* Filters Section */}
               <Grid item xs={12} sm={4}>
                 <FormControl fullWidth>
-                  <InputLabel>Category</InputLabel>
+                  <InputLabel>Categorie</InputLabel>
                   <Select
                     value={category}
                     onChange={handleCategoryChange}
                     label="Category"
                   >
-                    <MenuItem value="">All</MenuItem>
+                    <MenuItem value="">Tous</MenuItem>
                     {categories.map((cat) => (
                       <MenuItem key={cat.id} value={cat.id}>
                         {cat.frenchName}
@@ -204,7 +203,7 @@ export default function Dashboard() {
               <Grid item xs={12} sm={4}>
                 <TextField
                   fullWidth
-                  label="Search by Product Name"
+                  label="Nom de produit"
                   value={searchTerm}
                   onChange={handleSearchChange}
                 />
@@ -212,15 +211,15 @@ export default function Dashboard() {
 
               <Grid item xs={12} sm={4}>
                 <FormControl fullWidth>
-                  <InputLabel>Sort By</InputLabel>
+                  <InputLabel>Trier par</InputLabel>
                   <Select
                     value={sortOption}
                     onChange={handleSortChange}
                     label="Sort By"
                   >
-                    <MenuItem value="">None</MenuItem>
-                    <MenuItem value="sale">On Sale</MenuItem>
-                    <MenuItem value="new">New</MenuItem>
+                    <MenuItem value="">Non</MenuItem>
+                    <MenuItem value="sale">Soldé</MenuItem>
+                    <MenuItem value="new">Nouveau</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
