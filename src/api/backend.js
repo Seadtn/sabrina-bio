@@ -1,7 +1,7 @@
 import { getRequest, postRequest } from "./Request";
 
-const localhost = "http://135.125.1.158:8080";
-//const localhost = "http://localhost:8080";
+//const localhost = "http://135.125.1.158:8080";
+const localhost = "http://localhost:8080";
 const Product_URL = `${localhost}/api/v1/productManagement/`;
 const Command_URL = `${localhost}/api/v1/commandManagement/`;
 const Contact_URL = `${localhost}/api/v1/contactManagement/`;
@@ -17,8 +17,9 @@ export const getAllProducts = async () => {
     throw error;
   }
 };
+
 export const getPaginatedProducts = async (offset, limit) => {
-  const response = await getRequest(`${Product_URL}getAllProducts?offset=${offset}&limit=${limit}`);
+  const response = await getRequest(`${Product_URL}getAllProductsbyPages?offset=${offset}&limit=${limit}`);
   return response;
 };
 export const getProductById = async (id) => {

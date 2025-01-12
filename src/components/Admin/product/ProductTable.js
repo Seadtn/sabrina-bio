@@ -35,6 +35,7 @@ const ProductTable = ({ products, onEdit, onView, onDelete }) => {
             <TableCell>Image</TableCell>
             <TableCell>Nom</TableCell>
             <TableCell>Catégorie</TableCell>
+            <TableCell>Sous-Catégorie</TableCell>
             <TableCell>Description</TableCell>
             <TableCell>Prix</TableCell>
             <TableCell>Quantité</TableCell>
@@ -66,6 +67,7 @@ const ProductTable = ({ products, onEdit, onView, onDelete }) => {
                 </TableCell>
                 <TableCell>{product.name}</TableCell>
                 <TableCell>{product.category?.frenchName}</TableCell>
+                <TableCell>{product.souscategory?.frenchName}</TableCell>
                 <TableCell>
                   {product.description.length > 25
                     ? product.description.substring(0, 25) + "..."
