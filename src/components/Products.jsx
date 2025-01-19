@@ -1,20 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import "../App.css";
 import ProductCard from "./ProductCard";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useTranslation } from "react-i18next";
 import Loader from "./loader/Loader";
 import i18n from "../i18n/i18n";
-import { Link } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { getAllCategories, getPaginatedProducts, getSousCategoriesbyIdCategory } from "../api/backend";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
-  const [filteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [category, setCategory] = useState("");
-  const [subcategory, setSubcategory] = useState(""); 
-  const [subcategories, setSubcategories] = useState([]); 
+  const [subcategory, setSubcategory] = useState("");
+  const [subcategories, setSubcategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOption, setSortOption] = useState("");
   const [currentOffset, setCurrentOffset] = useState(0);
@@ -25,22 +24,56 @@ const Products = () => {
   const [categories, setCategories] = useState([]);
   const PRODUCTS_LIMIT = 9;
 
-  useEffect(() => {
-    const fetchInitialProducts = async () => {
-      setLoading(true);
-      try {
-        const data = await getPaginatedProducts(0, PRODUCTS_LIMIT);
-        setProducts(data);
-        setFilteredProducts(data);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const location = useLocation();
 
-    fetchInitialProducts();
-  }, []);
+  // Fetch products
+  const fetchProducts = useCallback(async (offset = 0, filters = {}) => {
+    const {
+      categoryId = category,
+      subcategoryId = subcategory,
+      search = searchTerm,
+      sort = sortOption,
+    } = filters;
+
+    setLoading(offset === 0);
+    setLoadingMore(offset > 0);
+
+    try {
+      const data = await getPaginatedProducts({
+        offset,
+        limit: PRODUCTS_LIMIT,
+        categoryId,
+        subcategoryId,
+        search,
+        sort,
+      });
+
+      if (offset === 0) {
+        setProducts(data);
+      } else {
+        setProducts((prev) => [...prev, ...data]);
+      }
+
+      setCurrentOffset(offset);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    } finally {
+      setLoading(false);
+      setLoadingMore(false);
+    }
+  }, [category, subcategory, searchTerm, sortOption]);
+
+  // Handle initial query param for category
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const initialCategory = params.get("category");
+    if (initialCategory) {
+      setCategory(initialCategory);
+      fetchProducts(0, { categoryId: initialCategory });
+    } else {
+      fetchProducts();
+    }
+  }, [location.search, fetchProducts]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -70,81 +103,48 @@ const Products = () => {
     }
   }, [category]);
 
-  useEffect(() => {
-    const getPrice = (product) => {
-      if (product.productType !== "STANDARD" && product.availableOptions?.length > 0) {
-        const prices = Object.values(product.prices);
-        const baseValue = Math.min(...prices);
-        return product.promotion
-          ? baseValue - baseValue * product.soldRatio * 0.01
-          : baseValue;
-      }
-      return product.promotion
-        ? product.price - product.price * product.soldRatio * 0.01
-        : product.price;
+  // Debounce function to prevent too many API calls
+  const debounce = (func, wait) => {
+    let timeout;
+    return (...args) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func(...args), wait);
     };
+  };
 
-    let filtered = products.filter((product) => {
-      const matchesCategory = category
-        ? product.category?.id + "" === category
-        : true;
-      const matchesSubcategory = subcategory
-        ? product.souscategory?.id + "" === subcategory
-        : true;
-      const matchesSearchTerm = product.name
-        ?.toLowerCase()
-        .includes(searchTerm.toLowerCase());
-      return matchesCategory && matchesSubcategory && matchesSearchTerm;
-    });
-
-    if (sortOption === "highPrice") {
-      filtered = filtered.sort((a, b) => getPrice(b) - getPrice(a));
-    } else if (sortOption === "lowPrice") {
-      filtered = filtered.sort((a, b) => getPrice(a) - getPrice(b));
-    } else if (sortOption === "name") {
-      filtered = filtered.sort((a, b) => {
-        return (
-          a.name.localeCompare(b.name) ||
-          a.nameFr.localeCompare(b.nameFr) ||
-          a.nameEng.localeCompare(b.nameEng)
-        );
-      });
-    }
-
-    setFilteredProducts(filtered);
-  }, [category, subcategory, searchTerm, sortOption, products]);
-
+  // Modified handlers to trigger new API calls
   const handleCategoryChange = (event) => {
-    setCategory(event.target.value);
-    setSubcategory(""); // Reset subcategory when category changes
+    const newCategory = event.target.value;
+    setCategory(newCategory);
+    setSubcategory("");
+    fetchProducts(0, { categoryId: newCategory, subcategoryId: "" });
   };
 
   const handleSubcategoryChange = (event) => {
-    setSubcategory(event.target.value);
+    const newSubcategory = event.target.value;
+    setSubcategory(newSubcategory);
+    fetchProducts(0, { subcategoryId: newSubcategory });
   };
 
+  // Debounced search handler
+  const debouncedSearch = debounce((value) => {
+    fetchProducts(0, { search: value });
+  }, 500);
+
   const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
+    const value = event.target.value;
+    setSearchTerm(value);
+    debouncedSearch(value);
   };
 
   const handleSortChange = (event) => {
-    setSortOption(event.target.value);
+    const value = event.target.value;
+    setSortOption(value);
+    fetchProducts(0, { sort: value });
   };
 
-  const handleViewMore = async () => {
-    setLoadingMore(true);
-    try {
-      const data = await getPaginatedProducts(
-        currentOffset + PRODUCTS_LIMIT,
-        PRODUCTS_LIMIT
-      );
-      setProducts((prevProducts) => [...prevProducts, ...data]);
-      setCurrentOffset((prevOffset) => prevOffset + PRODUCTS_LIMIT);
-    } catch (error) {
-      console.error("Error loading more products:", error);
-    } finally {
-      setLoadingMore(false);
-    }
+  const handleViewMore = () => {
+    fetchProducts(currentOffset + PRODUCTS_LIMIT);
   };
 
   return (
@@ -152,7 +152,6 @@ const Products = () => {
       <div className="content">
         <h2 className="title">{t("homePage.products.title")}</h2>
 
-        {/* Filters */}
         <div className="filters" dir={isArabic ? "rtl" : "ltr"} lang={isArabic ? "ar" : "fr"}>
           <div className="filter-category">
             <label>{t("homePage.categories.title")} :</label>
@@ -195,42 +194,34 @@ const Products = () => {
             <label>{t("homePage.products.sort.title")} :</label>
             <select value={sortOption} onChange={handleSortChange} className="data__input">
               <option value="">{t("homePage.products.sort.select")}</option>
-              <option value="highPrice">
-                {t("homePage.products.sort.highPrice")}
-              </option>
-              <option value="lowPrice">
-                {t("homePage.products.sort.lowPrice")}
-              </option>
+              <option value="highPrice">{t("homePage.products.sort.highPrice")}</option>
+              <option value="lowPrice">{t("homePage.products.sort.lowPrice")}</option>
               <option value="name">{t("homePage.products.sort.name")}</option>
             </select>
           </div>
         </div>
 
-        {/* Product List */}
         <div className="row products">
           {loading ? (
             <Loader />
           ) : (
-            filteredProducts?.map((product) => (
+            products?.map((product) => (
               <ProductCard product={product} key={product.id} />
             ))
           )}
         </div>
 
-        {/* "View More" Button */}
-        {filteredProducts?.length > 0 && filteredProducts?.length % PRODUCTS_LIMIT === 0 && (
+        {products?.length > 0 && products?.length % PRODUCTS_LIMIT === 0 && (
           <div className="viewContainer">
             <button className="btn-primary" onClick={handleViewMore} disabled={loadingMore}>
-              <Link to="#" className="btn-link">
-                {loadingMore ? (
-                  <div className="loading-more">
-                    <span className="loader-circle"></span>
-                    {t("homePage.products.viewAllBtn")}
-                  </div>
-                ) : (
-                  t("homePage.products.viewAllBtn")
-                )}
-              </Link>
+              {loadingMore ? (
+                <div className="loading-more">
+                  <span className="loader-circle"></span>
+                  {t("homePage.products.viewAllBtn")}
+                </div>
+              ) : (
+                t("homePage.products.viewAllBtn")
+              )}
             </button>
           </div>
         )}

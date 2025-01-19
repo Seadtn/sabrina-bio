@@ -18,8 +18,17 @@ export const getAllProducts = async () => {
   }
 };
 
-export const getPaginatedProducts = async (offset, limit) => {
-  const response = await getRequest(`${Product_URL}getAllProductsbyPages?offset=${offset}&limit=${limit}`);
+export const getPaginatedProducts = async (params) => {
+  const queryParams = new URLSearchParams({
+    offset: params.offset || 0,
+    limit: params.limit || 9,
+    ...(params.categoryId && { categoryId: params.categoryId }),
+    ...(params.subcategoryId && { subcategoryId: params.subcategoryId }),
+    ...(params.search && { search: params.search }),
+    ...(params.sort && { sort: params.sort })
+  }).toString();
+
+  const response = await getRequest(`${Product_URL}getAllProductsbyPages?${queryParams}`);
   return response;
 };
 export const getProductById = async (id) => {
