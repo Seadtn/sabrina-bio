@@ -20,6 +20,15 @@ const ProductCard = ({ product }) => {
       navigator.userAgent
     );
   };
+  const getName = (product) => {
+    if (isArabic) {
+      return product.name || product.nameFr || product.nameEng || "";
+    } else if (isFrench) {
+      return product.nameFr || product.name || product.nameEng || "";
+    } else {
+      return product.nameEng || product.name || product.nameFr || "";
+    }
+  };
   const navigate = useNavigate();
   // Share on Facebook Messenger
   const shareOnMessenger = () => {
@@ -77,7 +86,7 @@ const ProductCard = ({ product }) => {
           : product.price,
         maxQuantity: product.quantity,
         type: product.productType,
-        title: isArabic ? product.name  : isFrench ? product.nameFr :product.nameEng ,
+        title: getName(product) ,
       })
     );
   };
@@ -174,11 +183,7 @@ const ProductCard = ({ product }) => {
       >
         <>
           {(() => {
-            const name = isArabic
-              ? product.name
-              : isFrench
-                ? product.nameFr
-                : product.nameEng;
+            const name = getName(product);
 
             const truncatedName =
               name?.length > 25 ? `${name.substring(0, 25)}...` : name;

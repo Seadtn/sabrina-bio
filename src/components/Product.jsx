@@ -44,7 +44,7 @@ const Product = () => {
         type: product.productType,
         taste: selectedTaste,
         option: selectedOption >=1000 ? selectedOption/1000 : selectedOption,
-        title: isArabic ? product.name  : isFrench ? product.nameFr :product.nameEng ,
+        title: getName(product) ,
       })
     );
   };
@@ -80,7 +80,15 @@ const Product = () => {
 
     fetchProductAndRelated();
   }, [id]);
-
+  const getName = (product) => {
+    if (isArabic) {
+      return product.name || product.nameFr || product.nameEng || "";
+    } else if (isFrench) {
+      return product.nameFr || product.name || product.nameEng || "";
+    } else {
+      return product.nameEng || product.name || product.nameFr || "";
+    }
+  };
   const getDisplayPrice = () => {
     if (!product.hasTaste && !product.availableOptions?.length) {
       return product.price;
@@ -268,11 +276,7 @@ const Product = () => {
               <div className="col-single">
                 <h2>
                   {" "}
-                  {isArabic
-                    ? product.name
-                    : isFrench
-                      ? product.nameFr
-                      : product.nameEng}
+                  {getName(product)}
                 </h2>
 
                 <h4

@@ -64,7 +64,15 @@ const getDisplayPrice = () => {
   }
   return product.price;
 };
-
+const getName = (product) => {
+  if (isArabic) {
+    return product.name || product.nameFr || product.nameEng || "";
+  } else if (isFrench) {
+    return product.nameFr || product.name || product.nameEng || "";
+  } else {
+    return product.nameEng || product.name || product.nameFr || "";
+  }
+};
 // Get the actual price to display
 const displayPrice = getDisplayPrice();
 
@@ -84,11 +92,7 @@ const displayPrice = getDisplayPrice();
       <h2 className="product-title">
       <>
           {(() => {
-            const name = isArabic
-              ? product.name
-              : isFrench
-                ? product.nameFr
-                : product.nameEng;
+            const name = getName(product)
 
             const truncatedName =
               name?.length > 25 ? `${name.substring(0, 25)}...` : name;
