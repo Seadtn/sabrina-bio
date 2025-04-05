@@ -14,7 +14,7 @@ const FavoritesBlock = ({ id, imageUrl, title, price, sizes }) => {
   return (
     <div className="favorites__column">
       <div className="favorites__img">
-        <Link to={`/sabrina-bio/product/${id}`} aria-label="favoritesImg">
+        <Link to={`/product/${id}`} aria-label="favoritesImg">
           <img src={imageUrl} alt="" />
         </Link>
         <button aria-label="favoritesIcon" className="favorites__icon" onClick={onClickRemove}>

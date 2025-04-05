@@ -25,7 +25,7 @@ const Contact =  () => {
       }
       setError(false);
       addNewContact(contact);
-      navigation("/sabrina-bio/")
+      navigation("/")
     }
       
   };
@@ -80,10 +80,10 @@ const Contact =  () => {
                     </a>
                   </li>
                   <li dir="ltr" lang="fr">
-                    <i className="fa fa-phone-alt"></i> +216 22 547 506
+                    <i className="fa fa-phone-alt"></i> +216 22 014 257
                   </li>
                   <li dir="ltr" lang="fr">
-                    <i className="fa fa-phone-alt"></i> +216 22 547 506
+                    <i className="fa fa-phone-alt"></i> +216 52 052 265
                   </li>
                 </ul>
                 {error && <div style={{ textAlign: "center"}}>

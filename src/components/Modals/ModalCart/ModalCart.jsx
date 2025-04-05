@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -14,11 +14,6 @@ const ModalCart = () => {
     dispatch(setSuccessModal());
   };
 
-  //const { id } = useParams();
-  useEffect(() => {
-    const element = document.getElementById("modal-id");
-    document.body.appendChild(element); // Moves the element to the body
-  }, []);
   return (
     <div
       className="modal" id="modal-id"
@@ -48,7 +43,7 @@ const ModalCart = () => {
             {t("Modals.modalCart.btn1")}
           </button>
           <button className="button__right" onClick={toggleSwitchOk}>
-            <Link to={`/sabrina-bio/cart`}>{t("Modals.modalCart.btn2")}</Link>
+            <Link to={`/cart`}>{t("Modals.modalCart.btn2")}</Link>
           </button>
         </div>
       </div>

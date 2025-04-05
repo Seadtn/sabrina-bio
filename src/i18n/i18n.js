@@ -10,6 +10,7 @@ const resources = {
         facebook: "Facebook",
         instagram: "Instagram",
         tiktok: "Tiktok",
+        btnClose: "Close",
       },
       homePage: {
         menu: {
@@ -18,12 +19,11 @@ const resources = {
           products: "Products",
           contact: "Contact Us",
           livraisonText: "Free delivery starting from ",
-          livraisonPrix: "300 DT",
+          livraisonPrix: "100 DT",
         },
         slider: {
           collectionBtn: "visit collections",
-          description:
-            "Discover the ultimate online destination for beauty enthusiasts! Explore the latest trends in cosmetics that make a difference. From in-depth reviews to must-have products for women, men, and kids, we have everything you need to elevate your beauty game",
+          description:"Discover the ultimate destination for lovers of nature and beautyExplore the latest trends in the world of natural beauty that are making a difference. Beauty, essential and therapeutic products for men, women and children.We have everything you need for your health and beauty",
           type: {
             firstShop: "{{itm}}% Off For Your First Shopping",
             newProduct: "Check out our new arrivals !",
@@ -34,28 +34,37 @@ const resources = {
           title: "Our Products",
           new: "New Products",
           newLabel: "New",
-          soldLabel:"On Sale",
+          soldLabel: "On Sale",
           category: {
             all: "All",
             herbs: "Herbs and grains",
             oils: "Natural Oils",
-            cosmetic: "Cosmetics",
+            cosmetic: "Health and Beauty",
+            pain:"Pain and Rheumatism",
+            diseases:"Diseases",
           },
           sort: {
-            title:"Sort By",
+            title: "Sort By",
             select: "Select option",
             highPrice: "High Price",
             lowPrice: "Low Price",
             name: "Name,",
           },
-          search:{
-            title:"Search",
-            input:"Search by  name..."
+          search: {
+            title: "Search",
+            input: "Search by  name...",
+          },
+          details: {
+            grammage: "Weight",
+            dosage: "Dose",
+            gouts: "Flavors",
+            showLess:"Show Less",
+            viewAll:"View All",
           },
           viewAllBtn: "View All",
           viewBtn: "Fast View",
           buyBtn: "Buy",
-         related:"Related Products"
+          related: "Related Products",
         },
         deliverySection: {
           delivery: {
@@ -84,12 +93,15 @@ const resources = {
             followUs: "Follow us",
           },
           aboutUs: {
-            par1: "Sabrina Bio is a Tunisian small business offering natural cosmetic products like oils and herbs. We believe in the power of nature to enhance beauty and well-being.",
-            par2: "Our products are crafted with care, promoting sustainability and the timeless beauty secrets of Tunisia. Choose Sabrina Bio for pure, natural beauty solutions.",
+            par1: "Sabrina Bio is Specialized in natural herbal treatment, offering you therapeutic mixtures, essential oils and cosmetic products",
+            par2: "",
           },
         },
         categories: {
           title: "Our Categories",
+        },
+        subcategories: {
+          title: "Subcategories",
         },
       },
       cartPage: {
@@ -113,14 +125,14 @@ const resources = {
           catchPhrase3:
             "You can pay for your purchase in one of the following ways",
           phraseTic1: "Full subscription via Privat 24",
-          phraseTic2: "Cash on delivery at the Nova Poshta branch",
-          phraseTic3: "Visa/MasterCard money transfer",
+          phraseTic2: "Cash on delivery",
+          phraseTic3: "Poste money transfer",
           catchPhrase4: "Promo code",
           leftLine11: "Delivery ",
-          leftLine12: "At the carrier's rates",
+          leftLine12: "8 DT",
           leftLine2: "Total price",
           closingPhrase:
-            "By clicking on the 'pay for thethe order' button, I accept the terms of the public offer and policy Privacy",
+            "By clicking on the 'pay for the order' button, I accept the terms of the public offer and policy Privacy",
           empty: {
             title: "Favorites",
             desc1: "THERE ARE NO PRODUCTS IN FAVORITES",
@@ -140,28 +152,32 @@ const resources = {
       favorites: {
         title: "Favorites",
       },
-      contactPage:{
-        subject : "Subject",
-        email:"Your Email",
-        message:"Message",
-        description:"Sabrina Bio is a Tunisian small business offering natural cosmetic products like oils and herbs. We believe in the power of nature to enhance beauty and well-being",
-        btn:"Send",
-        error:"Please fill in all fields"
-      },
-      Modals:{
-        modalCart:{
-          title:"Performed",
-          msg:"The product has been successfully added to the cart",
-          btn1:"Continue shopping",
-          btn2:"Go to cart"
+      contactPage: {
+        subject: "Subject",
+        email: "Your Email",
+        message: "Message",
+        description:
+          "Sabrina Bio is Specialized in natural herbal treatment, offering you therapeutic mixtures, essential oils and cosmetic products",
+        btn: "Send",
+        error: "Please fill in all fields",
+        modal: {
+          msg: "Your command has been sent successfully!",
         },
-        ModalFavorites:{
-          title:"Performed",
-          msg:"The product has been successfully added to favorites",
-          btn1:"Continue shopping",
-          btn2:"Go to favorites"
-        }
-      }
+      },
+      Modals: {
+        modalCart: {
+          title: "Performed",
+          msg: "The product has been successfully added to the cart",
+          btn1: "Continue shopping",
+          btn2: "Go to cart",
+        },
+        ModalFavorites: {
+          title: "Performed",
+          msg: "The product has been successfully added to favorites",
+          btn1: "Continue shopping",
+          btn2: "Go to favorites",
+        },
+      },
       // Add more translations here
     },
   },
@@ -172,6 +188,7 @@ const resources = {
         facebook: "فيسبوك",
         instagram: "إنستغرام",
         tiktok: "تيك توك",
+        btnClose: "اغلاق",
       },
       homePage: {
         menu: {
@@ -180,12 +197,11 @@ const resources = {
           products: "المنتجات",
           contact: "اتصل بنا",
           livraisonText: "توصيل مجاني ابتداءً من ",
-          livraisonPrix: "300 د.ت",
+          livraisonPrix: "100 د.ت",
         },
         slider: {
           collectionBtn: "زيارة المجموعات",
-          description:
-            "اكتشف الوجهة النهائية على الإنترنت لعشاق الجمال! استكشف أحدث الاتجاهات في مستحضرات التجميل التي تُحدث فرقًا. من المراجعات المتعمقة إلى المنتجات الأساسية للنساء والرجال والأطفال، لدينا كل ما تحتاجه لتحسين روتينك الجمالي",
+          description:"اكتشف الوجهة النهائية لعشاق الطبيعية والجمال  استكشف أحدث الاتجاهات في عالم الطبيعية والجمال التي تحدث فرقا. منتجات جمالية، أساسية وعلاجية للرجال، النساء والأطفال. لدينا كل ما تحتاجه لصحتك وجمالك",
           type: {
             firstShop: "خصم على تسوقك الأول ٪{{itm}}",
             newProduct: "! تصفح أحدث المنتجات لدينا",
@@ -196,12 +212,14 @@ const resources = {
           title: "منتجاتنا",
           new: "منتجاتنا الجديدة",
           newLabel: "جديد",
-          soldLabel:"مُخفض",
+          soldLabel: "مُخفض",
           category: {
             all: "الكل",
             herbs: "الأعشاب و الحبوب",
             oils: "الزيوت الطبيعية",
-            cosmetic: "مستحضارات تجميل",
+            cosmetic: "الصحة والجمال",
+            pain:"الآلام والبرد	",
+            diseases:"الأمراض	",
           },
           sort: {
             title: "ترتيب حسب",
@@ -212,12 +230,19 @@ const resources = {
           },
           search: {
             title: "بحث",
-            input: "ابحث بالاسم..."
+            input: "ابحث بالاسم...",
+          },
+          details: {
+            grammage: "الوزن",
+            dosage: "الجرعة",
+            gouts: "النّكهات",
+            showLess:"عرض أقل",
+            viewAll:"عرض الكل",
           },
           viewAllBtn: "عرض الكل",
           viewBtn: "عرض سريع",
           buyBtn: "شراء",
-          related: "منتجات ذات صلة"
+          related: "منتجات ذات صلة",
         },
         deliverySection: {
           delivery: {
@@ -244,12 +269,15 @@ const resources = {
             followUs: "تابعنا",
           },
           aboutUs: {
-            par1: "صابرينا بيو هي شركة تونسية صغيرة تقدم منتجات تجميل طبيعية مثل الزيوت والأعشاب. نحن نؤمن بقوة الطبيعة في تعزيز الجمال والرفاهية.",
-            par2: "منتجاتنا مصنوعة بعناية، تروج للاستدامة وأسرار الجمال الخالدة في تونس. اختر صابرينا بيو لحلول الجمال الطبيعية والنقية.",
+            par1: "Sabrina Bio مختصة في العلاج بالأعشاب الطبيعية، تقدم لكم خلطات علاجية، زيوت أساسية و  منتجات تجميلية ...على خاطر نحبوكم بالحويجة الطبيعية والصحية نودوكم",
+            par2: "",
           },
         },
         categories: {
           title: "فئاتنا",
+        },
+        subcategories: {
+          title: "الفئات الفرعية",
         },
       },
       cartPage: {
@@ -271,11 +299,11 @@ const resources = {
           linePhrase: "عنوان التوصيل",
           catchPhrase3: "يمكنك الدفع لشرائك بإحدى الطرق التالية",
           phraseTic1: "الاشتراك الكامل عبر Privat 24",
-          phraseTic2: "الدفع نقدًا عند التسليم في فرع Nova Poshta",
-          phraseTic3: "تحويل أموال بواسطة Visa/MasterCard",
+          phraseTic2: "الدفع نقدًا عند التسليم ",
+          phraseTic3: "تحويل أموال بواسطة Poste",
           catchPhrase4: "رمز الخصم",
           leftLine11: " التوصيل",
-          leftLine12: " حسب أسعارالناقل",
+          leftLine12: "8 د.ت",
           leftLine2: "السعر الإجمالي",
           closingPhrase:
             "بالنقر على زر 'دفع الطلب'، أوافق على شروط العرض العام وسياسة الخصوصية",
@@ -302,24 +330,27 @@ const resources = {
         subject: "الموضوع",
         email: "بريدك الإلكتروني",
         message: "الرسالة",
-        description: "سابرينا بايو هي شركة صغيرة تونسية تقدم منتجات تجميل طبيعية مثل الزيوت والأعشاب. نحن نؤمن بقوة الطبيعة في تعزيز الجمال والرفاهية.",
+        description: "Sabrina Bio مختصة في العلاج بالأعشاب الطبيعية، تقدم لكم خلطات علاجية، زيوت أساسية و  منتجات تجميلية .. على خاطر نحبوكم بالحويجة الطبيعية والصحية نودوكم",
         btn: "إرسال",
-        error:"الرجاء ملء جميع البيانات "
+        error: "الرجاء ملء جميع البيانات ",
+        modal: {
+          msg: "تم إرسال طلبك بنجاح!",
+        },
       },
       Modals: {
         modalCart: {
           title: "تم بنجاح",
           msg: "تمت إضافة المنتج إلى السلة بنجاح",
           btn1: "متابعة التسوق",
-          btn2: "الذهاب إلى السلة"
+          btn2: "الذهاب إلى السلة",
         },
         ModalFavorites: {
           title: "تم بنجاح",
           msg: "تمت إضافة المنتج إلى المفضلة بنجاح",
           btn1: "متابعة التسوق",
-          btn2: "الذهاب إلى المفضلة"
-        }
-      }
+          btn2: "الذهاب إلى المفضلة",
+        },
+      },
       // Add more translations here
     },
   },
@@ -330,6 +361,7 @@ const resources = {
         facebook: "Facebook",
         instagram: "Instagram",
         tiktok: "Tiktok",
+        btnClose: "Fermer",
       },
       homePage: {
         menu: {
@@ -338,12 +370,11 @@ const resources = {
           products: "Produits",
           contact: "Nos Contacts",
           livraisonText: "Livraison gratuite à partir de ",
-          livraisonPrix: "300 DT",
+          livraisonPrix: "100 DT",
         },
         slider: {
           collectionBtn: " Visiter les collections",
-          description:
-            "Découvrez la destination en ligne ultime pour les passionnés de beauté ! Explorez les dernières tendances en cosmétique qui font la différence. Des critiques approfondies aux produits incontournables pour les femmes, les hommes et les enfants, nous avons tout ce qu'il vous faut pour rehausser votre routine beauté",
+          description:"Découvrez la destination ultime pour les amoureux de nature et de beauté Découvrez les dernières tendances dans le monde de la beauté naturelle qui font la différence. Produits de beauté, essentiels et thérapeutiques pour hommes, femmes et enfants.Nous avons tout ce dont vous avez besoin pour votre santé et votre beauté",
           type: {
             firstShop: "{{itm}}% de réduction pour vos premiers achats",
             newProduct: "Découvrez nos nouvelles arrivées !",
@@ -354,28 +385,37 @@ const resources = {
           title: "Nos Produits",
           new: "Nouveaux Produits",
           newLabel: "Nouveau",
-          soldLabel:"Soldé",
+          soldLabel: "Soldé",
           category: {
             all: "Tout",
             herbs: "Herbes et Grains",
             oils: "Huiles Naturelles",
-            cosmetic: "Cosmétiques",
+            cosmetic: "Santé et Beauté",
+            pain:"Maux et Rhumatismes	",
+            diseases:"Maladies",
           },
-          sort: { 
+          sort: {
             title: "Trier par",
             select: "Sélectionner une option",
             highPrice: "Prix élevé",
             lowPrice: "Prix bas",
-            name: "Nom"
+            name: "Nom",
           },
           search: {
             title: "Rechercher",
-            input: "Rechercher par nom..."
+            input: "Rechercher par nom...",
+          },
+          details: {
+            grammage: "Grammage",
+            dosage: "Dosage",
+            gouts: "Goûts",
+            showLess:"Voir moins",
+            viewAll:"Voir tout",
           },
           viewAllBtn: "Voir tout",
           viewBtn: "Vue rapide",
           buyBtn: "Acheter",
-          related: "Produits Connexes"
+          related: "Produits Connexes",
         },
         deliverySection: {
           delivery: {
@@ -404,13 +444,16 @@ const resources = {
             followUs: "Suivez-nous",
           },
           aboutUs: {
-            par1: "Sabrina Bio est une petite entreprise tunisienne offrant des produits cosmétiques naturels tels que des huiles et des herbes. Nous croyons au pouvoir de la nature pour sublimer la beauté et le bien-être.",
-            par2: "Nos produits sont soigneusement élaborés, promouvant la durabilité et les secrets de beauté intemporels de la Tunisie. Choisissez Sabrina Bio pour des solutions de beauté pures et naturelles.",
+            par1: "Sabrina Bio est Spécialisé dans les traitements naturels à base de plantes, vous proposant des mélanges thérapeutiques, des huiles essentielles et des produits cosmétiques",
+            par2: "",
           },
         },
         categories: {
           title: "Nos catégories",
         },
+        subcategories:{
+          title:"Sous-catégories",
+        }
       },
       cartPage: {
         cart: {
@@ -434,11 +477,11 @@ const resources = {
           catchPhrase3:
             "Vous pouvez payer votre achat de l'une des manières suivantes",
           phraseTic1: "Abonnement complet via Privat 24",
-          phraseTic2: "Paiement à la livraison à la succursale Nova Poshta",
-          phraseTic3: "Transfert d'argent Visa/MasterCard",
+          phraseTic2: "Paiement à la livraison",
+          phraseTic3: "Transfert d'argent a travers Poste",
           catchPhrase4: "Code promo",
           leftLine11: "Livraison ",
-          leftLine12: "Aux tarifs du transporteur",
+          leftLine12: "8 DT",
           leftLine2: "Prix total",
           closingPhrase:
             "En cliquant sur le bouton 'payer la commande', j'accepte les conditions de l'offre publique et la politique de confidentialité",
@@ -465,24 +508,27 @@ const resources = {
         subject: "Sujet",
         email: "Votre Email",
         message: "Message",
-        description: "Sabrina Bio est une petite entreprise tunisienne qui propose des produits cosmétiques naturels comme des huiles et des herbes. Nous croyons au pouvoir de la nature pour sublimer la beauté et le bien-être.",
+        description:"Sabrina Bio est Spécialisé dans les traitements naturels à base de plantes, vous proposant des mélanges thérapeutiques, des huiles essentielles et des produits cosmétiques",
         btn: "Envoyer",
-        error:"Veuillez remplir tous les champs"
+        error: "Veuillez remplir tous les champs",
+        modal: {
+          msg: "Votre commande a été envoyée avec succès !",
+        },
       },
       Modals: {
         modalCart: {
           title: "Effectué",
           msg: "Le produit a été ajouté avec succès au panier",
           btn1: "Continuer vos achats",
-          btn2: "Aller au panier"
+          btn2: "Aller au panier",
         },
         ModalFavorites: {
           title: "Effectué",
           msg: "Le produit a été ajouté avec succès aux favoris",
           btn1: "Continuer vos achats",
-          btn2: "Aller aux favoris"
-        }
-      }
+          btn2: "Aller aux favoris",
+        },
+      },
       // Add more translations here
     },
   },

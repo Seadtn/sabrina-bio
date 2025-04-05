@@ -44,7 +44,7 @@ body {
   margin-right: 0.2rem;
   font-weight: bold;
   animation: fadeInOut 2s ease-in-out infinite;
-
+  -webkit-animation: fadeInOut 2s ease-in-out infinite;
 }
 
 @keyframes fadeInOut {
@@ -98,6 +98,11 @@ nav ul li a:hover {
 .logo a {
   text-decoration: none;
 }
+.nav-element{
+  display: flex;
+  text-align: center;
+  align-items: center;
+}
 .cart_icon span {
   color: #2fcb00;
   background-color: #fff;
@@ -147,6 +152,9 @@ nav ul li a:hover {
     background-color: none;
   }
   .nav-links {
+    display: none;
+  }
+  nav ul li:first-child{
     display: none;
   }
   nav ul {
@@ -420,6 +428,7 @@ nav ul li a:hover {
   align-items: center;
   flex-wrap: wrap;
   justify-content: space-around;
+  margin-top: 30px;
 }
 .row_contact{
   display: flex;
@@ -534,9 +543,11 @@ nav ul li a:hover {
   font-size: 14px;
 }
 
-.col-single .product-image {
-  width: 80%;
-  height: 500px;
+.col-single .product-image{
+  width: 100%;
+  height: 550px;
+  position: sticky;
+  top: 0;
 }
 .product img {
   width: 180px;
@@ -767,7 +778,7 @@ input:invalid[focused="true"] {
   border: 1px solid red;
 }
 #details {
-  margin-top: 35px;
+  margin-top: 10px;
 }
 .backProducts,
 .backHome {
@@ -1168,7 +1179,7 @@ form button {
   position: absolute;
   top: 100%;
   left: 0;
-  z-index: 3;
+  z-index: 5;
 }
 
 .dropdown {
@@ -1245,7 +1256,6 @@ form button {
   justify-content: center;
   align-items: center;
   width: 100%;
-  margin: 20px 0;
 }
 
 .search-input-fr {
@@ -1255,7 +1265,6 @@ form button {
   border-radius: 25px 0 0 25px;
   font-size: 16px;
   transition: border 0.3s;
-  margin-bottom: 20px;
   outline: none;
   -webkit-border-radius: 25px 0 0 25px;
   -moz-border-radius: 25px 0 0 25px;
@@ -1267,7 +1276,6 @@ form button {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 0 25px 25px 0;
-  margin-bottom: 20px;
   font-size: 16px;
   transition: border 0.3s;
   outline: none;
@@ -1284,8 +1292,6 @@ form button {
 .search-button-fr {
   padding: 10px 15px;
   background-color: #2fcb00;
-  margin-bottom: 20px;
-
   color: #fff;
   width: 50px;
   border: none;
@@ -1301,8 +1307,6 @@ form button {
 .search-button-ar {
   padding: 10px 15px;
   background-color: #2fcb00;
-  margin-bottom: 20px;
-
   color: #fff;
   width: 50px;
   border: none;
@@ -1399,6 +1403,17 @@ form button {
 .old-price {
   text-decoration: line-through;
   text-align: center;
+  font-size: medium;
+  font-weight: bold;
+  color: gray;
+}
+.price-product {
+  font-size: large;
+  color: #25d366;
+  font-weight: bold;
+}
+.old-price-product {
+  text-decoration: line-through;
   font-size: medium;
   font-weight: bold;
   color: gray;
@@ -1528,7 +1543,8 @@ form button {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  width: 450px;
+  margin-top: 20px;
+  width: 350px;
   height: 150px;
   border-radius: 5%;
   box-shadow: 0 0px 6px rgba(0, 0, 0, 0.2);
@@ -1613,3 +1629,144 @@ form button {
 
 
 
+
+
+/* Messenger color */
+.share-button.messenger i {
+  color: #f914c7; /* Messenger blue */
+}
+
+/* WhatsApp color */
+.share-button.whatsapp i {
+  color: #25d366; /* WhatsApp green */
+}
+
+/* Telegram color */
+.share-button.telegram i {
+  color: #0088cc; /* Telegram blue */
+}
+
+/* Options and Tastes Section */
+.options-section {
+  margin-bottom: 20px;
+}
+
+.options-title {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.options-container {
+  display: flex;
+  flex-wrap: wrap; /* Enable wrapping */
+  gap: 10px;
+  margin-bottom: 20px;
+  max-width: 300px; /* Limit the total width for 3 buttons per row */
+}
+
+.option-button {
+  padding: 3px 10px;
+  border: 2px solid #e0e0e0;
+  border-radius: 6px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 12px;
+  flex: 1 1 calc(33.333% - 100px); /* 3 buttons per row with gap */
+  text-align: center; /* Center the text in the button */
+  box-sizing: border-box; /* Ensure padding and border don't affect width */
+}
+
+.option-button:hover {
+  border-color: #25d366;
+  color: #25d366;
+}
+
+.option-button.selected {
+  background: #28a745;
+  color: white;
+  border-color: #25d366;
+}
+.description-container {
+  margin-bottom: 10px;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .description-container {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .description-collapsed {
+    -webkit-line-clamp: 7; 
+  }
+
+  .description-expanded {
+    -webkit-line-clamp: unset; 
+  }
+}
+
+/* Desktop styles */
+@media (min-width: 769px) {
+  .description-container {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .description-collapsed {
+    -webkit-line-clamp: 7; 
+  }
+
+  .description-expanded {
+    -webkit-line-clamp: unset; 
+  }
+}
+.search-results {
+  position: absolute;
+  top: 10;
+  left: 0;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  z-index: 4;
+  max-height: 300px;
+  overflow-y: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-result-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.search-result-item:hover {
+  background-color: #f0f0f0;
+}
+
+.search-result-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.search-result-image {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-right: 10px;
+}
+
+.search-result-name {
+  font-size: 14px;
+  font-weight: 500;
+}

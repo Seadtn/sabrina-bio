@@ -2,6 +2,10 @@ export type CartItem = {
   id: string;
 	newId: number;
   title: string;
+  maxQuantity:number,
+  type: string,
+  taste:string,
+  option:string,
   price: number;
   imageUrl: string;
   sizes: [];

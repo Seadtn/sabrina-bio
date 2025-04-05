@@ -14,7 +14,7 @@ function MostSeller(props) {
   const settings = {
     dots: false,
     infinite: true,
-    slidesToShow: 4,
+    slidesToShow: products.length <4 ? products.length : 4,
     slidesToScroll: 1,
     autoplay: true,
     arrows: true,
@@ -24,19 +24,19 @@ function MostSeller(props) {
       {
         breakpoint: 1200, 
         settings: {
-          slidesToShow: 3,
+          slidesToShow: products.length <3 ? products.length : 3,
         },
       },
       {
         breakpoint: 992, 
         settings: {
-          slidesToShow: 2,
+          slidesToShow: products.length <2 ? products.length : 2,
         },
       },
       {
         breakpoint: 768, 
         settings: {
-          slidesToShow: 1,
+          slidesToShow: products.length <1 ? products.length : 1,
         },
       },
     ],

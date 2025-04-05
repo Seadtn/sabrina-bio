@@ -6,6 +6,7 @@ export interface Product {
   price: number;
   creationDate: string;
   inSold: boolean;
+  promotion?:boolean;
   startDate: string;
   lastDate: string;
   soldRation : number;

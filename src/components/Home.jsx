@@ -8,20 +8,27 @@ import SearchBar from "./SearchBar";
 import Categories from "./Categories";
 import { Link } from "react-router-dom";
 import MostSeller from "./MostSeller";
+import {getBestSellers, getProductsInHomePage } from "../api/backend";
+
 
 const Home = () => {
-  const [products, setProducts] = useState([]);
-  const [filter, setFilter] = useState(products);
+  const [NewProducts, setNewproducts] = useState([]);
+  const [bestSeller, setBestSeller] = useState([]);
+
+  const [filter, setFilter] = useState(NewProducts);
   const { t } = useTranslation();
+
+
+
 
   const handleSearch = (searchTerm) => {
     if (searchTerm) {
-      const filteredProducts = products.filter((product) =>
-        product.title.toLowerCase().includes(searchTerm.toLowerCase())
+      const filteredProducts = NewProducts.filter((product) =>
+        product.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setFilter(filteredProducts);
     } else {
-      setFilter(products);
+      setFilter(NewProducts);
     }
   };
 
@@ -29,14 +36,13 @@ const Home = () => {
     let loadProducts = true;
 
     const getProducts = async () => {
-      const res = await fetch("https://fakestoreapi.com/products", {
-        mode: "cors",
-      });
-
+      
       if (loadProducts) {
-        const data = await res.json();
-        setProducts(data.slice(7, 13));
-        setFilter(data.slice(0, 6));
+        const newProduct = await getProductsInHomePage();
+        setNewproducts(newProduct);
+        setFilter(newProduct);
+        const bestSellerProducts = await getBestSellers();
+        setBestSeller(bestSellerProducts);
       }
       return () => {
         loadProducts = false;
@@ -52,7 +58,7 @@ const Home = () => {
         <Categories />
         <div className="content">
           <h2 className="title">{t("homePage.products.new")}</h2>
-          <SearchBar onSearch={handleSearch} />
+          <SearchBar onSearch={handleSearch}  className={"search-bar"}/>
           <div className="row products">
             {filter.map((product,index) => (
               <ProductCard product={product} key={index} />
@@ -68,7 +74,7 @@ const Home = () => {
         </div>
         <DeliveryCards />
         <div className="content">
-          <MostSeller products={products} />
+          <MostSeller products={bestSeller} />
         </div>
       </div>
     </div>

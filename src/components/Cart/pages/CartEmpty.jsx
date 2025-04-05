@@ -20,7 +20,7 @@ const CartEmpty = () => {
           <br />
           {t("cartPage.cart.empty.desc2")}
         </p>
-        <Link to="/sabrina-bio/products" className="cart__button-back">
+        <Link to="/products" className="cart__button-back">
           <span>{t("cartPage.cart.empty.btn")}</span>
         </Link>
       </div>

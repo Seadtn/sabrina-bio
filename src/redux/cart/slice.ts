@@ -73,11 +73,15 @@ const cartSlice = createSlice({
 		setErrorModal(state) {
 			state.errorModal = !state.errorModal;
 		},
+		resetCart(state) {
+			state.items = [];
+			state.totalPrice = 0;
+		  },
   },
 });
 
-const findDuplicates = (arr: CartItem[], item: CartItem) => arr.filter(elem => elem.size === item.size && elem.title === item.title);
+const findDuplicates = (arr: CartItem[], item: CartItem) => arr.filter(elem => elem.size === item.size && elem.title === item.title && elem.option===item.option && elem.taste===item.taste);
 const deleteDuplicates = (arr: CartItem[], item: CartItem) => arr.filter(elem => elem.size !== item.size || elem.title !== item.title);
 
-export const { addItems, removeItems, minusItems, plusItems, setSuccessModal, setErrorModal} = cartSlice.actions;
+export const { addItems, removeItems, minusItems, plusItems, setSuccessModal, setErrorModal,resetCart} = cartSlice.actions;
 export default cartSlice.reducer;

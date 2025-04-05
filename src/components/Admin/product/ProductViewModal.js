@@ -59,28 +59,56 @@ const ProductViewModal = ({ open, onClose, product }) => {
           <Grid item xs={12} md={6}>
             <Stack spacing={3}>
               <Box>
-                <Typography variant="h4" gutterBottom>
-                  {product?.inSold
-                    ? product?.price * (product.soldRatio * 0.01)
-                    : product?.price?.toFixed(2)}{" "}
-                  DT
-                </Typography>
-                {product?.inSold && (
-                  <p className="old-price" style={{ textAlign: "start" }}>
-                    {product?.price} DT
-                  </p>
+                {product?.productType !== "STANDARD" ? (
+                  <Typography variant="h5" gutterBottom>
+                    {product?.price === 0 && !product?.promotion
+                      ? product?.availableOptions?.map((option, index) => (
+                          <div key={index}>
+                            {option.value} {option.unit} -{" "}
+                            {product?.prices[option.value]} DT
+                          </div>
+                        ))
+                      : product?.availableOptions?.map((option, index) => (
+                          <div key={index}>
+                            {option.value} {option.unit} -{" "}
+                            {(
+                              product?.prices[option.value] -
+                              product?.prices[option.value] *
+                                (product.soldRatio * 0.01)
+                            ).toFixed(2)}{" "}
+                            DT
+                          </div>
+                        ))}
+                  </Typography>
+                ) : (
+                  <div>
+                    <Typography variant="h4" gutterBottom>
+                      {product?.promotion
+                        ? (
+                            product?.price -
+                            product?.price * (product.soldRatio * 0.01)
+                          ).toFixed(2)
+                        : product?.price?.toFixed(2)}{" "}
+                      DT
+                    </Typography>
+                    {product?.promotion && (
+                      <p className="old-price" style={{ textAlign: "start" }}>
+                        {product?.price} DT
+                      </p>
+                    )}
+                  </div>
                 )}
                 <Chip
-                  label={product?.inSold ? "On Sale" : "Regular Price"}
-                  color={product?.inSold ? "error" : "default"} 
+                  label={product?.promotion ? "Soldé" : "Standard"}
+                  color={product?.promotion ? "error" : "default"}
                   sx={{
-                    color: product?.inSold ? "white !important" : "black ", 
+                    color: product?.promotion ? "white !important" : "black ",
                   }}
                   size="small"
                 />
                 {product?.productNew === true && (
                   <Chip
-                    label="New"
+                    label="Nouveau"
                     color="success"
                     size="small"
                     sx={{
@@ -104,26 +132,60 @@ const ProductViewModal = ({ open, onClose, product }) => {
 
               <Divider />
 
+              {product?.hasTaste && (
+                <>
+                  <Box>
+                    <Typography variant="subtitle2" color="text.secondary">
+                      Goûts
+                    </Typography>
+                    <Typography
+                      variant="body1"
+                      component="ul"
+                      sx={{
+                        margin: 0,
+                        listStyleType: "none",
+                      }}
+                    >
+                      {product?.tastes?.map((t, index) => (
+                        <li
+                          key={index}
+                          style={{ display: "flex", alignItems: "center" }}
+                        >
+                          <Typography
+                            variant="body1"
+                            sx={{ fontWeight: "bold", marginRight: "8px" }}
+                          >
+                            •
+                          </Typography>
+                          {t}
+                        </li>
+                      ))}
+                    </Typography>
+                  </Box>
+                  <Divider />
+                </>
+              )}
+
               <Box>
                 <Typography variant="subtitle2" color="text.secondary">
-                  Product Details
+                  Détails du produit
                 </Typography>
                 <Stack spacing={1}>
                   <Typography variant="body2">
-                    <b>Created:</b>{" "}
+                    <b>Créé:</b>{" "}
                     {new Date(product?.creationDate).toLocaleDateString()}
                   </Typography>
                   {product?.inSold && (
                     <>
                       <Typography variant="body2">
-                        <b>Sale Ratio:</b> {product?.soldRatio}%
+                        <b>Taux de la promotion:</b> {product?.soldRatio}%
                       </Typography>
                       <Typography variant="body2">
-                        <b>Sale Start:</b>{" "}
+                        <b>Début de la promotion:</b>{" "}
                         {new Date(product?.startDate).toLocaleDateString()}
                       </Typography>
                       <Typography variant="body2">
-                        <b>Sale End:</b>{" "}
+                        <b>Fin de la promotion:</b>{" "}
                         {new Date(product?.lastDate).toLocaleDateString()}
                       </Typography>
                     </>
@@ -145,7 +207,7 @@ const ProductViewModal = ({ open, onClose, product }) => {
             textTransform: "none",
           }}
         >
-          Close
+          Fermer
         </Button>
       </DialogActions>
     </Dialog>

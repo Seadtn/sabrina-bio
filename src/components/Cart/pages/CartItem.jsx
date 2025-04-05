@@ -9,11 +9,25 @@ import {
 } from "../../../redux/cart/slice.ts";
 import i18n from "../../../i18n/i18n.js";
 
-const CartItem = ({ id, newId, title, imageUrl, price, count }) => {
+const CartItem = ({
+  id,
+  newId,
+  title,
+  imageUrl,
+  price,
+  count,
+  maxQuantity,
+  type,
+  option,
+  taste,
+}) => {
   const dispatch = useDispatch();
   const isArabic = i18n.language === "ar";
+
   const onClickPlus = () => {
-    dispatch(plusItems(newId));
+    if (count < maxQuantity) {
+      dispatch(plusItems(newId));
+    }
   };
 
   const onClickMinus = () => {
@@ -36,9 +50,36 @@ const CartItem = ({ id, newId, title, imageUrl, price, count }) => {
             <div className="cart__img">
               <img src={imageUrl} alt={title} />
             </div>
+
             <div className="cart__info">
               <Link to={`/product/${id}`} className="cart__name">
-                {title}
+                {title} <br />{" "}
+                <small
+                  style={{
+                    fontSize: "20px",
+                    marginRight: "10px",
+                    marginLeft: "10px",
+                    color: "gray",
+                  }}
+                >
+                  {" "}
+                  {option}
+                  {" "}
+                  {
+                    !isArabic
+                      ? type === "GRAMMAGE"
+                        ? "Kg"
+                        :type === "DOSAGE"
+                          ? "L"
+                          : ""
+                      : type === "GRAMMAGE"
+                        ? "كغ"
+                        : type === "DOSAGE"
+                          ? "ل"
+                          : ""
+                  }{" "}
+                  {taste ? "-" + taste : ""}
+                </small>
               </Link>
               <div className="cart__amount">
                 <button
@@ -63,6 +104,7 @@ const CartItem = ({ id, newId, title, imageUrl, price, count }) => {
                 <div className="cart__number">{count}</div>
                 <button
                   aria-label="plusBtn"
+                  disabled={count >= maxQuantity}
                   className="cart__plus"
                   onClick={onClickPlus}
                 >
@@ -103,7 +145,9 @@ const CartItem = ({ id, newId, title, imageUrl, price, count }) => {
                 />
               </svg>
             </button>
-            <div className="cart__price">{price * count} {!isArabic ? "DT" : "دت"}</div>
+            <div className="cart__price">
+              {price * count} {!isArabic ? "DT" : "دت"}
+            </div>
           </div>
         </div>
       </div>
