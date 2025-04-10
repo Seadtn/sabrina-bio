@@ -16,13 +16,13 @@ const SearchBar = ({ onSearch, searchTerm }) => {
       dir={isArabic ? "rtl" : "ltr"}
       lang={isArabic ? "ar" : "fr"}
     >
-      <input
+      {/* <input
         type="text"
         placeholder={t("general.search")}
         value={searchTerm}
         onChange={handleInputChange}
         className={isArabic ? "search-input-ar" : "search-input-fr"}
-      />
+      /> */}
       <button type="submit" className={isArabic ? "search-button-ar" : "search-button-fr"}>
         <FaSearch style={{ color: "white" }} />
       </button>

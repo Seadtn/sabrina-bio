@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import SearchBar from "./SearchBar";
 import { searchProductsByName } from "../api/backend";
+import Publicity from "./publicity";
 
 const languages = {
   ar: { label: "العربية", flag: "/images/flags/arabic.jpg" },
@@ -66,38 +67,72 @@ const NavBar = () => {
   };
 
   const handleProductClick = (id) => {
-    navigate("/product/"+id)
+    navigate("/product/" + id);
     setSearchResults([]);
   };
 
   return (
     <div>
-      <div
-        className="publicity"
-        dir={isArabic ? "rtl" : "ltr"}
-        lang={isArabic ? "ar" : "fr"}
-      >
-        <h4 className="text">
-          {t("homePage.menu.livraisonText")}
-          <p>{t("homePage.menu.livraisonPrix")}</p>
-        </h4>
-      </div>
-      <div className="navbar">
-        <div className="logo">
+      <Publicity />
+
+      <nav className="navbar">
+        <div className="navbar-left">
+          <div className="dropdown" ref={dropdownRef}>
+            <div className="selected-language" onClick={toggleDropdown}>
+              <img
+                src={process.env.PUBLIC_URL + languages[selectedLanguage].flag}
+                alt={languages[selectedLanguage].label}
+                style={{ width: "40px", height: "auto", borderRadius: "4px" }}
+              />
+            </div>
+
+            {dropdownOpen && (
+              <div className="language-dropdown">
+                {Object.entries(languages)
+                  .filter(([key]) => key !== selectedLanguage) // 👈 Filter out the selected one
+                  .map(([key, { label, flag }]) => (
+                    <span
+                      key={key}
+                      onClick={() => changeLanguage(key)}
+                      style={{
+                        display: "inline-block",
+                        margin: "0",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <img
+                        src={process.env.PUBLIC_URL + flag}
+                        alt={label}
+                        style={{
+                          width: "40px",
+                          height: "auto",
+                          borderRadius: "4px",
+                        }}
+                      />
+                    </span>
+                  ))}
+              </div>
+            )}
+          </div>
+        </div>
+        <div className="logo navbar-center">
           <Link to="/">
             <h4>
               Sabrina <span>Bio</span>
             </h4>
           </Link>
         </div>
-        <nav style={{ display: "flex", justifyContent: "end", alignItems: "center" }}>
+
+        <div className="navbar-right">
           <ul
             className={isMobile ? "nav-links-mobile" : "nav-links"}
             onClick={() => setIsMobile(false)}
-            dir={(isArabic && isMobile) ? "rtl" : "ltr"} lang={(isArabic && isMobile) ? "ar" : "fr"}
+            dir={isArabic && isMobile ? "rtl" : "ltr"}
+            lang={isArabic && isMobile ? "ar" : "fr"}
           >
+            {" "}
             <li className="nav-element">
-              <SearchBar onSearch={handleSearch} />
+              <SearchBar onSearch={handleSearch} searchTerm="" />
             </li>
             <li className="nav-element">
               <Link to="/">{t("homePage.menu.home")}</Link>
@@ -123,49 +158,29 @@ const NavBar = () => {
               </Link>
             </li>
           </ul>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <div className="dropdown" ref={dropdownRef}>
-              <div className="selected-language" onClick={toggleDropdown}>
-                <img
-                  src={process.env.PUBLIC_URL + languages[selectedLanguage].flag}
-                  alt={languages[selectedLanguage].label}
-                />
-                {languages[selectedLanguage].label}
-                <i className={`fas fa-chevron-${dropdownOpen ? "up" : "down"}`} />
-              </div>
-              {dropdownOpen && (
-                <div className="language-dropdown">
-                  {Object.entries(languages).map(([key, { label, flag }]) => (
-                    <span key={key} onClick={() => changeLanguage(key)}>
-                      <img src={process.env.PUBLIC_URL + flag} alt={label} /> {label}
-                    </span>
-                  ))}
-                </div>
-              )}
-            </div>
-            <button
-              className="mobile-icon"
-              onClick={() => setIsMobile(!isMobile)}
-            >
-              {isMobile ? (
-                <i className="fas fa-times menu"></i>
-              ) : (
-                <i className="fas fa-bars menu"></i>
-              )}
-            </button>
-          </div>
-        </nav>
-      </div>
+          <button
+            className="mobile-icon"
+            onClick={() => setIsMobile(!isMobile)}
+          >
+            {isMobile ? (
+              <i className="fas fa-times menu"></i>
+            ) : (
+              <i className="fas fa-bars menu"></i>
+            )}
+          </button>
+        </div>
+      </nav>
       {searchResults.length > 0 && (
         <div className="search-results">
           {searchResults.map((product) => (
-            <div key={product.id} className="search-result-item" onClick={()=>handleProductClick(product.id)}>
-              <Link
-                to={`/product/${product.id}`}
-                style={{display:"flex"}}
-              >
+            <div
+              key={product.id}
+              className="search-result-item"
+              onClick={() => handleProductClick(product.id)}
+            >
+              <Link to={`/product/${product.id}`} style={{ display: "flex" }}>
                 <img
-                  src={"data:image/*;base64,"+product.image}
+                  src={"data:image/*;base64," + product.image}
                   alt={product.name}
                   className="search-result-image"
                 />
