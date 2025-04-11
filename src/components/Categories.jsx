@@ -2,10 +2,13 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import i18n from "../i18n/i18n";
 import { Link } from "react-router-dom";
+import Slider from "react-slick";
+import Arrows from "./arrows";
 
 const Categories = () => {
   const { t } = useTranslation();
-  const isArabic = i18n.language === "ar";
+  const isArabic = i18n.language === "ar";  // You can use this flag if you need language-specific logic.
+  
   const img = [
     { id: 4, url: "/images/Categories/herbs.jpg", path: "homePage.products.category.herbs" },
     { id: 2, url: "/images/Categories/oils.jpg", path: "homePage.products.category.oils" },
@@ -14,29 +17,63 @@ const Categories = () => {
     { id: 3, url: "/images/Categories/pain.jpg", path: "homePage.products.category.pain" },
   ];
 
+  const settings = {
+    dots: false,
+    infinite: true,
+    slidesToShow: 5,
+    slidesToScroll: 1,
+    autoplay: true,
+    arrows: true,
+    prevArrow: <Arrows />,
+    nextArrow: <Arrows />,
+    responsive: [
+      {
+        breakpoint: 1200,
+        settings: {
+          slidesToShow: 4,
+        },
+      },
+      {
+        breakpoint: 992,
+        settings: {
+          slidesToShow: 3,
+        },
+      },
+      {
+        breakpoint: 768,
+        settings: {
+          slidesToShow: 2,
+        },
+      },
+      {
+        breakpoint: 576,
+        settings: {
+          slidesToShow: 1,
+        },
+      },
+    ],
+  };
+
   return (
-    <div>
+    <div className="container">
       <h2 className="title">{t("homePage.categories.title")}</h2>
-      <div
-        className="row"
-        dir={isArabic ? "rtl" : "ltr"}
-        lang={isArabic ? "ar" : "fr"}
-      >
+      <Slider {...settings}>
         {img.map((image) => (
-          <Link
-            key={image.path}
-            to={`/products?category=${image.id}`} // Pass the category ID in the query
-            className="CategoryCardGroup"
-          >
-            <img
-              className="card-image"
-              src={process.env.PUBLIC_URL + image.url}
-              alt={t(image.path)}
-            />
+          <div className="newCategoryCardGroup" key={image.id}>
+            <Link
+              to={`/products?category=${image.id}`}
+              className="CategoryCardGroup"
+            >
+              <img
+                className="card-image"
+                src={process.env.PUBLIC_URL + image.url}
+                alt={t(image.path)}
+              />
+            </Link>
             <div className="category-text">{t(image.path)}</div>
-          </Link>
+          </div>
         ))}
-      </div>
+      </Slider>
     </div>
   );
 };
