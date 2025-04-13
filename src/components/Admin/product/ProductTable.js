@@ -96,7 +96,7 @@ const ProductTable = ({ products, onEdit, onView, onDelete }) => {
                 <TableCell>
                   {product.promotion === true && product.soldRatio > 0
                     ? `Oui (${product.soldRatio}%)`
-                    : product.startDate && product.startDate.trim() !== ""
+                    : ((product.startDate && product.startDate.trim()) !== "") && product.promotion === true
                       ? `La promotion commencera ${product.startDate}`
                       : "Non"}
                 </TableCell>

@@ -1,63 +1,41 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import i18n from "../i18n/i18n";
 import { useDispatch, useSelector } from "react-redux";
-import { addItems } from "../redux/cart/slice.ts";
 import { addFavoriteItems } from "../redux/favorite/slice.ts";
+import { useTranslation } from "react-i18next";
+import { addItems } from "../redux/cart/slice.ts";
 import { openFastViewModal } from "../redux/fastView/slice.ts";
 
-const ProductCard = ({ product }) => {
-  const dispatch = useDispatch();
-
-  const { t } = useTranslation();
+const OnSoldCard = ({ product }) => {
   const isArabic = i18n.language === "ar";
-  // eslint-disable-next-line
   const isFrench = i18n.language === "fr";
+  const navigate = useNavigate();
+  const { t } = useTranslation();
   const { favorites } = useSelector((state) => state.favorite);
   const isFavorited = favorites.some((item) => item.id === product.id);
   const { items } = useSelector((state) => state.cart);
   const isInCart = items.some((item) => item.id === product.id);
-  const getName = (product) => {
-    if (isArabic) {
-      return product.name || product.nameFr || product.nameEng || "";
-    } else if (isFrench) {
-      return product.nameFr || product.nameEng || product.name || "";
-    } else {
-      return product.nameEng || product.nameFr || product.name || "";
-    }
-  };
-  const navigate = useNavigate();
-
-  const onClickAddItem = () => {
-    dispatch(
-      addItems({
-        id: product.id ?? 0,
-        count: 1,
-        imageUrl: `data:image/*;base64,${product.image}`,
-        price: product.promotion
-          ? displayPrice - displayPrice * product.soldRatio * 0.01
-          : getDisplayPrice(),
-        maxQuantity: product.quantity,
-        type: product.productType,
-        title: getName(product),
-      })
-    );
-  };
   const getDisplayPrice = () => {
-    if (product.prices && product.productType !== "STANDARD") {
+    if (product.price === 0 && product.prices) {
+      // Get the lowest price from the prices object
       const priceValues = Object.values(product.prices);
       return priceValues.length > 0 ? Math.min(...priceValues) : 0;
     }
     return product.price;
   };
+  const getName = (product) => {
+    if (isArabic) {
+      return product.name || product.nameFr || product.nameEng || "";
+    } else if (isFrench) {
+      return product.nameFr || product.name || product.nameEng || "";
+    } else {
+      return product.nameEng || product.name || product.nameFr || "";
+    }
+  };
 
   const displayPrice = getDisplayPrice();
-
-  const promotionalPrice = product.promotion
-    ? displayPrice - displayPrice * product.soldRatio * 0.01
-    : null;
-
+  const dispatch = useDispatch();
   const onClickAddFavoriteItems = () => {
     let favoriteItem = {};
     if (product.productType !== "STANDARD") {
@@ -91,44 +69,35 @@ const ProductCard = ({ product }) => {
     }
     dispatch(addFavoriteItems(favoriteItem));
   };
+  const onClickAddItem = () => {
+    dispatch(
+      addItems({
+        id: product.id ?? 0,
+        count: 1,
+        imageUrl: `data:image/*;base64,${product.image}`,
+        price: product.promotion
+          ? displayPrice - displayPrice * product.soldRatio * 0.01
+          : getDisplayPrice(),
+        maxQuantity: product.quantity,
+        type: product.productType,
+        title: getName(product),
+      })
+    );
+  };
   const handleFastView = () => {
     dispatch(openFastViewModal(product));
   };
   return (
-    <div className="col4 product">
+    <div className="col4 product" style={{ margin: "10px" }}>
       <div className="image-container">
-        {/* New Label */}
-        {product.productNew && (
-          <div
-            className="new-label"
-            dir={isArabic ? "rtl" : "ltr"}
-            lang={isArabic ? "ar" : "fr"}
-          >
-            {t("homePage.products.newLabel")}
-          </div>
-        )}
-        {product.promotion && (
-          <div
-            className={`${product.productNew ? "sold-label1" : "sold-label2"}`}
-            dir={isArabic ? "rtl" : "ltr"}
-            lang={isArabic ? "ar" : "fr"}
-          >
-            {t("homePage.products.soldLabel")}
-          </div>
-        )}
-
         <Link to={`/product/${product.id}`} className="product-link">
           <img
             src={`data:image/*;base64,${product.image}`}
-            alt={product.name?.substring(0, 25)}
+            alt={product.name.substring(0, 25)}
           />
         </Link>
       </div>
-      <h2
-        className="product-title"
-        dir={isArabic ? "rtl" : "ltr"}
-        lang={isArabic ? "ar" : isFrench ? "fr" : "en"}
-      >
+      <h2 className="product-title">
         <>
           {(() => {
             const name = getName(product);
@@ -177,33 +146,23 @@ const ProductCard = ({ product }) => {
       <button className="icon-fast-view-button" onClick={handleFastView}>
         <i className="fas fa-book"></i>
       </button>
-      <div className="price-container">
+      {product.promotion === true ? (
         <p
-          className={product.promotion ? "old-price" : "price"}
+          className="price"
+          dir={isArabic ? "rtl" : "ltr"}
+          lang={isArabic ? "ar" : "fr"}
+        >
+          {displayPrice - displayPrice * product.soldRatio * 0.01}{" "}
+          {!isArabic ? "DT" : "دت"}
+        </p>
+      ) : (
+        <p
+          className="price"
           dir={isArabic ? "rtl" : "ltr"}
           lang={isArabic ? "ar" : "fr"}
         >
           {displayPrice} {!isArabic ? "DT" : "دت"}
         </p>
-
-        {product.promotion && (
-          <p
-            className="price"
-            dir={isArabic ? "rtl" : "ltr"}
-            lang={isArabic ? "ar" : "fr"}
-          >
-            {promotionalPrice} {!isArabic ? "DT" : "دت"}
-          </p>
-        )}
-      </div>
-      {product.quantity === 0 && (
-        <div style={{ color: "red", marginBottom: "2px", textAlign: "center" }}>
-          {isArabic
-            ? "المنتج نفذ من المخزون"
-            : isFrench
-              ? "Ce produit est épuisé"
-              : "This product is sold out"}
-        </div>
       )}
       <button
         className={isFavorited ? "favorite-button " : "unfavorite-button "}
@@ -242,4 +201,4 @@ const ProductCard = ({ product }) => {
   );
 };
 
-export default ProductCard;
+export default OnSoldCard;

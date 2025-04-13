@@ -5,9 +5,9 @@ import "slick-carousel/slick/slick-theme.css";
 import "../App.css";
 import { useTranslation } from "react-i18next";
 import Arrows from "./arrows";
-import MostSellerCard from "./MostSellerCard";
+import OnSoldCard from "./OnSoldCard";
 
-function MostSeller(props) {
+function OnSoldProduct(props) {
   const { products } = props;
   const { t } = useTranslation();
 
@@ -44,11 +44,11 @@ function MostSeller(props) {
 
   return (
     <div>
-      <h2 className="title">{t("homePage.mostSellerSection.title")}</h2>
+      <h2 className="title">{t("homePage.products.new")}</h2>
       <div>
         <Slider {...settings}>
           {products.map((product, index) => (
-            <MostSellerCard key={index} product={product} />
+            <OnSoldCard key={index} product={product} />
           ))}
         </Slider>
       </div>
@@ -56,4 +56,4 @@ function MostSeller(props) {
   );
 }
 
-export default MostSeller;
+export default OnSoldProduct;
