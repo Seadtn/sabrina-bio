@@ -40,7 +40,7 @@ const ProductTable = ({
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
-          <TableRow>
+          <TableRow >
             <TableCell>ID</TableCell>
             <TableCell>Image</TableCell>
             <TableCell>Nom</TableCell>
@@ -60,11 +60,11 @@ const ProductTable = ({
           {products.map((product, index) => {
             const displayIndex = page * rowsPerPage + index + 1; // Adjust index
             return (
-              <TableRow key={product.id}>
+              <TableRow key={product.id} onClick={(event) => onView(product, event)}>
                 <TableCell>{displayIndex}</TableCell>
                 <TableCell>
                   <img
-                    src={`data:image/jpeg;base64,${product.image}`}
+                    src={`data:image/*;base64,${product.image}`}
                     alt={`product${product.id}`}
                     style={{
                       width: "50px",

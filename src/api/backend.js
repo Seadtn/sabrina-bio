@@ -1,4 +1,5 @@
 import { getRequest, postRequest } from "./Request";
+import axios from "axios";
 
 //const localhost = "https://135.125.1.158:8080";
 // const localhost = "https://sabrina-bio.tn"; // Production
@@ -9,6 +10,7 @@ const Product_URL = `${localhost}/api/v1/productManagement/`;
 const Command_URL = `${localhost}/api/v1/commandManagement/`;
 const Contact_URL = `${localhost}/api/v1/contactManagement/`;
 const Category_URL = `${localhost}/api/v1/categoryManagement/`;
+const ProductOTY_URL = `${localhost}/api/v1/productoty/`;
 const USER_URL = `${localhost}/api/v1/authDashbord/`;
 
 export const getAllProducts = async () => {
@@ -250,4 +252,52 @@ export const login = async (user) => {
     console.error("Authentication error :", error.message);
     throw error;
   }
+};
+
+// Get paginated ProductOTY items with total count
+export const getPaginatedProductOTY = async (offset = 0, limit = 10) => {
+  const response = await axios.get(ProductOTY_URL, {
+    params: { offset, limit },
+  });
+  return response.data; // { products: [...], totalCount: number }
+};
+
+// Get a specific ProductOTY by ID
+export const getProductOTYById = async (id) => {
+  const response = await axios.get(`${ProductOTY_URL}${id}`);
+  return response.data;
+};
+
+// Get a active ProductOTY by ID
+export const getActiveProductOTY = async () => {
+    try {
+      const product = await getRequest(ProductOTY_URL + "active");
+      if (!product || Object.keys(product).length === 0) {
+        // Handle the case where no active product exists
+        console.log("No active Product of the Year found.");
+        return null; // or return a default value
+      }
+      return product;
+    } catch (error) {
+      console.error("Error fetching active Product of the Year:", error.message);
+      throw error;
+    }
+};
+
+// Create a new ProductOTY
+export const createProductOTY = async (productOTY) => {
+  const response = await axios.post(ProductOTY_URL, productOTY);
+  return response.data;
+};
+
+// Update an existing ProductOTY by ID
+export const updateProductOTY = async (id, productOTY) => {
+  const response = await axios.put(`${ProductOTY_URL}${id}`, productOTY);
+  return response.data;
+};
+
+// Delete a ProductOTY by ID
+export const deleteProductOTY = async (id) => {
+  const response = await axios.delete(`${ProductOTY_URL}${id}`);
+  return response.data;
 };

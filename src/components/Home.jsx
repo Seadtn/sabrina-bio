@@ -5,7 +5,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { useTranslation } from "react-i18next";
 import Categories from "./Categories";
 import { Link } from "react-router-dom";
-import { getBestSellers, getLatestOnSoldProduct, getProductsInHomePage } from "../api/backend";
+import { getActiveProductOTY, getBestSellers, getLatestOnSoldProduct, getProductsInHomePage } from "../api/backend";
 import ClientAvis from "./ClientAvis";
 import ProductOfTheYear from "./ProductOfYear";
 import ProductSlider from "./ProductSlider";
@@ -15,6 +15,7 @@ const Home = () => {
   const [bestSeller, setBestSeller] = useState([]);
   // const [loading, setLoading] = useState(true); // TODO: Add loading state
   const [products, setProducts] = useState([]);
+  const [productOTY, setProductOTY] = useState(null);
 
   const { t } = useTranslation();
 
@@ -25,6 +26,8 @@ const Home = () => {
       if (loadProducts) {
         const newProduct = await getLatestOnSoldProduct();
         setNewproducts(newProduct);
+        const poty = await getActiveProductOTY();
+        setProductOTY(poty);
         const bestSellerProducts = await getBestSellers();
         setBestSeller(bestSellerProducts);
         const prods = await getProductsInHomePage();
@@ -42,7 +45,8 @@ const Home = () => {
       <BannerSection />
       <div className="container">
         <Categories />
-        <ProductOfTheYear product={bestSeller[0]} />
+        
+        { productOTY && <ProductOfTheYear productOTY={productOTY} />}
         {/* On Sold Products Section */}
         <div className="content">
           <ProductSlider products={bestSeller} title={t("homePage.mostSellerSection.title")} />

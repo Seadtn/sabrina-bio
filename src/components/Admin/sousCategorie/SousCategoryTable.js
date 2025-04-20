@@ -30,7 +30,7 @@ function SousCategoryTable({ categories,onEdit }) {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>ID de la sous catégorie</TableCell>
+            <TableCell>ID</TableCell>
             <TableCell>Nom de Catégorie</TableCell>
             <TableCell>Name</TableCell>
             <TableCell>الاسم</TableCell>
@@ -42,9 +42,9 @@ function SousCategoryTable({ categories,onEdit }) {
         <TableBody>
           {categories
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((sousCategory) => (
+            .map((sousCategory,index) => (
               <TableRow key={sousCategory.id}>
-                <TableCell>#{sousCategory.id}</TableCell>
+                <TableCell>#{index+1}</TableCell>
                 <TableCell>{sousCategory.category?.frenchName}</TableCell>
                 <TableCell>{sousCategory.englishName}</TableCell>
                 <TableCell>{sousCategory.arabicName}</TableCell>

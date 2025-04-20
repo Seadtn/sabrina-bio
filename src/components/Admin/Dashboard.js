@@ -36,6 +36,7 @@ import ContactMailIcon from "@mui/icons-material/ContactMail";
 import SousCategoryDashboard from "./sousCategorie/SousCategoryDashboard.js";
 import CelebrationIcon from "@mui/icons-material/Celebration";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
+import ProductOTYDashboard from "./ProductOfTheYear/ProductOTYDashboard.js";
 const NAVIGATION = [
   { kind: "header", title: "All" },
   { segment: "products", title: "Produits", icon: <ShoppingCartIcon /> },
@@ -77,6 +78,8 @@ export default function Dashboard() {
   const [selectedProduct, setSelectedProduct] = React.useState(null);
   const [commands, setCommands] = React.useState([]);
   const [categories, setCategories] = React.useState([]);
+  const [productOTY, setProductOTY] = React.useState([]);
+
   const [Souscategories, setSousCategories] = React.useState([]);
   const [page, setPage] = React.useState(0); // start at page 0
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -401,6 +404,9 @@ export default function Dashboard() {
         )}
         {activePage === "contacts" && (
           <ContactDashboard contacts={contacts} setContacts={setContacts} />
+        )}
+        {activePage === "productOfTheYear" && (
+          <ProductOTYDashboard productsOTY={productOTY}  setProductsOTY={setProductOTY} />
         )}
       </DashboardLayout>
     </AppProvider>
