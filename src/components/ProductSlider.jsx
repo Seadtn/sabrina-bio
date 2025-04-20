@@ -3,13 +3,11 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "../App.css";
-import { useTranslation } from "react-i18next";
 import Arrows from "./arrows";
-import MostSellerCard from "./MostSellerCard";
+import OnSoldCard from "./ProductSliderCard";
 
-function MostSeller(props) {
-  const { products } = props;
-  const { t } = useTranslation();
+function ProductSlider(props) {
+  const { products,title } = props;
 
   const settings = {
     dots: false,
@@ -44,11 +42,11 @@ function MostSeller(props) {
 
   return (
     <div>
-      <h2 className="title">{t("homePage.mostSellerSection.title")}</h2>
+      <h2 className="title">{title}</h2>
       <div>
         <Slider {...settings}>
           {products.map((product, index) => (
-            <MostSellerCard key={index} product={product} />
+            <OnSoldCard key={index} product={product} />
           ))}
         </Slider>
       </div>
@@ -56,4 +54,4 @@ function MostSeller(props) {
   );
 }
 
-export default MostSeller;
+export default ProductSlider;

@@ -40,6 +40,10 @@ const CommandViewModal = ({ open, onClose, command, onEditStatus }) => {
         return "default";
     }
   };
+  const hasFreeDeliveryItem = () => {
+    console.log("command?.commandProducts", command?.commandProducts);
+    return command?.commandProducts.some((item) => item.product.freeDelivery === true);
+  };
   return (
     <Dialog open={open} onClose={onClose} maxWidth="lg" fullWidth>
       <DialogTitle
@@ -61,12 +65,19 @@ const CommandViewModal = ({ open, onClose, command, onEditStatus }) => {
               <Typography>
                 <strong>Nom:</strong> {command?.firstName} {command?.lastName}
               </Typography>
-              <Typography>
-                <strong>E-mail:</strong> {command?.mail}
-              </Typography>
+              {(command?.mail !== "" && command?.mail !== null) && (
+                <Typography>
+                  <strong>E-mail:</strong> {command?.mail}
+                </Typography>
+              )}
               <Typography>
                 <strong>Téléphone:</strong> {command?.phone}
               </Typography>
+              {(command?.phone2 !== "" && command?.phone2 !== null)&& (
+                <Typography>
+                  <strong>Téléphone 2:</strong> {command?.phone2}
+                </Typography>
+              )}
               <Typography>
                 <strong>Adresse:</strong> {command?.city}, {command?.postalCode}
               </Typography>
@@ -115,7 +126,7 @@ const CommandViewModal = ({ open, onClose, command, onEditStatus }) => {
                   </TableCell>
                   <TableCell align="right">
                     <strong>
-                      TND {command?.totalPrice <= 100 ? "8.00" : "0.00"}
+                      TND {hasFreeDeliveryItem() ? "0.00" : "8.00"}
                     </strong>
                   </TableCell>
                 </TableRow>

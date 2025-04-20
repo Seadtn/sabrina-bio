@@ -26,8 +26,8 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
   const [formData, setFormData] = useState({
     id: null,
     name: "",
-    nameFr:"",
-    nameEng:"",
+    nameFr: "",
+    nameEng: "",
     description: "",
     price: 0,
     image: null,
@@ -41,11 +41,12 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
     lastDate: "",
     active: true,
     category: null,
-    souscategory: null, 
+    souscategory: null,
     productType: "STANDARD",
     prices: {},
     availableOptions: [],
     hasTaste: false,
+    freeDelivery: false,
     tastes: [],
   });
 
@@ -58,8 +59,8 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
     setFormData({
       id: null,
       name: "",
-      nameFr:"",
-      nameEng:"",
+      nameFr: "",
+      nameEng: "",
       description: "",
       price: 0,
       image: null,
@@ -125,7 +126,7 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
 
   const handleInputChange = async (e) => {
     const { name, value, type, checked } = e.target;
-  
+
     if (name === "category") {
       setFormData((prev) => ({
         ...prev,
@@ -133,12 +134,12 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
         souscategory: null,
       }));
       try {
-        const response = await fetchSubcategories(value.id); 
+        const response = await fetchSubcategories(value.id);
         if (!response.ok) {
           throw new Error("Failed to fetch subcategories");
         }
         const subcategories = await response.json();
-          setFormData((prev) => ({
+        setFormData((prev) => ({
           ...prev,
           souscategory: subcategories,
         }));
@@ -164,7 +165,6 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
       }));
     }
   };
-  
 
   const handlePriceChange = (value, price) => {
     setFormData((prev) => ({
@@ -557,6 +557,16 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
               </Button>
             </>
           )}
+          <FormControlLabel
+            control={
+              <Switch
+                checked={formData.freeDelivery}
+                onChange={handleInputChange}
+                name="freeDelivery"
+              />
+            }
+            label="Livrison gratuite"
+          />{" "}
           <Box sx={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
             <FormControlLabel
               control={

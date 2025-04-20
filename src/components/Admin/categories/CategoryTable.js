@@ -12,9 +12,9 @@ import {
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 
-function CategoryTable({ categories,onEdit }) {
+function CategoryTable({ categories, onEdit }) {
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -30,10 +30,12 @@ function CategoryTable({ categories,onEdit }) {
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell>ID de la catégorie</TableCell>
+            <TableCell>ID</TableCell>
+            <TableCell>Image</TableCell>
             <TableCell>Name</TableCell>
             <TableCell>الاسم</TableCell>
             <TableCell>Nom</TableCell>
+            <TableCell>Tri</TableCell>
             <TableCell>Date de création</TableCell>
             <TableCell>Action</TableCell>
           </TableRow>
@@ -41,12 +43,25 @@ function CategoryTable({ categories,onEdit }) {
         <TableBody>
           {categories
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((category) => (
+            .map((category, index) => (
               <TableRow key={category.id}>
-                <TableCell>#{category.id}</TableCell>
+                <TableCell>#{index + 1}</TableCell>
+                <TableCell>
+                  <img
+                    src={`data:image/png;base64,${category.image}`}
+                    alt={`category-${category.id}`}
+                    style={{
+                      width: "50px",
+                      height: "50px",
+                      objectFit: "cover",
+                      borderRadius: "4px",
+                    }}
+                  />
+                </TableCell>
                 <TableCell>{category.englishName}</TableCell>
                 <TableCell>{category.arabicName}</TableCell>
                 <TableCell>{category.frenchName}</TableCell>
+                <TableCell>{category.tri}</TableCell>
                 <TableCell>{category.creationDate}</TableCell>
                 <TableCell>
                   {" "}

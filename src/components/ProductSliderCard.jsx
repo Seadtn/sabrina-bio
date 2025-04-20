@@ -1,71 +1,45 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
-import i18n from "../i18n/i18n";
+import i18n from "../i18n/i18n.js";
 import { useDispatch, useSelector } from "react-redux";
-import { addItems } from "../redux/cart/slice.ts";
 import { addFavoriteItems } from "../redux/favorite/slice.ts";
+import { useTranslation } from "react-i18next";
+import { addItems } from "../redux/cart/slice.ts";
 import { openFastViewModal } from "../redux/fastView/slice.ts";
 
-const ProductCard = ({ product }) => {
-  const dispatch = useDispatch();
-
-  const { t } = useTranslation();
+const ProductSliderCard = ({ product }) => {
   const isArabic = i18n.language === "ar";
-  // eslint-disable-next-line
   const isFrench = i18n.language === "fr";
+  const navigate = useNavigate();
+  const { t } = useTranslation();
   const { favorites } = useSelector((state) => state.favorite);
   const isFavorited = favorites.some((item) => item.id === product.id);
   const { items } = useSelector((state) => state.cart);
   const isInCart = items.some((item) => item.id === product.id);
-  const getName = (product) => {
-    if (isArabic) {
-      return product.name || product.nameFr || product.nameEng || "";
-    } else if (isFrench) {
-      return product.nameFr || product.nameEng || product.name || "";
-    } else {
-      return product.nameEng || product.nameFr || product.name || "";
-    }
-  };
-  const navigate = useNavigate();
-
-  const onClickAddItem = () => {
-    dispatch(
-      addItems({
-        id: product.id ?? 0,
-        count: 1,
-        imageUrl: `data:image/*;base64,${product.image}`,
-        price: product.promotion
-          ? displayPrice - displayPrice * product.soldRatio * 0.01
-          : getDisplayPrice(),
-        maxQuantity: product.quantity,
-        type: product.productType,
-        freeDelivery: product.freeDelivery === null ? false : product.freeDelivery,
-        taste: product.availableOptions[0]?.taste,
-        option:
-          product.availableOptions[0]?.value >= 1000
-            ? product.availableOptions[0]?.value / 1000
-            : product.availableOptions[0]?.value,
-        title: product.name,
-        titleFr: product.nameFr,
-        titleEng: product.nameEng,
-      })
-    );
-  };
   const getDisplayPrice = () => {
-    if (product.prices && product.productType !== "STANDARD") {
+    if (product.price === 0 && product.prices) {
+      // Get the lowest price from the prices object
       const priceValues = Object.values(product.prices);
       return priceValues.length > 0 ? Math.min(...priceValues) : 0;
     }
     return product.price;
   };
 
-  const displayPrice = getDisplayPrice();
+  const getName = (product) => {
+    if (isArabic) {
+      return product.name || product.nameFr || product.nameEng || "";
+    } else if (isFrench) {
+      return product.nameFr || product.name || product.nameEng || "";
+    } else {
+      return product.nameEng || product.name || product.nameFr || "";
+    }
+  };
 
+  const displayPrice = getDisplayPrice();
   const promotionalPrice = product.promotion
     ? displayPrice - displayPrice * product.soldRatio * 0.01
     : null;
-
+  const dispatch = useDispatch();
   const onClickAddFavoriteItems = () => {
     let favoriteItem = {};
     if (product.productType !== "STANDARD") {
@@ -99,13 +73,35 @@ const ProductCard = ({ product }) => {
     }
     dispatch(addFavoriteItems(favoriteItem));
   };
+  const onClickAddItem = () => {
+    dispatch(
+      addItems({
+        id: product.id ?? 0,
+        count: 1,
+        imageUrl: `data:image/*;base64,${product.image}`,
+        price: product.promotion
+          ? displayPrice - displayPrice * product.soldRatio * 0.01
+          : getDisplayPrice(),
+        maxQuantity: product.quantity,
+        type: product.productType,
+        taste: product.availableOptions[0]?.taste,
+        freeDelivery: product.freeDelivery === null ? false : product.freeDelivery,
+        option:
+          product.availableOptions[0]?.value >= 1000
+            ? product.availableOptions[0]?.value / 1000
+            : product.availableOptions[0]?.value,
+        title: product.name,
+        titleFr: product.nameFr,
+        titleEng: product.nameEng,
+      })
+    );
+  };
   const handleFastView = () => {
     dispatch(openFastViewModal(product));
   };
   return (
-    <div className="col4 product">
+    <div className="col4 product" style={{ margin: "10px" }}>
       <div className="image-container">
-        {/* New Label */}
         {product.productNew && (
           <div
             className="new-label"
@@ -133,20 +129,15 @@ const ProductCard = ({ product }) => {
             {t("homePage.products.deliveryLabel")}
           </div>
         )}
-
         <Link to={`/product/${product.id}`} className="product-link">
           <img
             src={`data:image/*;base64,${product.image}`}
-            alt={product.name?.substring(0, 25)}
+            alt={product.name.substring(0, 25)}
             loading="lazy"
           />
         </Link>
       </div>
-      <h2
-        className="product-title"
-        dir={isArabic ? "rtl" : "ltr"}
-        lang={isArabic ? "ar" : isFrench ? "fr" : "en"}
-      >
+      <h2 className="product-title">
         <>
           {(() => {
             const name = getName(product);
@@ -260,4 +251,4 @@ const ProductCard = ({ product }) => {
   );
 };
 
-export default ProductCard;
+export default ProductSliderCard;

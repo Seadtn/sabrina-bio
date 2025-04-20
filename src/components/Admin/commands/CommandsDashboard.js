@@ -3,12 +3,14 @@ import React, { useState, useEffect } from 'react';
 import CommandsTable from './CommandsTable';
 import CommandViewModal from './CommandViewModal';
 import { Card, CardContent, Typography, Grid } from '@mui/material';
-import { changeCommandStatus } from '../../../api/backend';
+import { changeCommandStatus, getAllCommands } from '../../../api/backend';
 
-function CommandsDashboard({commands,setCommands}) {
+function CommandsDashboard({ page, rowsPerPage, setPage, setRowsPerPage, totalPages }) {
+  const [commands, setCommands] = useState([]);
   const [openViewModal, setOpenViewModal] = useState(false);
   const [selectedCommand, setSelectedCommand] = useState(null);
-
+  const [totalElements, setTotalElements] = useState(0);
+  
   const [data, setData] = useState({
     acceptedCommands: { count: 0, money: 0 },
     pendingCommands: { count: 0, money: 0 },
@@ -20,51 +22,46 @@ function CommandsDashboard({commands,setCommands}) {
     setOpenViewModal(true);
   };
 
-  const handleViewCommand = (command) => { 
+  const handleViewCommand = (command) => {
     setSelectedCommand(command);
     setOpenViewModal(true);
   };
 
   const handleEditCommandStatus = (command) => {
-    setCommands(commands.map(c => (c.id === command.id ? command : c)));
+    setCommands(commands.map((c) => (c.id === command.id ? command : c)));
     changeCommandStatus(command);
   };
 
   useEffect(() => {
-    const fetchCommands = () => {
+    const fetchCommands = async () => {
       try {
-        // Filter commands based on their status
-        const accepted = commands.filter(c => c.status === 'Accepted');
-        const pending = commands.filter(c => c.status === 'Pending');
-        const rejected = commands.filter(c => c.status === 'Rejected');
-  
-        // Calculate counts and total prices for each status
-        const calculateTotal = (commandsList) => {
-          return commandsList.reduce((sum, c) => sum + c.totalPrice, 0);
-        };
-  
+        const response = await getAllCommands(page, rowsPerPage);
+    
+        setCommands(response.data);
+        setTotalElements(response.totalElements);
+        const stats = response.commandStats || {};
+    
         setData({
           acceptedCommands: {
-            count: accepted.length,
-            money: calculateTotal(accepted),
+            count: stats.acceptedCount || 0,
+            money: stats.acceptedMoney || 0,
           },
           pendingCommands: {
-            count: pending.length,
-            money: calculateTotal(pending),
+            count: stats.pendingCount || 0,
+            money: stats.pendingMoney || 0,
           },
           rejectedCommands: {
-            count: rejected.length,
-            money: calculateTotal(rejected),
+            count: stats.rejectedCount || 0,
+            money: stats.rejectedMoney || 0,
           },
         });
       } catch (error) {
         console.error('Error fetching commands:', error);
       }
     };
-  
+    
     fetchCommands();
-  }, [commands]); 
-  
+  }, [page, rowsPerPage]);
 
   const CommandCard = ({ title, count, money, color }) => (
     <Card sx={{ backgroundColor: color, color: '#fff' }}>
@@ -76,7 +73,7 @@ function CommandsDashboard({commands,setCommands}) {
           <strong>Nombre de commandes:</strong> {count}
         </Typography>
         <Typography variant="body1">
-          <strong>Montant total:</strong>  {money} TND
+          <strong>Montant total:</strong> {money} TND
         </Typography>
       </CardContent>
     </Card>
@@ -90,7 +87,7 @@ function CommandsDashboard({commands,setCommands}) {
           <CommandCard
             title="Commandes acceptées"
             count={data.acceptedCommands.count}
-            money={data.acceptedCommands.money}
+            money={ Math.round(data.acceptedCommands.money)}
             color="#4caf50"
           />
         </Grid>
@@ -98,7 +95,7 @@ function CommandsDashboard({commands,setCommands}) {
           <CommandCard
             title="Commandes en attente"
             count={data.pendingCommands.count}
-            money={data.pendingCommands.money}
+            money={Math.round(data.pendingCommands.money )}
             color="#ff9800"
           />
         </Grid>
@@ -106,17 +103,23 @@ function CommandsDashboard({commands,setCommands}) {
           <CommandCard
             title="Commandes rejetées"
             count={data.rejectedCommands.count}
-            money={data.rejectedCommands.money}
+            money={Math.round(data.rejectedCommands.money)}
             color="#f44336"
           />
         </Grid>
       </Grid>
 
-      {/* Commands Table */}
+      {/* Commands Table with Pagination */}
       <CommandsTable
         commands={commands}
         onEdit={handleEditCommand}
         onView={handleViewCommand}
+        page={page}
+        rowsPerPage={rowsPerPage}
+        setPage={setPage}
+        setRowsPerPage={setRowsPerPage}
+        totalPages={totalPages}
+        totalElements={totalElements}
       />
 
       {/* Modals */}

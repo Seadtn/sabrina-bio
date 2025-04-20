@@ -3,46 +3,35 @@ import BannerSection from "./BannerSection";
 import ProductCard from "./ProductCard";
 import "react-loading-skeleton/dist/skeleton.css";
 import { useTranslation } from "react-i18next";
-import DeliveryCards from "./DeliveryCards";
-import SearchBar from "./SearchBar";
 import Categories from "./Categories";
 import { Link } from "react-router-dom";
-import MostSeller from "./MostSeller";
-import {getBestSellers, getProductsInHomePage } from "../api/backend";
-
+import { getActiveProductOTY, getBestSellers, getLatestOnSoldProduct, getProductsInHomePage } from "../api/backend";
+import ClientAvis from "./ClientAvis";
+import ProductOfTheYear from "./ProductOfYear";
+import ProductSlider from "./ProductSlider";
 
 const Home = () => {
   const [NewProducts, setNewproducts] = useState([]);
   const [bestSeller, setBestSeller] = useState([]);
+  // const [loading, setLoading] = useState(true); // TODO: Add loading state
+  const [products, setProducts] = useState([]);
+  const [productOTY, setProductOTY] = useState(null);
 
-  const [filter, setFilter] = useState(NewProducts);
   const { t } = useTranslation();
-
-
-
-
-  const handleSearch = (searchTerm) => {
-    if (searchTerm) {
-      const filteredProducts = NewProducts.filter((product) =>
-        product.name.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-      setFilter(filteredProducts);
-    } else {
-      setFilter(NewProducts);
-    }
-  };
 
   useEffect(() => {
     let loadProducts = true;
 
     const getProducts = async () => {
-      
       if (loadProducts) {
-        const newProduct = await getProductsInHomePage();
+        const newProduct = await getLatestOnSoldProduct();
         setNewproducts(newProduct);
-        setFilter(newProduct);
+        const poty = await getActiveProductOTY();
+        setProductOTY(poty);
         const bestSellerProducts = await getBestSellers();
         setBestSeller(bestSellerProducts);
+        const prods = await getProductsInHomePage();
+        setProducts(prods);
       }
       return () => {
         loadProducts = false;
@@ -56,11 +45,16 @@ const Home = () => {
       <BannerSection />
       <div className="container">
         <Categories />
+        
+        { productOTY && <ProductOfTheYear productOTY={productOTY} />}
+        {/* On Sold Products Section */}
         <div className="content">
-          <h2 className="title">{t("homePage.products.new")}</h2>
-          <SearchBar onSearch={handleSearch}  className={"search-bar"}/>
+          <ProductSlider products={bestSeller} title={t("homePage.mostSellerSection.title")} />
+        </div>
+        <div className="content most-seller-section">
+          <h2 className="title">{t("homePage.products.title")}</h2>
           <div className="row products">
-            {filter.map((product,index) => (
+            {products.map((product, index) => (
               <ProductCard product={product} key={index} />
             ))}
           </div>
@@ -72,9 +66,22 @@ const Home = () => {
             </button>
           </div>
         </div>
-        <DeliveryCards />
+
+        {/* Publicity Banner */}
+        <div className="publicity-banner">
+          <img
+            src={process.env.PUBLIC_URL + "/images/publicity/pub.jpg"}
+            alt="Publicité"
+            className="publicity-img"
+            loading="lazy"
+          />
+        </div>
+
+        {/* Client Avis Section */}
+        {/* <ClientAvis /> */}
+        {/* On Sold Products Section */}
         <div className="content">
-          <MostSeller products={bestSeller} />
+          <ProductSlider products={NewProducts} title={t("homePage.products.new")}/>
         </div>
       </div>
     </div>

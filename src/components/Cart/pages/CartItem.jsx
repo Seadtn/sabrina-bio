@@ -13,6 +13,8 @@ const CartItem = ({
   id,
   newId,
   title,
+  titleFr,
+  titleEng,
   imageUrl,
   price,
   count,
@@ -23,7 +25,7 @@ const CartItem = ({
 }) => {
   const dispatch = useDispatch();
   const isArabic = i18n.language === "ar";
-
+  const isFrench = i18n.language === "fr";
   const onClickPlus = () => {
     if (count < maxQuantity) {
       dispatch(plusItems(newId));
@@ -37,7 +39,15 @@ const CartItem = ({
   const onClickRemove = () => {
     dispatch(removeItems(newId));
   };
-
+  const getName = () => {
+    if (isArabic) {
+      return title || titleFr || titleEng || "";
+    } else if (isFrench) {
+      return titleFr|| titleEng || title || "";
+    } else {
+      return titleEng || titleFr || title || "";
+    }
+  };
   return (
     <>
       <div
@@ -48,12 +58,12 @@ const CartItem = ({
         <div className="cart__column">
           <div className="cart__item">
             <div className="cart__img">
-              <img src={imageUrl} alt={title} />
+              <img src={imageUrl} alt={getName()} loading="lazy"/>
             </div>
 
             <div className="cart__info">
               <Link to={`/product/${id}`} className="cart__name">
-                {title} <br />{" "}
+                {getName()} <br />{" "}
                 <small
                   style={{
                     fontSize: "20px",

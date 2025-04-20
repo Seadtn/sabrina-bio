@@ -14,7 +14,7 @@ const CartEmpty = () => {
     >
       <div className="container">
         <h2>{t("cartPage.cart.empty.title")}</h2>
-        <img src={emptyImg} alt="Empty cart" />
+        <img src={emptyImg} alt="Empty cart" loading="lazy"/>
         <p>
         {t("cartPage.cart.empty.desc1")}
           <br />
