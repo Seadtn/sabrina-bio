@@ -32,7 +32,7 @@ const resources = {
         },
         products: {
           title: "Our Products",
-          new: "New Products",
+          new: "Sale Products",
           newLabel: "New",
           soldLabel: "On Sale",
           category: {
@@ -145,6 +145,7 @@ const resources = {
           firstName: "First Name",
           lastName: "Last Name",
           phone: "Phone",
+          phone2: "Phone 2",
           mail: "Email",
           city: "City",
           postalCode: "Postal Code",
@@ -205,13 +206,13 @@ const resources = {
           description:"اكتشف الوجهة النهائية لعشاق الطبيعية والجمال  استكشف أحدث الاتجاهات في عالم الطبيعية والجمال التي تحدث فرقا. منتجات جمالية، أساسية وعلاجية للرجال، النساء والأطفال. لدينا كل ما تحتاجه لصحتك وجمالك",
           type: {
             firstShop: "خصم على تسوقك الأول ٪{{itm}}",
-            newProduct: "! تصفح أحدث المنتجات لدينا",
+            newProduct: " تصفح أحدث المنتجات لدينا !",
             sold: "خصم على هذا العنصر ٪{{itm}}",
           },
         },
         products: {
           title: "منتجاتنا",
-          new: "منتجاتنا الجديدة",
+          new: "المنتجات المخفضة",
           newLabel: "جديد",
           soldLabel: "مُخفض",
           category: {
@@ -320,6 +321,7 @@ const resources = {
           firstName: "الاسم ",
           lastName: "لقب العائلة",
           phone: "الهاتف",
+          phone2: "الهاتف 2",
           mail: "البريد الإلكتروني",
           city: "المدينة",
           postalCode: "الرمز البريدي",
@@ -336,7 +338,7 @@ const resources = {
         btn: "إرسال",
         error: "الرجاء ملء جميع البيانات ",
         modal: {
-          msg: "تم إرسال طلبك بنجاح!",
+          msg: "تم إرسال طلبك بنجاح !",
         },
       },
       Modals: {
@@ -385,7 +387,7 @@ const resources = {
         },
         products: {
           title: "Nos Produits",
-          new: "Nouveaux Produits",
+          new: "Les produits en solde",
           newLabel: "Nouveau",
           soldLabel: "Soldé",
           category: {
@@ -499,6 +501,7 @@ const resources = {
           firstName: "Prénom",
           lastName: "Nom de famille",
           phone: "Téléphone",
+          phone2: "Téléphone 2",
           mail: "E-mail",
           city: "Ville",
           postalCode: "Code postal",

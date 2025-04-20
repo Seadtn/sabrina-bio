@@ -40,7 +40,11 @@ const ProductCard = ({ product }) => {
           : getDisplayPrice(),
         maxQuantity: product.quantity,
         type: product.productType,
-        title: getName(product),
+        taste: product.availableOptions[0]?.taste,
+        option: product.availableOptions[0]?.value >= 1000 ? product.availableOptions[0]?.value / 1000 : product.availableOptions[0]?.value,
+        title: product.name,
+        titleFr: product.nameFr,
+        titleEng: product.nameEng,
       })
     );
   };
@@ -121,6 +125,7 @@ const ProductCard = ({ product }) => {
           <img
             src={`data:image/*;base64,${product.image}`}
             alt={product.name?.substring(0, 25)}
+            loading="lazy"
           />
         </Link>
       </div>

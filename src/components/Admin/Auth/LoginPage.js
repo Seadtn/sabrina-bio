@@ -127,10 +127,10 @@ const LoginPage = () => {
                 },
               },
               "& .MuiInputLabel-root": {
-                color: "#000", // default label color
+                color: "black", // default label color
               },
               "& .Mui-focused .MuiInputLabel-root": {
-                color: "#000", // label color when focused
+                color: "black", // label color when focused
               },
             }}
           />
@@ -145,6 +145,7 @@ const LoginPage = () => {
             autoComplete="current-password"
             value={formData.password}
             onChange={handleChange}
+            style={{ color: "black" }}
             sx={{
               "& .MuiOutlinedInput-root": {
                 "& fieldset": {
@@ -158,10 +159,10 @@ const LoginPage = () => {
                 },
               },
               "& .MuiInputLabel-root": {
-                color: "#000", // default label color
+                color: "black", // default label color
               },
               "& .Mui-focused .MuiInputLabel-root": {
-                color: "#000", // label color when focused
+                color: "black", // label color when focused
               },
             }}
           />

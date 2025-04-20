@@ -1,13 +1,11 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import i18n from "../i18n/i18n";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import Arrows from "./arrows";
 
 const Categories = () => {
   const { t } = useTranslation();
-  const isArabic = i18n.language === "ar";  // You can use this flag if you need language-specific logic.
   
   const img = [
     { id: 4, url: "/images/Categories/herbs.jpg", path: "homePage.products.category.herbs" },
@@ -68,6 +66,7 @@ const Categories = () => {
                 className="card-image"
                 src={process.env.PUBLIC_URL + image.url}
                 alt={t(image.path)}
+                loading="lazy"
               />
             </Link>
             <div className="category-text">{t(image.path)}</div>

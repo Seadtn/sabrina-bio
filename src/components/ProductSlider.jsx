@@ -3,13 +3,11 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "../App.css";
-import { useTranslation } from "react-i18next";
 import Arrows from "./arrows";
-import OnSoldCard from "./OnSoldCard";
+import OnSoldCard from "./ProductSliderCard";
 
-function OnSoldProduct(props) {
-  const { products } = props;
-  const { t } = useTranslation();
+function ProductSlider(props) {
+  const { products,title } = props;
 
   const settings = {
     dots: false,
@@ -44,7 +42,7 @@ function OnSoldProduct(props) {
 
   return (
     <div>
-      <h2 className="title">{t("homePage.products.new")}</h2>
+      <h2 className="title">{title}</h2>
       <div>
         <Slider {...settings}>
           {products.map((product, index) => (
@@ -56,4 +54,4 @@ function OnSoldProduct(props) {
   );
 }
 
-export default OnSoldProduct;
+export default ProductSlider;

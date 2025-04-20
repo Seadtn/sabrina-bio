@@ -1,13 +1,13 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import i18n from "../i18n/i18n";
+import i18n from "../i18n/i18n.js";
 import { useDispatch, useSelector } from "react-redux";
 import { addFavoriteItems } from "../redux/favorite/slice.ts";
 import { useTranslation } from "react-i18next";
 import { addItems } from "../redux/cart/slice.ts";
 import { openFastViewModal } from "../redux/fastView/slice.ts";
 
-const OnSoldCard = ({ product }) => {
+const ProductSliderCard = ({ product }) => {
   const isArabic = i18n.language === "ar";
   const isFrench = i18n.language === "fr";
   const navigate = useNavigate();
@@ -24,6 +24,7 @@ const OnSoldCard = ({ product }) => {
     }
     return product.price;
   };
+  
   const getName = (product) => {
     if (isArabic) {
       return product.name || product.nameFr || product.nameEng || "";
@@ -35,6 +36,9 @@ const OnSoldCard = ({ product }) => {
   };
 
   const displayPrice = getDisplayPrice();
+  const promotionalPrice = product.promotion
+  ? displayPrice - displayPrice * product.soldRatio * 0.01
+  : null;
   const dispatch = useDispatch();
   const onClickAddFavoriteItems = () => {
     let favoriteItem = {};
@@ -80,7 +84,11 @@ const OnSoldCard = ({ product }) => {
           : getDisplayPrice(),
         maxQuantity: product.quantity,
         type: product.productType,
-        title: getName(product),
+        taste: product.availableOptions[0]?.taste,
+        option: product.availableOptions[0]?.value >= 1000 ? product.availableOptions[0]?.value / 1000 : product.availableOptions[0]?.value,
+        title: product.name,
+        titleFr: product.nameFr,
+        titleEng: product.nameEng,
       })
     );
   };
@@ -90,10 +98,29 @@ const OnSoldCard = ({ product }) => {
   return (
     <div className="col4 product" style={{ margin: "10px" }}>
       <div className="image-container">
+      {product.productNew && (
+          <div
+            className="new-label"
+            dir={isArabic ? "rtl" : "ltr"}
+            lang={isArabic ? "ar" : "fr"}
+          >
+            {t("homePage.products.newLabel")}
+          </div>
+        )}
+        {product.promotion && (
+          <div
+            className={`${product.productNew ? "sold-label1" : "sold-label2"}`}
+            dir={isArabic ? "rtl" : "ltr"}
+            lang={isArabic ? "ar" : "fr"}
+          >
+            {t("homePage.products.soldLabel")}
+          </div>
+        )}
         <Link to={`/product/${product.id}`} className="product-link">
           <img
             src={`data:image/*;base64,${product.image}`}
             alt={product.name.substring(0, 25)}
+            loading="lazy"
           />
         </Link>
       </div>
@@ -146,23 +173,33 @@ const OnSoldCard = ({ product }) => {
       <button className="icon-fast-view-button" onClick={handleFastView}>
         <i className="fas fa-book"></i>
       </button>
-      {product.promotion === true ? (
+      <div className="price-container">
         <p
-          className="price"
-          dir={isArabic ? "rtl" : "ltr"}
-          lang={isArabic ? "ar" : "fr"}
-        >
-          {displayPrice - displayPrice * product.soldRatio * 0.01}{" "}
-          {!isArabic ? "DT" : "دت"}
-        </p>
-      ) : (
-        <p
-          className="price"
+          className={product.promotion ? "old-price" : "price"}
           dir={isArabic ? "rtl" : "ltr"}
           lang={isArabic ? "ar" : "fr"}
         >
           {displayPrice} {!isArabic ? "DT" : "دت"}
         </p>
+
+        {product.promotion && (
+          <p
+            className="price"
+            dir={isArabic ? "rtl" : "ltr"}
+            lang={isArabic ? "ar" : "fr"}
+          >
+            {promotionalPrice} {!isArabic ? "DT" : "دت"}
+          </p>
+        )}
+      </div>
+      {product.quantity === 0 && (
+        <div style={{ color: "red", marginBottom: "2px", textAlign: "center" }}>
+          {isArabic
+            ? "المنتج نفذ من المخزون"
+            : isFrench
+              ? "Ce produit est épuisé"
+              : "This product is sold out"}
+        </div>
       )}
       <button
         className={isFavorited ? "favorite-button " : "unfavorite-button "}
@@ -201,4 +238,4 @@ const OnSoldCard = ({ product }) => {
   );
 };
 
-export default OnSoldCard;
+export default ProductSliderCard;

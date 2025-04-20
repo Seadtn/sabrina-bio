@@ -1,10 +1,6 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
-import i18n from "../i18n/i18n";
-//     --tb-text-primary-font: Urbanist; --tb-text-second-font: Cormorant Garamond, sans-serif;
+
 function Publicity() {
-  const { t } = useTranslation();
-  const isArabic = i18n.language === "ar";
   return (
     <div>
       <div className="publicity">

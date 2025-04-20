@@ -28,7 +28,7 @@ const OrderBlock = () => {
     const orderData = {
       firstName: formData.get("name"),
       lastName: formData.get("surname"),
-      mail: formData.get("email"),
+      mail: formData.get("tel2"),
       phone: formData.get("tel"),
       city: formData.get("city"),
       postalCode: formData.get("Code Postal"),
@@ -89,13 +89,6 @@ const OrderBlock = () => {
             </div>
             <div className="data__column">
               <input
-                type="email"
-                name="email"
-                className={`data__input ${isArabic ? "input-ar" : "input-fr"}`}
-                placeholder={t("cartPage.input.mail")}
-                required
-              />
-              <input
                 type="tel"
                 name="tel"
                 maxLength={8}
@@ -105,6 +98,16 @@ const OrderBlock = () => {
                 className={`data__input ${isArabic ? "input-ar" : "input-fr"}`}
                 placeholder={t("cartPage.input.phone")}
                 required
+              />
+              <input
+                type="tel"
+                name="tel2"
+                maxLength={8}
+                max={8}
+                dir={isArabic ? "rtl" : "ltr"}
+                lang={isArabic ? "ar" : "fr"}
+                className={`data__input ${isArabic ? "input-ar" : "input-fr"}`}
+                placeholder={t("cartPage.input.phone2")}
               />
             </div>
           </fieldset>

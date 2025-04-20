@@ -44,7 +44,9 @@ const Product = () => {
         type: product.productType,
         taste: selectedTaste,
         option: selectedOption >= 1000 ? selectedOption / 1000 : selectedOption,
-        title: getName(product),
+        title: product.name,
+        titleFr: product.nameFr,
+        titleEng: product.nameEng,
       })
     );
   };
@@ -125,6 +127,7 @@ const Product = () => {
               className={`option-button ${
                 selectedOption === option.value ? "selected" : ""
               }`}
+              style={{color:selectedOption === option.value ?"":"black"}}
             >
               {option.value >= 1000
                 ? `${option.value / 1000} ${

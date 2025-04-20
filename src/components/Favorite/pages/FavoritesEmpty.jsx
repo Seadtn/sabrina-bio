@@ -16,7 +16,7 @@ const FavoritesEmpty = () => {
       >
         <div className="container">
           <h2>{t("cartPage.order.empty.title")}</h2>
-          <img src={favorites} alt="Empty favorites" />
+          <img src={favorites} alt="Empty favorites" loading="lazy"/>
           <p>
           {t("cartPage.order.empty.desc1")}
             <br />

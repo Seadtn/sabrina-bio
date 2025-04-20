@@ -43,6 +43,7 @@ const Contact =  () => {
                 className="contact__img"
                 src={process.env.PUBLIC_URL + "/images/contact.jpg"}
                 alt="contact"
+                loading="lazy"
               />
             </div>
             <div className="sign-col">

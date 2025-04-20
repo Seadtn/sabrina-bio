@@ -54,7 +54,7 @@ const FavoritesBlock = ({
     <div className="favorites__column">
       <div className="favorites__img">
         <Link to={`/product/${id}`} aria-label="favoritesImg">
-          <img src={imageUrl} alt="" />
+          <img src={imageUrl} alt={getName()} loading="lazy"/>
         </Link>
         <button
           aria-label="favoritesIcon"
