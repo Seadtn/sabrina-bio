@@ -78,7 +78,7 @@ const Home = () => {
         </div>
 
         {/* Client Avis Section */}
-        <ClientAvis />
+        {/* <ClientAvis /> */}
         {/* On Sold Products Section */}
         <div className="content">
           <ProductSlider products={NewProducts} title={t("homePage.products.new")}/>
