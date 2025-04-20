@@ -34,7 +34,8 @@ import CategoriesDashboard from "./categories/CategoriesDashboard.js";
 import ContactDashboard from "./contact/ContactDashboard.js";
 import ContactMailIcon from "@mui/icons-material/ContactMail";
 import SousCategoryDashboard from "./sousCategorie/SousCategoryDashboard.js";
-
+import CelebrationIcon from "@mui/icons-material/Celebration";
+import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 const NAVIGATION = [
   { kind: "header", title: "All" },
   { segment: "products", title: "Produits", icon: <ShoppingCartIcon /> },
@@ -44,6 +45,16 @@ const NAVIGATION = [
     segment: "souscategories",
     title: "Sous Categories",
     icon: <CategoryIcon />,
+  },
+  {
+    segment: "productOfTheYear",
+    title: "Produit de l'année",
+    icon: <CelebrationIcon />,
+  },
+  {
+    segment: "ClientAvis",
+    title: "Avis Client",
+    icon: <ChatBubbleIcon />,
   },
   { segment: "contacts", title: "Contacts", icon: <ContactMailIcon /> },
 ];
@@ -70,6 +81,7 @@ export default function Dashboard() {
   const [page, setPage] = React.useState(0); // start at page 0
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [totalCount, setTotalCount] = React.useState(0); // total number of
+  const [TotalPages, setTotalPages] = React.useState(0); // total number of
 
   // Filter states
   const [category, setCategory] = React.useState("");
@@ -78,7 +90,7 @@ export default function Dashboard() {
   const [contacts, setContacts] = React.useState([]);
   const [subcategory, setSubcategory] = React.useState("");
   const [currentOffset, setCurrentOffset] = React.useState(0);
-const [subcategories, setSubcategories] = React.useState([]);
+  const [subcategories, setSubcategories] = React.useState([]);
 
   const debouncedSearch = debounce((value) => {
     fetchPaginatedProducts(0, { search: value });
@@ -91,28 +103,28 @@ const [subcategories, setSubcategories] = React.useState([]);
     setPage(0); // ⬅ Reset page
     fetchPaginatedProducts(0, { categoryId: newCategory, subcategoryId: "" });
   };
-  
+
   const handleSearchChange = (event) => {
     const value = event.target.value;
     setSearchTerm(value);
     setPage(0); // ⬅ Reset page
     debouncedSearch(value);
   };
-  
+
   const handleSortChange = (event) => {
     const value = event.target.value;
     setSortOption(value);
     setPage(0); // ⬅ Reset page
     fetchPaginatedProducts(0, { sort: value });
   };
-  
+
   const handleSubcategoryChange = (event) => {
     const newSubcategory = event.target.value;
     setSubcategory(newSubcategory);
     setPage(0); // ⬅ Reset page
     fetchPaginatedProducts(0, { subcategoryId: newSubcategory });
   };
-  
+
   const handleAddProduct = () => {
     setSelectedProduct(null);
     setTimeout(() => setOpenFormModal(true), 0);
@@ -131,14 +143,14 @@ const [subcategories, setSubcategories] = React.useState([]);
         sort: sortOption,
         ...filters,
       };
-  
+
       try {
         const { products, total } = await getPaginatedProductsTable({
           offset,
           limit: rowsPerPage,
           ...mergedFilters,
         });
-        
+
         if (Array.isArray(products)) {
           setProducts(products);
           setTotalCount(total);
@@ -152,11 +164,11 @@ const [subcategories, setSubcategories] = React.useState([]);
     },
     [category, subcategory, searchTerm, sortOption, rowsPerPage]
   );
-  
+
   // 🎯 Load Subcategories by Category
   React.useEffect(() => {
     if (!category) return setSubcategories([]);
-  
+
     const fetchSubcategories = async () => {
       try {
         const data = await getSousCategoriesbyIdCategory(category);
@@ -165,64 +177,73 @@ const [subcategories, setSubcategories] = React.useState([]);
         console.error("Error fetching subcategories:", error);
       }
     };
-  
+
     fetchSubcategories();
   }, [category]);
-  
+
   // 📦 Initial Data Fetch
   React.useEffect(() => {
     const loadInitialData = async () => {
       try {
+        // Fetch paginated products
         await fetchPaginatedProducts(0);
-  
-        const [commands, categories, contacts, sousCategories] = await Promise.all([
-          getAllCommands(),
+
+        // Fetch paginated commands with the necessary parameters
+        const { data: commands, totalPages } = await getAllCommands(
+          0,
+          rowsPerPage
+        );
+
+        const [categories, contacts, sousCategories] = await Promise.all([
           getAllCategories(),
           getAllContacts(),
           getAllSousCategories(),
         ]);
-  
-        setCommands(commands.reverse());
+
+        setCommands(commands);
         setCategories(categories);
         setContacts(contacts.reverse());
         setSousCategories(sousCategories);
+        setTotalPages(totalPages);
       } catch (error) {
         console.error("Error loading initial data:", error);
       }
     };
-  
+
     loadInitialData();
-  }, [fetchPaginatedProducts]);
-  
+  }, [fetchPaginatedProducts, rowsPerPage]);
+
   // 🧭 Table Pagination Effect
   React.useEffect(() => {
     fetchPaginatedProducts(page * rowsPerPage);
   }, [page, rowsPerPage, fetchPaginatedProducts]);
-  
+
   // 🧩 Handlers
-  
+
   const handleSaveProduct = async (productData) => {
     try {
       const isEdit = Boolean(productData.id);
       const response = await addNewProduct(productData);
-  
+
       setProducts((prev) =>
         isEdit
-          ? prev.map((prod) => (prod.id === productData.id ? { ...prod, ...response } : prod))
+          ? prev.map((prod) =>
+              prod.id === productData.id ? { ...prod, ...response } : prod
+            )
           : [...prev, response]
       );
-  
+
       setSelectedProduct(null);
     } catch (error) {
       console.error("Error saving/updating product:", error.message);
     }
   };
-  
+
   const handleViewProduct = (product) => {
     setSelectedProduct(product);
     setOpenViewModal(true);
   };
-  
+
   const handleDeleteProduct = async (id) => {
     try {
       await deleteProduct(id);
@@ -231,7 +252,7 @@ const [subcategories, setSubcategories] = React.useState([]);
       console.error("Error deleting product:", error.message);
     }
   };
-  
+
   // 🌐 Custom Router (maybe for SPA-style nav)
   const customRouter = {
     navigate: (to) => {
@@ -241,7 +262,7 @@ const [subcategories, setSubcategories] = React.useState([]);
     pathname: "",
     searchParams: new URLSearchParams(),
   };
-  
+
   return (
     <AppProvider
       theme={demoTheme}
@@ -356,7 +377,15 @@ const [subcategories, setSubcategories] = React.useState([]);
         )}
 
         {activePage === "commands" && (
-          <CommandsDashboard commands={commands} setCommands={setCommands} />
+          <CommandsDashboard
+            commands={commands}
+            setCommands={setCommands}
+            page={page}
+            rowsPerPage={rowsPerPage}
+            setPage={setPage}
+            setRowsPerPage={setRowsPerPage}
+            totalPages={TotalPages}
+          />
         )}
         {activePage === "categories" && (
           <CategoriesDashboard

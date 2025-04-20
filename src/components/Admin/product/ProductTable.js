@@ -51,6 +51,7 @@ const ProductTable = ({
             <TableCell>Quantité</TableCell>
             <TableCell>Ajouté le</TableCell>
             <TableCell>Promotion</TableCell>
+            <TableCell>Livrison gratuite</TableCell>
             <TableCell>Nouveau produit</TableCell>
             <TableCell>Actions</TableCell>
           </TableRow>
@@ -105,6 +106,9 @@ const ProductTable = ({
                         product.promotion === true
                       ? `La promotion commencera ${product.startDate}`
                       : "Non"}
+                </TableCell>
+                <TableCell>
+                  {product.freeDelivery === true ? "Oui" : "Non"}
                 </TableCell>
                 <TableCell>
                   <Chip

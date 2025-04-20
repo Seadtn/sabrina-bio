@@ -35,6 +35,7 @@ const resources = {
           new: "Sale Products",
           newLabel: "New",
           soldLabel: "On Sale",
+          deliveryLabel: "Free Delivery",
           category: {
             all: "All",
             herbs: "Herbs and grains",
@@ -215,6 +216,7 @@ const resources = {
           new: "المنتجات المخفضة",
           newLabel: "جديد",
           soldLabel: "مُخفض",
+          deliveryLabel: "توصيل مجاني",
           category: {
             all: "الكل",
             herbs: "الأعشاب و الحبوب",
@@ -390,6 +392,7 @@ const resources = {
           new: "Les produits en solde",
           newLabel: "Nouveau",
           soldLabel: "Soldé",
+          deliveryLabel: "Livraison gratuite",
           category: {
             all: "Tout",
             herbs: "Herbes et Grains",

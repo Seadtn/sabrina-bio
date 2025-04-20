@@ -3,7 +3,7 @@ import { getRequest, postRequest } from "./Request";
 //const localhost = "https://135.125.1.158:8080";
 // const localhost = "https://sabrina-bio.tn"; // Production
 // const localhost = "http://localhost:8080"; // Local
-const localhost = "http://192.168.100.15:8080"; // phone test
+const localhost = "http://192.168.1.6:8080"; // phone test
 // const localhost = "http://192.168.234.10:8080"; // Telnet
 const Product_URL = `${localhost}/api/v1/productManagement/`;
 const Command_URL = `${localhost}/api/v1/commandManagement/`;
@@ -135,15 +135,18 @@ export const searchProductsByName = async (name) => {
   const response = await getRequest(`${Product_URL}search?name=${name}`);
   return response; 
 };
-export const getAllCommands = async () => {
+export const getAllCommands = async (offset = 0, limit = 10) => {
   try {
-    const commands = await getRequest(Command_URL + "getAllCommands");
-    return commands;
+    const response = await getRequest(
+      `${Command_URL}getAllCommands?offset=${offset}&limit=${limit}`
+    );
+    return response; 
   } catch (error) {
     console.error("Error fetching all commands:", error.message);
     throw error;
   }
 };
+
 
 export const addNewCommand = async (command) => {
   try {

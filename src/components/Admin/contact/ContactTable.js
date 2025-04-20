@@ -36,9 +36,9 @@ function ContactTable({ Contacts,onView }) {
         <TableBody>
           {Contacts
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((contact) => (
+            .map((contact,index) => (
               <TableRow key={contact?.id} onClick={(event) => onView(contact, event)}>
-                <TableCell>#{contact?.id}</TableCell>
+                <TableCell>#{index+1}</TableCell>
                 <TableCell>{contact?.mail}</TableCell>
                 <TableCell>{contact?.subject}</TableCell>
               </TableRow>

@@ -7,7 +7,7 @@ import SuccessModal from "../../Modals/ModalConfirmation/SuccessModal.js";
 import { resetCart } from "../../../redux/cart/slice.ts";
 const OrderBlock = () => {
   const dispatch = useDispatch();
-  const { totalPrice, items } = useSelector((state) => state.cart);
+  const { totalPrice,items } = useSelector((state) => state.cart);
   const { t } = useTranslation();
   const isArabic = i18n.language === "ar";
   const isMountedCart = useRef(false);
@@ -21,19 +21,22 @@ const OrderBlock = () => {
     }
     isMountedCart.current = true;
   }, [items]);
-
+  const hasFreeDeliveryItem = () => {
+    return items.some((item) => item.freeDelivery === true);
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const orderData = {
       firstName: formData.get("name"),
       lastName: formData.get("surname"),
-      mail: formData.get("tel2"),
+      phone2: formData.get("tel2"),
+      mail: "",
       phone: formData.get("tel"),
       city: formData.get("city"),
       postalCode: formData.get("Code Postal"),
       paymentMethod: formData.get("payment"),
-      totalPrice: totalPrice < 100 ? totalPrice + 8 : totalPrice,
+      totalPrice: hasFreeDeliveryItem() ?totalPrice : totalPrice + 8 ,
       creationDate: new Date().toISOString().split("T")[0],
       confirmationDate: "",
       status: "Pending",
@@ -163,12 +166,12 @@ const OrderBlock = () => {
             className="order__style"
           >
             {t("cartPage.order.leftLine11")} :{" "}
-            <span style={totalPrice >= 100 ? { textDecoration: "line-through" } : {}}>{t("cartPage.order.leftLine12")}</span>
+            <span style={hasFreeDeliveryItem() ? { textDecoration: "line-through" }:{} }>{t("cartPage.order.leftLine12")}</span>
           </div>
           <div className="order__style">
             {t("cartPage.order.leftLine2")} :{" "}
             <span>
-              {totalPrice < 100 ? totalPrice + 8 : totalPrice}{" "}
+              {hasFreeDeliveryItem() ?   totalPrice :totalPrice + 8}{" "}
               {!isArabic ? "DT" : "دت"}
             </span>
           </div>

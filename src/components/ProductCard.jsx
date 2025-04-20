@@ -40,8 +40,12 @@ const ProductCard = ({ product }) => {
           : getDisplayPrice(),
         maxQuantity: product.quantity,
         type: product.productType,
+        freeDelivery: product.freeDelivery === null ? false : product.freeDelivery,
         taste: product.availableOptions[0]?.taste,
-        option: product.availableOptions[0]?.value >= 1000 ? product.availableOptions[0]?.value / 1000 : product.availableOptions[0]?.value,
+        option:
+          product.availableOptions[0]?.value >= 1000
+            ? product.availableOptions[0]?.value / 1000
+            : product.availableOptions[0]?.value,
         title: product.name,
         titleFr: product.nameFr,
         titleEng: product.nameEng,
@@ -118,6 +122,15 @@ const ProductCard = ({ product }) => {
             lang={isArabic ? "ar" : "fr"}
           >
             {t("homePage.products.soldLabel")}
+          </div>
+        )}
+        {product.freeDelivery && (
+          <div
+            className={`${product.promotion ? "free-delivery-label1" : "free-delivery-label2"}`}
+            dir={isArabic ? "rtl" : "ltr"}
+            lang={isArabic ? "ar" : "fr"}
+          >
+            {t("homePage.products.deliveryLabel")}
           </div>
         )}
 

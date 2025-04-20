@@ -24,7 +24,7 @@ const ProductSliderCard = ({ product }) => {
     }
     return product.price;
   };
-  
+
   const getName = (product) => {
     if (isArabic) {
       return product.name || product.nameFr || product.nameEng || "";
@@ -37,8 +37,8 @@ const ProductSliderCard = ({ product }) => {
 
   const displayPrice = getDisplayPrice();
   const promotionalPrice = product.promotion
-  ? displayPrice - displayPrice * product.soldRatio * 0.01
-  : null;
+    ? displayPrice - displayPrice * product.soldRatio * 0.01
+    : null;
   const dispatch = useDispatch();
   const onClickAddFavoriteItems = () => {
     let favoriteItem = {};
@@ -85,7 +85,11 @@ const ProductSliderCard = ({ product }) => {
         maxQuantity: product.quantity,
         type: product.productType,
         taste: product.availableOptions[0]?.taste,
-        option: product.availableOptions[0]?.value >= 1000 ? product.availableOptions[0]?.value / 1000 : product.availableOptions[0]?.value,
+        freeDelivery: product.freeDelivery === null ? false : product.freeDelivery,
+        option:
+          product.availableOptions[0]?.value >= 1000
+            ? product.availableOptions[0]?.value / 1000
+            : product.availableOptions[0]?.value,
         title: product.name,
         titleFr: product.nameFr,
         titleEng: product.nameEng,
@@ -98,7 +102,7 @@ const ProductSliderCard = ({ product }) => {
   return (
     <div className="col4 product" style={{ margin: "10px" }}>
       <div className="image-container">
-      {product.productNew && (
+        {product.productNew && (
           <div
             className="new-label"
             dir={isArabic ? "rtl" : "ltr"}
@@ -114,6 +118,15 @@ const ProductSliderCard = ({ product }) => {
             lang={isArabic ? "ar" : "fr"}
           >
             {t("homePage.products.soldLabel")}
+          </div>
+        )}
+        {product.freeDelivery && (
+          <div
+            className={`${product.promotion ? "free-delivery-label1" : "free-delivery-label2"}`}
+            dir={isArabic ? "rtl" : "ltr"}
+            lang={isArabic ? "ar" : "fr"}
+          >
+            {t("homePage.products.deliveryLabel")}
           </div>
         )}
         <Link to={`/product/${product.id}`} className="product-link">
