@@ -95,6 +95,7 @@ const BannerSection = () => {
                   <img
                     src={"data:image/*;base64,"+slider.cover}
                     alt="slider"
+                    loading="lazy"
                   />
                 </div>
               </div>

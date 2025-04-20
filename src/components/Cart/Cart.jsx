@@ -35,6 +35,7 @@ const Cart = () => {
               dir={isArabic ? "rtl" : "ltr"}
               lang={isArabic ? "ar" : "fr"}
             >
+              {items[0].freeDelivery}
               <div className="cart__title">{t("cartPage.cart.title")}</div>
               <div className="cart__orders">
                 {items.map((item) => (

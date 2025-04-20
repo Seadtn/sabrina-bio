@@ -1,12 +1,16 @@
 import { getRequest, postRequest } from "./Request";
+import axios from "axios";
 
 //const localhost = "https://135.125.1.158:8080";
-const localhost = "https://sabrina-bio.tn";
-//const localhost = "http://localhost:8080";
+// const localhost = "https://sabrina-bio.tn"; // Production
+// const localhost = "http://localhost:8080"; // Local
+const localhost = "http://192.168.1.6:8080"; // phone test
+// const localhost = "http://192.168.234.10:8080"; // Telnet
 const Product_URL = `${localhost}/api/v1/productManagement/`;
 const Command_URL = `${localhost}/api/v1/commandManagement/`;
 const Contact_URL = `${localhost}/api/v1/contactManagement/`;
 const Category_URL = `${localhost}/api/v1/categoryManagement/`;
+const ProductOTY_URL = `${localhost}/api/v1/productoty/`;
 const USER_URL = `${localhost}/api/v1/authDashbord/`;
 
 export const getAllProducts = async () => {
@@ -30,6 +34,20 @@ export const getPaginatedProducts = async (params) => {
   }).toString();
 
   const response = await getRequest(`${Product_URL}getAllProductsbyPages?${queryParams}`);
+  return response;
+};
+
+export const getPaginatedProductsTable = async (params) => {
+  const queryParams = new URLSearchParams({
+    offset: params.offset || 0,
+    limit: params.limit || 10,
+    ...(params.categoryId && { categoryId: params.categoryId }),
+    ...(params.subcategoryId && { subcategoryId: params.subcategoryId }),
+    ...(params.search && { search: params.search }),
+    ...(params.sort && { sort: params.sort })
+  }).toString();
+
+  const response = await getRequest(`${Product_URL}getAllProductsbyPagesTable?${queryParams}`);
   return response;
 };
 export const getProductById = async (id) => {
@@ -67,7 +85,7 @@ export const getRelatedProducts = async (categoryId) => {
 export const getProductsInHomePage = async () => {
   try {
     const sortedProducts = await getRequest(
-      Product_URL + "getProductsInHomePage"
+      Product_URL + "getHomePageProducts"
     );
     return sortedProducts;
   } catch (error) {
@@ -76,6 +94,17 @@ export const getProductsInHomePage = async () => {
   }
 };
 
+export const getLatestOnSoldProduct = async () => {
+  try {
+    const sortedProducts = await getRequest(
+      Product_URL + "getLatestPromotionedProducts"
+    );
+    return sortedProducts;
+  } catch (error) {
+    console.error("Error fetching products Home page:", error.message);
+    throw error;
+  }
+};
 export const getLatestMixedProducts = async () => {
   try {
     const response = await getRequest(Product_URL + "getLatestMixedProducts");
@@ -108,15 +137,18 @@ export const searchProductsByName = async (name) => {
   const response = await getRequest(`${Product_URL}search?name=${name}`);
   return response; 
 };
-export const getAllCommands = async () => {
+export const getAllCommands = async (offset = 0, limit = 10) => {
   try {
-    const commands = await getRequest(Command_URL + "getAllCommands");
-    return commands;
+    const response = await getRequest(
+      `${Command_URL}getAllCommands?offset=${offset}&limit=${limit}`
+    );
+    return response; 
   } catch (error) {
     console.error("Error fetching all commands:", error.message);
     throw error;
   }
 };
+
 
 export const addNewCommand = async (command) => {
   try {
@@ -220,4 +252,52 @@ export const login = async (user) => {
     console.error("Authentication error :", error.message);
     throw error;
   }
+};
+
+// Get paginated ProductOTY items with total count
+export const getPaginatedProductOTY = async (offset = 0, limit = 10) => {
+  const response = await axios.get(ProductOTY_URL, {
+    params: { offset, limit },
+  });
+  return response.data; // { products: [...], totalCount: number }
+};
+
+// Get a specific ProductOTY by ID
+export const getProductOTYById = async (id) => {
+  const response = await axios.get(`${ProductOTY_URL}${id}`);
+  return response.data;
+};
+
+// Get a active ProductOTY by ID
+export const getActiveProductOTY = async () => {
+    try {
+      const product = await getRequest(ProductOTY_URL + "active");
+      if (!product || Object.keys(product).length === 0) {
+        // Handle the case where no active product exists
+        console.log("No active Product of the Year found.");
+        return null; // or return a default value
+      }
+      return product;
+    } catch (error) {
+      console.error("Error fetching active Product of the Year:", error.message);
+      throw error;
+    }
+};
+
+// Create a new ProductOTY
+export const createProductOTY = async (productOTY) => {
+  const response = await axios.post(ProductOTY_URL, productOTY);
+  return response.data;
+};
+
+// Update an existing ProductOTY by ID
+export const updateProductOTY = async (id, productOTY) => {
+  const response = await axios.put(`${ProductOTY_URL}${id}`, productOTY);
+  return response.data;
+};
+
+// Delete a ProductOTY by ID
+export const deleteProductOTY = async (id) => {
+  const response = await axios.delete(`${ProductOTY_URL}${id}`);
+  return response.data;
 };

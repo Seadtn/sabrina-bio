@@ -7,34 +7,40 @@ import {
   Button,
   TextField,
   Box,
+  Typography,
 } from "@mui/material";
 
-const CategoryFormModal = ({category,open, onClose, onSave }) => {
+const CategoryFormModal = ({ category, open, onClose, onSave }) => {
   const [formData, setFormData] = useState({
     frenchName: "",
     englishName: "",
     arabicName: "",
+    tri: 0,
+    image: "",
     creationDate: new Date().toISOString().split("T")[0],
   });
-    useEffect(() => {
-
-      if(category){
-          setFormData({
-            id:category.id,
-            frenchName:category.frenchName,
-            englishName:category.englishName,
-            arabicName:category.arabicName,
-            creationDate:category.creationDate,
-          })
-      }else{
-        setFormData({
-          frenchName:"",
-          englishName:"",
-          arabicName:"",
-          creationDate:new Date().toISOString().split("T")[0],
-        })
-      }
-    }, [category]);
+  useEffect(() => {
+    if (category) {
+      setFormData({
+        id: category.id,
+        frenchName: category.frenchName,
+        englishName: category.englishName,
+        arabicName: category.arabicName,
+        tri: category.tri,
+        creationDate: category.creationDate,
+        image: category.image,
+      });
+    } else {
+      setFormData({
+        frenchName: "",
+        englishName: "",
+        arabicName: "",
+        tri: 0,
+        creationDate: new Date().toISOString().split("T")[0],
+        image: "",
+      });
+    }
+  }, [category]);
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -46,10 +52,25 @@ const CategoryFormModal = ({category,open, onClose, onSave }) => {
     onSave(formData);
     onClose();
   };
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
 
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64String = reader.result.split(",")[1];
+      setFormData((prevData) => ({
+        ...prevData,
+        image: base64String,
+      }));
+    };
+    reader.readAsDataURL(file);
+  };
   return (
     <Dialog open={open} onClose={onClose} maxWidth={"lg"}>
-      <DialogTitle>{category ? 'Modifier la catégorie' : 'Ajouter une catégorie'}</DialogTitle>
+      <DialogTitle>
+        {category ? "Modifier la catégorie" : "Ajouter une catégorie"}
+      </DialogTitle>
       <DialogContent
         sx={{
           display: "flex",
@@ -61,6 +82,36 @@ const CategoryFormModal = ({category,open, onClose, onSave }) => {
           minWidth: "800px",
         }}
       >
+        <Box sx={{ display: "flex", minWidth: "400px", marginTop: "20px" }}>
+        <Button
+          variant="outlined"
+          component="label"
+          fullWidth
+          style={{
+            border: "1px solid #2fcb00",
+            marginTop: "10px",
+            color: "#2fcb00",
+          }}
+        >
+          Télécharger une image
+          <input type="file" hidden onChange={handleImageUpload} />
+        </Button>
+        {formData.image && (
+          <Typography variant="caption" display="block" sx={{ mt: 1 }}>
+            Image téléchargée ✅
+          </Typography>
+        )}
+        </Box>
+        <Box sx={{ display: "flex", minWidth: "400px", marginTop: "20px" }}>
+          <TextField
+            name="tri"
+            label="Numéro de tri"
+            type="number"
+            fullWidth
+            value={formData.tri}
+            onChange={handleInputChange}
+          />
+        </Box>
         <Box sx={{ display: "flex", minWidth: "400px", marginTop: "20px" }}>
           <TextField
             name="frenchName"
@@ -95,7 +146,7 @@ const CategoryFormModal = ({category,open, onClose, onSave }) => {
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose} style={{ color: "#2fcb00" }}>
-        Annuler
+          Annuler
         </Button>
         <Button
           onClick={handleSubmit}

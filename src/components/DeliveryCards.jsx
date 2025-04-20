@@ -10,7 +10,7 @@ function DeliveryCards() {
   const isArabic = i18n.language === "ar";
 
   return (
-    <div>
+    <div style={{ marginBottom: "50px" }} className="container">
       <h2 className="title">{t("homePage.deliverySection.services")}</h2>
 
       <div

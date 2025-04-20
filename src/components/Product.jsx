@@ -43,8 +43,10 @@ const Product = () => {
         maxQuantity: product.quantity,
         type: product.productType,
         taste: selectedTaste,
-        option: selectedOption >=1000 ? selectedOption/1000 : selectedOption,
-        title: getName(product) ,
+        option: selectedOption >= 1000 ? selectedOption / 1000 : selectedOption,
+        title: product.name,
+        titleFr: product.nameFr,
+        titleEng: product.nameEng,
       })
     );
   };
@@ -84,9 +86,9 @@ const Product = () => {
     if (isArabic) {
       return product.name || product.nameFr || product.nameEng || "";
     } else if (isFrench) {
-      return product.nameFr || product.name || product.nameEng || "";
+      return product.nameFr || product.nameEng || product.name || "";
     } else {
-      return product.nameEng || product.name || product.nameFr || "";
+      return product.nameEng || product.nameFr || product.name || "";
     }
   };
   const getDisplayPrice = () => {
@@ -125,6 +127,7 @@ const Product = () => {
               className={`option-button ${
                 selectedOption === option.value ? "selected" : ""
               }`}
+              style={{color:selectedOption === option.value ?"":"black"}}
             >
               {option.value >= 1000
                 ? `${option.value / 1000} ${
@@ -185,7 +188,7 @@ const Product = () => {
       </div>
     );
   };
-  
+
   useEffect(() => {
     const checkLineCount = () => {
       const element = descriptionRef.current;
@@ -202,11 +205,11 @@ const Product = () => {
         `;
         temp.innerHTML = product.description;
         document.body.appendChild(temp);
-    
+
         // Calculate lineHeight
         const computedStyle = window.getComputedStyle(temp);
         let lineHeight = computedStyle.lineHeight;
-    
+
         if (lineHeight === "normal") {
           // Estimate line height as 1.2 times the font size if "normal"
           const fontSize = parseFloat(computedStyle.fontSize);
@@ -219,24 +222,24 @@ const Product = () => {
         const lineCount = Math.ceil(height / lineHeight);
         // Clean up
         document.body.removeChild(temp);
-    
+
         setHasMoreLines(lineCount > 7);
       }
     };
 
     checkLineCount();
     // Add resize listener to recheck on window resize
-    window.addEventListener('resize', checkLineCount);
-    
+    window.addEventListener("resize", checkLineCount);
+
     return () => {
-      window.removeEventListener('resize', checkLineCount);
+      window.removeEventListener("resize", checkLineCount);
     };
   }, [product.description]);
   const toggleDescription = () => {
- if (!isMobile)  {
+    if (!isMobile) {
       setIsDescriptionExpanded(false);
       handleFastView();
-    }else{
+    } else {
       setIsDescriptionExpanded((prev) => !prev);
     }
   };
@@ -274,10 +277,7 @@ const Product = () => {
                 />
               </div>
               <div className="col-single">
-                <h2>
-                  {" "}
-                  {getName(product)}
-                </h2>
+                <h2> {getName(product)}</h2>
 
                 <h4
                   className={

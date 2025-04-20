@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Table,
   TableBody,
@@ -14,15 +14,25 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-const ProductTable = ({ products, onEdit, onView, onDelete }) => {
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+const ProductTable = ({
+  products,
+  onEdit,
+  onView,
+  onDelete,
+  page,
+  rowsPerPage,
+  totalCount,
+  setPage,
+  setRowsPerPage,
+}) => {
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    const newRowsPerPage = parseInt(event.target.value, 10);
+    setRowsPerPage(newRowsPerPage);
     setPage(0);
   };
 
@@ -30,7 +40,7 @@ const ProductTable = ({ products, onEdit, onView, onDelete }) => {
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
-          <TableRow>
+          <TableRow >
             <TableCell>ID</TableCell>
             <TableCell>Image</TableCell>
             <TableCell>Nom</TableCell>
@@ -41,22 +51,20 @@ const ProductTable = ({ products, onEdit, onView, onDelete }) => {
             <TableCell>Quantité</TableCell>
             <TableCell>Ajouté le</TableCell>
             <TableCell>Promotion</TableCell>
+            <TableCell>Livrison gratuite</TableCell>
             <TableCell>Nouveau produit</TableCell>
             <TableCell>Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {products
-            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((product) => (
-              <TableRow
-                key={product.id}
-                onClick={(event) => onView(product, event)}
-              >
-                <TableCell>#{product?.id}</TableCell>
+          {products.map((product, index) => {
+            const displayIndex = page * rowsPerPage + index + 1; // Adjust index
+            return (
+              <TableRow key={product.id} onClick={(event) => onView(product, event)}>
+                <TableCell>{displayIndex}</TableCell>
                 <TableCell>
                   <img
-                    src={`data:image/jpeg;base64,${product.image}`}
+                    src={`data:image/*;base64,${product.image}`}
                     alt={`product${product.id}`}
                     style={{
                       width: "50px",
@@ -74,31 +82,33 @@ const ProductTable = ({ products, onEdit, onView, onDelete }) => {
                     : product.description}
                 </TableCell>
                 <TableCell>
-                  <TableCell>
-                    {product.price === 0 ? (
-                      <>
-                        {product.availableOptions &&
-                        product.availableOptions.length > 0
-                          ? product.availableOptions.map((option, index) => (
-                              <div key={index}>
-                                {product.prices[option.value]}   
-                              </div>
-                            ))
-                          : null}
-                      </>
-                    ) : (
-                      product.price
-                    )}
-                  </TableCell>
+                  {product.price === 0 ? (
+                    <>
+                      {product.availableOptions &&
+                      product.availableOptions.length > 0
+                        ? product.availableOptions.map((option, index) => (
+                            <div key={index}>
+                              {product.prices[option.value]}
+                            </div>
+                          ))
+                        : null}
+                    </>
+                  ) : (
+                    product.price
+                  )}
                 </TableCell>
                 <TableCell>{product.quantity}</TableCell>
                 <TableCell>{product.creationDate}</TableCell>
                 <TableCell>
                   {product.promotion === true && product.soldRatio > 0
                     ? `Oui (${product.soldRatio}%)`
-                    : product.startDate && product.startDate.trim() !== ""
+                    : (product.startDate && product.startDate.trim()) !== "" &&
+                        product.promotion === true
                       ? `La promotion commencera ${product.startDate}`
                       : "Non"}
+                </TableCell>
+                <TableCell>
+                  {product.freeDelivery === true ? "Oui" : "Non"}
                 </TableCell>
                 <TableCell>
                   <Chip
@@ -133,17 +143,18 @@ const ProductTable = ({ products, onEdit, onView, onDelete }) => {
                   </IconButton>
                 </TableCell>
               </TableRow>
-            ))}
+            );
+          })}
         </TableBody>
       </Table>
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={products.length}
+        count={totalCount} // Total number of products
         rowsPerPage={rowsPerPage}
         page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
+        onPageChange={handleChangePage} // This should update the page correctly
+        onRowsPerPageChange={handleChangeRowsPerPage} // This should update the rows per page correctly
       />
     </TableContainer>
   );
