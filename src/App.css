@@ -1782,7 +1782,7 @@ form button {
   position: absolute;
   top: 110px;
   /*belowtheothers*/left: 0px;
-  background-color: #62d1d8;
+  background-color: rgb(231, 31, 31);
   /*Greentodifferentiate*/border-radius: 0 10px 10px 0;
   color: white;
   padding: 10px;
@@ -1801,7 +1801,30 @@ form button {
   background: transparent;
   border: none;
   padding: 10px;
-  background-color: #62d1d8;
+  background-color: rgb(231, 31, 31);
+  border-radius: 0 10px 10px 0;
+  color: white;
+  font-size: 10px;
+  cursor: pointer;
+  outline: none;
+  transition: color 0.3s ease;
+  -webkit-border-radius: 0 10px 10px 0;
+  -moz-border-radius: 0 10px 10px 0;
+  -ms-border-radius: 0 10px 10px 0;
+  -o-border-radius: 0 10px 10px 0;
+  -webkit-transition: color 0.3s ease;
+  -moz-transition: color 0.3s ease;
+  -ms-transition: color 0.3s ease;
+  -o-transition: color 0.3s ease;
+}
+.free-delivery-label3 {
+  position: absolute;
+  top: 10px;
+  left: 0px;
+  background: transparent;
+  border: none;
+  padding: 10px;
+  background-color: rgb(231, 31, 31);
   border-radius: 0 10px 10px 0;
   color: white;
   font-size: 10px;

@@ -47,7 +47,7 @@ const ProductTable = ({
             <TableCell>Catégorie</TableCell>
             <TableCell>Sous-Catégorie</TableCell>
             <TableCell>Description</TableCell>
-            <TableCell>Prix</TableCell>
+            <TableCell>Prix (TND)</TableCell>
             <TableCell>Quantité</TableCell>
             <TableCell>Ajouté le</TableCell>
             <TableCell>Promotion</TableCell>

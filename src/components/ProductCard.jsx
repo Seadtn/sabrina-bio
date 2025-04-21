@@ -36,8 +36,10 @@ const ProductCard = ({ product }) => {
         count: 1,
         imageUrl: `data:image/*;base64,${product.image}`,
         price: product.promotion
-          ? displayPrice - displayPrice * product.soldRatio * 0.01
-          : getDisplayPrice(),
+        ? (product.soldRatio !== null
+            ? displayPrice - displayPrice * product.soldRatio * 0.01
+            : product.newPrice)
+        : getDisplayPrice(),
         maxQuantity: product.quantity,
         type: product.productType,
         freeDelivery: product.freeDelivery === null ? false : product.freeDelivery,
@@ -63,8 +65,9 @@ const ProductCard = ({ product }) => {
   const displayPrice = getDisplayPrice();
 
   const promotionalPrice = product.promotion
-    ? displayPrice - displayPrice * product.soldRatio * 0.01
-    : null;
+  ? (product.soldRatio !== null
+      ? displayPrice - displayPrice * product.soldRatio * 0.01
+      : product.newPrice): null;
 
   const onClickAddFavoriteItems = () => {
     let favoriteItem = {};
@@ -75,8 +78,10 @@ const ProductCard = ({ product }) => {
         titleFr: product.nameFr,
         titleEng: product.nameEng,
         price: product.promotion
-          ? displayPrice - displayPrice * product.soldRatio * 0.01
-          : getDisplayPrice(),
+        ? (product.soldRatio !== null
+            ? displayPrice - displayPrice * product.soldRatio * 0.01
+            : product.newPrice)
+        : getDisplayPrice(),
         imageUrl: `data:image/*;base64,${product.image}`,
         unit: product.availableOptions[0].unit,
         value: product.availableOptions[0].value,
@@ -89,8 +94,10 @@ const ProductCard = ({ product }) => {
         titleFr: product.nameFr,
         titleEng: product.nameEng,
         price: product.promotion
-          ? displayPrice - displayPrice * product.soldRatio * 0.01
-          : getDisplayPrice(),
+        ? (product.soldRatio !== null
+            ? displayPrice - displayPrice * product.soldRatio * 0.01
+            : product.newPrice)
+        : getDisplayPrice(),
         imageUrl: `data:image/*;base64,${product.image}`,
         unit: "",
         value: "",
@@ -126,7 +133,7 @@ const ProductCard = ({ product }) => {
         )}
         {product.freeDelivery && (
           <div
-            className={`${product.promotion ? "free-delivery-label1" : "free-delivery-label2"}`}
+            className={`${product.promotion ? "free-delivery-label1" : product.productNew ? "free-delivery-label2" : "free-delivery-label3"}`}
             dir={isArabic ? "rtl" : "ltr"}
             lang={isArabic ? "ar" : "fr"}
           >
@@ -201,7 +208,7 @@ const ProductCard = ({ product }) => {
           dir={isArabic ? "rtl" : "ltr"}
           lang={isArabic ? "ar" : "fr"}
         >
-          {displayPrice} {!isArabic ? "DT" : "دت"}
+          {Math.round(displayPrice)} {!isArabic ? "DT" : "دت"}
         </p>
 
         {product.promotion && (
@@ -210,7 +217,7 @@ const ProductCard = ({ product }) => {
             dir={isArabic ? "rtl" : "ltr"}
             lang={isArabic ? "ar" : "fr"}
           >
-            {promotionalPrice} {!isArabic ? "DT" : "دت"}
+            {Math.round(promotionalPrice)} {!isArabic ? "DT" : "دت"}
           </p>
         )}
       </div>

@@ -43,7 +43,7 @@ const Cart = () => {
                 ))}
               </div>
               <div className="cart__fullsum">
-                <span>{t("cartPage.cart.total")} :</span> {totalPrice} {!isArabic ? "DT" : "دت"}
+                <span>{t("cartPage.cart.total")} :</span> {Math.round(totalPrice)} {!isArabic ? "DT" : "دت"}
               </div>
             </div>
           </section>

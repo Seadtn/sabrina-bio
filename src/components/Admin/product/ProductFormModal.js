@@ -35,7 +35,7 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
     inSold: false,
     promotion: false,
     productNew: false,
-    soldRatio: 0,
+    newPrice: 0,
     quantity: 1,
     startDate: "",
     lastDate: "",
@@ -68,7 +68,7 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
       inSold: false,
       promotion: false,
       productNew: false,
-      soldRatio: 0,
+      newPrice: 0,
       quantity: 1,
       startDate: "",
       lastDate: "",
@@ -592,13 +592,12 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
           {formData.inSold && (
             <>
               <TextField
-                name="soldRatio"
-                label="Taux de la promotion"
+                name="newPrice"
+                label="Nouveau prix"
                 type="number"
                 fullWidth
-                value={formData.soldRatio}
+                value={formData.newPrice}
                 onChange={handleInputChange}
-                inputProps={{ min: 5, max: 90 }}
               />
               <TextField
                 name="startDate"

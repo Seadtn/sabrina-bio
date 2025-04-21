@@ -8,6 +8,8 @@ import {
   removeItems,
 } from "../../../redux/cart/slice.ts";
 import i18n from "../../../i18n/i18n.js";
+import { Chip } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 const CartItem = ({
   id,
@@ -21,11 +23,14 @@ const CartItem = ({
   maxQuantity,
   type,
   option,
+  freeDelivery,
   taste,
 }) => {
   const dispatch = useDispatch();
   const isArabic = i18n.language === "ar";
   const isFrench = i18n.language === "fr";
+  const { t } = useTranslation();
+
   const onClickPlus = () => {
     if (count < maxQuantity) {
       dispatch(plusItems(newId));
@@ -43,7 +48,7 @@ const CartItem = ({
     if (isArabic) {
       return title || titleFr || titleEng || "";
     } else if (isFrench) {
-      return titleFr|| titleEng || title || "";
+      return titleFr || titleEng || title || "";
     } else {
       return titleEng || titleFr || title || "";
     }
@@ -58,12 +63,29 @@ const CartItem = ({
         <div className="cart__column">
           <div className="cart__item">
             <div className="cart__img">
-              <img src={imageUrl} alt={getName()} loading="lazy"/>
+              <img src={imageUrl} alt={getName()} loading="lazy" />
             </div>
 
             <div className="cart__info">
               <Link to={`/product/${id}`} className="cart__name">
                 {getName()} <br />{" "}
+                {freeDelivery && (
+                  <div>
+                    <Chip
+                      label={t("homePage.products.deliveryLabel")}
+                      color="success"
+                      size="small"
+                      sx={{
+                        color: "white",
+                        padding: "5px",
+                        marginRight: "10px",
+                        marginTop: "5px",
+                        marginLeft: "10px",
+                      }}
+                    />
+                    <br />{" "}
+                  </div>
+                )}
                 <small
                   style={{
                     fontSize: "20px",
@@ -73,21 +95,18 @@ const CartItem = ({
                   }}
                 >
                   {" "}
-                  {option}
-                  {" "}
-                  {
-                    !isArabic
-                      ? type === "GRAMMAGE"
-                        ? "Kg"
-                        :type === "DOSAGE"
-                          ? "L"
-                          : ""
-                      : type === "GRAMMAGE"
-                        ? "كغ"
-                        : type === "DOSAGE"
-                          ? "ل"
-                          : ""
-                  }{" "}
+                  {option}{" "}
+                  {!isArabic
+                    ? type === "GRAMMAGE"
+                      ? "Kg"
+                      : type === "DOSAGE"
+                        ? "L"
+                        : ""
+                    : type === "GRAMMAGE"
+                      ? "كغ"
+                      : type === "DOSAGE"
+                        ? "ل"
+                        : ""}{" "}
                   {taste ? "-" + taste : ""}
                 </small>
               </Link>
