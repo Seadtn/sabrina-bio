@@ -2,6 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { addItems } from "../redux/cart/slice.ts";
+import { useNavigate } from "react-router-dom";
 
 const ProductOfTheYear = ({ productOTY }) => {
   const product = productOTY?.product;
@@ -13,8 +14,10 @@ const ProductOfTheYear = ({ productOTY }) => {
       return priceValues.length > 0 ? Math.round(Math.min(...priceValues)) : 0;
     }
   };
+  const navigate = useNavigate();
   const displayPrice = getDisplayPrice();
   const dispatch = useDispatch();
+  
   const onClickAddItem = () => {
     dispatch(
       addItems({
@@ -38,9 +41,9 @@ const ProductOfTheYear = ({ productOTY }) => {
     );
   };
   return (
-    <div>
-      <h2 className="title">منتج السنة</h2>
-      <section className="product-of-year-section">
+    <div >
+      <h2 className="title">{t("homePage.menu.ProductOfTheYear")}</h2>
+      <section className="product-of-year-section" onClick={()=>navigate(`/product/${product?.id}`)}>
         <div className="product-of-year-wrapper">
           <div className="product-image">
             <img

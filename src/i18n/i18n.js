@@ -1,5 +1,6 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+import ProductOfTheYear from "../components/ProductOfYear";
 
 // Translation resources
 const resources = {
@@ -20,6 +21,7 @@ const resources = {
           contact: "Contact Us",
           livraisonText: "Free delivery starting from ",
           livraisonPrix: "100 DT",
+          ProductOfTheYear: "Product of the Year",
         },
         slider: {
           collectionBtn: "visit collections",
@@ -201,6 +203,7 @@ const resources = {
           contact: "اتصل بنا",
           livraisonText: "توصيل مجاني ابتداءً من ",
           livraisonPrix: "100 د.ت",
+          ProductOfTheYear: "منتج السنة",
         },
         slider: {
           collectionBtn: "زيارة المجموعات",
@@ -377,6 +380,7 @@ const resources = {
           contact: "Nos Contacts",
           livraisonText: "Livraison gratuite à partir de ",
           livraisonPrix: "100 DT",
+          ProductOfTheYear: "Produit de l'année",
         },
         slider: {
           collectionBtn: " Visiter les collections",
