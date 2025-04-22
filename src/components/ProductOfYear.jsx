@@ -43,8 +43,8 @@ const ProductOfTheYear = ({ productOTY }) => {
   return (
     <div >
       <h2 className="title">{t("homePage.menu.ProductOfTheYear")}</h2>
-      <section className="product-of-year-section" onClick={()=>navigate(`/product/${product?.id}`)}>
-        <div className="product-of-year-wrapper">
+      <section className="product-of-year-section" >
+        <div className="product-of-year-wrapper" onClick={()=>navigate(`/product/${product?.id}`)}>
           <div className="product-image">
             <img
               src={`data:image/*;base64,${productOTY?.image}`}
