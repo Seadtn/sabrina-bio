@@ -20,9 +20,9 @@ const ProductSliderCard = ({ product }) => {
     if (product.price === 0 && product.prices) {
       // Get the lowest price from the prices object
       const priceValues = Object.values(product.prices);
-      return priceValues.length > 0 ? Math.min(...priceValues) : 0;
+      return priceValues.length > 0 ?  Math.round(Math.min(...priceValues)) : 0;
     }
-    return product.price;
+    return  Math.round(product.price);
   };
 
   const getName = (product) => {
@@ -49,7 +49,7 @@ const ProductSliderCard = ({ product }) => {
         titleFr: product.nameFr,
         titleEng: product.nameEng,
         price: product.promotion
-          ? displayPrice - displayPrice * product.soldRatio * 0.01
+          ?  Math.round(displayPrice - displayPrice * product.soldRatio * 0.01)
           : getDisplayPrice(),
         imageUrl: `data:image/*;base64,${product.image}`,
         unit: product.availableOptions[0].unit,
@@ -63,7 +63,7 @@ const ProductSliderCard = ({ product }) => {
         titleFr: product.nameFr,
         titleEng: product.nameEng,
         price: product.promotion
-          ? displayPrice - displayPrice * product.soldRatio * 0.01
+          ?  Math.round(displayPrice - displayPrice * product.soldRatio * 0.01)
           : getDisplayPrice(),
         imageUrl: `data:image/*;base64,${product.image}`,
         unit: "",
@@ -80,7 +80,7 @@ const ProductSliderCard = ({ product }) => {
         count: 1,
         imageUrl: `data:image/*;base64,${product.image}`,
         price: product.promotion
-          ? displayPrice - displayPrice * product.soldRatio * 0.01
+          ?  Math.round(displayPrice - displayPrice * product.soldRatio * 0.01)
           : getDisplayPrice(),
         maxQuantity: product.quantity,
         type: product.productType,

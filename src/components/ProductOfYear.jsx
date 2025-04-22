@@ -10,7 +10,7 @@ const ProductOfTheYear = ({ productOTY }) => {
   const getDisplayPrice = () => {
     if (product?.price === 0 && product?.prices) {
       const priceValues = Object.values(product?.prices);
-      return priceValues.length > 0 ? Math.min(...priceValues) : 0;
+      return priceValues.length > 0 ? Math.round(Math.min(...priceValues)) : 0;
     }
   };
   const displayPrice = getDisplayPrice();
@@ -22,12 +22,15 @@ const ProductOfTheYear = ({ productOTY }) => {
         count: 1,
         imageUrl: `data:image/*;base64,${product?.image}`,
         price: product?.promotion
-          ? displayPrice - displayPrice * product?.soldRatio * 0.01
+          ?  Math.round(displayPrice - displayPrice * product?.soldRatio * 0.01)
           : getDisplayPrice(),
         maxQuantity: product?.quantity,
         type: product?.productType,
         taste: product?.availableOptions[0]?.taste,
-        option: product?.availableOptions[0]?.value >= 1000 ? product?.availableOptions[0]?.value / 1000 : product?.availableOptions[0]?.value,
+        option:
+          product?.availableOptions[0]?.value >= 1000
+            ? product?.availableOptions[0]?.value / 1000
+            : product?.availableOptions[0]?.value,
         title: product?.name,
         titleFr: product?.nameFr,
         titleEng: product?.nameEng,
@@ -36,9 +39,7 @@ const ProductOfTheYear = ({ productOTY }) => {
   };
   return (
     <div>
-      <h2 className="title" >
-        منتج السنة
-      </h2>
+      <h2 className="title">منتج السنة</h2>
       <section className="product-of-year-section">
         <div className="product-of-year-wrapper">
           <div className="product-image">
@@ -54,7 +55,10 @@ const ProductOfTheYear = ({ productOTY }) => {
               className="buy-button-poty"
               onClick={() => onClickAddItem()}
             >
-              <i className="fas fa-shopping-cart" style={{ marginRight: '8px' }}></i>
+              <i
+                className="fas fa-shopping-cart"
+                style={{ marginRight: "8px" }}
+              ></i>
               {t("homePage.products.buyBtn")}
             </button>
           </div>
@@ -62,7 +66,6 @@ const ProductOfTheYear = ({ productOTY }) => {
       </section>
     </div>
   );
-  
 };
 
 export default ProductOfTheYear;

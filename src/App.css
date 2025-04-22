@@ -631,26 +631,7 @@ nav ul li a:hover {
   flex-direction: row;
 }
 
-@media only screen and (min-width: 320px) and (max-width: 725px) {
-  .box {
-    margin-top: 40px;
-    padding: 0px 20px;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-  }
-  .box .right img {
-    display: none;
-  }
-  .product img {
-    width: 80px;
-    height: 100px;
-  }
-  .homeSlide ul {
-    display: none;
-    padding: 0px;
-  }
-}
+
 .box .left-ar {
   width: 70%;
   display: flex;
@@ -773,7 +754,7 @@ nav ul li a:hover {
 .col4 {
   flex-basis: 25%;
   padding: 10px;
-  min-width: 170px;
+  min-width: 150px;
   margin-bottom: 50px;
   transition: all 0.2s ease-in-out;
   -webkit-transition: all 0.2s ease-in-out;
@@ -2379,4 +2360,27 @@ form button {
     max-width: 250px;
   }
   
+}
+@media only screen and (min-width: 320px) and (max-width: 725px) {
+  .box {
+    margin-top: 40px;
+    padding: 0px 20px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+  .box .right img {
+    display: none;
+  }
+  .product img {
+    width: 120px;
+    height: 150px;
+  }
+  .col4{
+    min-width: none;
+  }
+  .homeSlide ul {
+    display: none;
+    padding: 0px;
+  }
 }

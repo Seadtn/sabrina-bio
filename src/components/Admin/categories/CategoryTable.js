@@ -24,7 +24,14 @@ function CategoryTable({ categories, onEdit }) {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
-
+  const getBase64Image = (byteArray) => {
+    const uint8Array = new Uint8Array(byteArray);
+    const binaryString = uint8Array.reduce(
+      (data, byte) => data + String.fromCharCode(byte),
+      ""
+    );
+    return window.btoa(binaryString);
+  };
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -48,7 +55,7 @@ function CategoryTable({ categories, onEdit }) {
                 <TableCell>#{index + 1}</TableCell>
                 <TableCell>
                   <img
-                    src={`data:image/png;base64,${category.image}`}
+                    src={`data:image/*;base64,${getBase64Image(category.image)}`}
                     alt={`category-${category.id}`}
                     style={{
                       width: "50px",

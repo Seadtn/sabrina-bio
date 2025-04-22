@@ -7,7 +7,6 @@ import {
   Select,
   MenuItem,
   TextField,
-  debounce,
 } from "@mui/material";
 import { AppProvider } from "@toolpad/core/AppProvider";
 import { DashboardLayout } from "@toolpad/core/DashboardLayout";
@@ -94,37 +93,54 @@ export default function Dashboard() {
   const [subcategory, setSubcategory] = React.useState("");
   const [currentOffset, setCurrentOffset] = React.useState(0);
   const [subcategories, setSubcategories] = React.useState([]);
+  const [isInitialized, setIsInitialized] = React.useState(false);
+  const [filtersChanged, setFiltersChanged] = React.useState(false);
 
-  const debouncedSearch = debounce((value) => {
-    fetchPaginatedProducts(0, { search: value });
-  }, 500);
+  // Create a ref for debounce timers
+  const timerRef = React.useRef(null);
+
+  const debouncedSearch = (value) => {
+    // Clear any existing timer
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+    
+    // Set a new timer
+    timerRef.current = setTimeout(() => {
+      setFiltersChanged(true);
+      fetchPaginatedProducts(0, { search: value });
+    }, 500);
+  };
 
   const handleCategoryChange = (event) => {
     const newCategory = event.target.value;
     setCategory(newCategory);
     setSubcategory("");
-    setPage(0); // ⬅ Reset page
+    setPage(0); // Reset page
+    setFiltersChanged(true);
     fetchPaginatedProducts(0, { categoryId: newCategory, subcategoryId: "" });
   };
 
   const handleSearchChange = (event) => {
     const value = event.target.value;
     setSearchTerm(value);
-    setPage(0); // ⬅ Reset page
+    setPage(0); // Reset page
     debouncedSearch(value);
   };
 
   const handleSortChange = (event) => {
     const value = event.target.value;
     setSortOption(value);
-    setPage(0); // ⬅ Reset page
+    setPage(0); // Reset page
+    setFiltersChanged(true);
     fetchPaginatedProducts(0, { sort: value });
   };
 
   const handleSubcategoryChange = (event) => {
     const newSubcategory = event.target.value;
     setSubcategory(newSubcategory);
-    setPage(0); // ⬅ Reset page
+    setPage(0); // Reset page
+    setFiltersChanged(true);
     fetchPaginatedProducts(0, { subcategoryId: newSubcategory });
   };
 
@@ -137,6 +153,7 @@ export default function Dashboard() {
     setSelectedProduct(product);
     setOpenFormModal(true);
   };
+  
   const fetchPaginatedProducts = React.useCallback(
     async (offset = 0, filters = {}) => {
       const mergedFilters = {
@@ -168,9 +185,12 @@ export default function Dashboard() {
     [category, subcategory, searchTerm, sortOption, rowsPerPage]
   );
 
-  // 🎯 Load Subcategories by Category
+  // Load Subcategories by Category
   React.useEffect(() => {
-    if (!category) return setSubcategories([]);
+    if (!category) {
+      setSubcategories([]);
+      return;
+    }
 
     const fetchSubcategories = async () => {
       try {
@@ -184,7 +204,7 @@ export default function Dashboard() {
     fetchSubcategories();
   }, [category]);
 
-  // 📦 Initial Data Fetch
+  // Initial Data Fetch
   React.useEffect(() => {
     const loadInitialData = async () => {
       try {
@@ -208,20 +228,36 @@ export default function Dashboard() {
         setContacts(contacts.reverse());
         setSousCategories(sousCategories);
         setTotalPages(totalPages);
+        setIsInitialized(true);
       } catch (error) {
         console.error("Error loading initial data:", error);
       }
     };
 
-    loadInitialData();
-  }, [fetchPaginatedProducts, rowsPerPage]);
+    if (!isInitialized) {
+      loadInitialData();
+    }
+  }, [fetchPaginatedProducts, rowsPerPage, isInitialized]);
 
-  // 🧭 Table Pagination Effect
+  // Table Pagination Effect - Only run when pagination changes, not on every filter change
   React.useEffect(() => {
-    fetchPaginatedProducts(page * rowsPerPage);
-  }, [page, rowsPerPage, fetchPaginatedProducts]);
+    // Skip first render and only respond to explicit page changes
+    if (isInitialized && !filtersChanged) {
+      fetchPaginatedProducts(page * rowsPerPage);
+    }
+    
+    // Reset the filters changed flag
+    setFiltersChanged(false);
+  }, [page, rowsPerPage, fetchPaginatedProducts, isInitialized, filtersChanged]);
 
-  // 🧩 Handlers
+  // Cleanup timer on unmount
+  React.useEffect(() => {
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    };
+  }, []);
 
   const handleSaveProduct = async (productData) => {
     try {
@@ -237,6 +273,7 @@ export default function Dashboard() {
       );
 
       setSelectedProduct(null);
+      setOpenFormModal(false);
     } catch (error) {
       console.error("Error saving/updating product:", error.message);
     }
@@ -256,7 +293,7 @@ export default function Dashboard() {
     }
   };
 
-  // 🌐 Custom Router (maybe for SPA-style nav)
+  // Custom Router (maybe for SPA-style nav)
   const customRouter = {
     navigate: (to) => {
       setActivePage(to.slice(1));
@@ -406,7 +443,7 @@ export default function Dashboard() {
           <ContactDashboard contacts={contacts} setContacts={setContacts} />
         )}
         {activePage === "productOfTheYear" && (
-          <ProductOTYDashboard productsOTY={productOTY}  setProductsOTY={setProductOTY} />
+          <ProductOTYDashboard productsOTY={productOTY} setProductsOTY={setProductOTY} />
         )}
       </DashboardLayout>
     </AppProvider>

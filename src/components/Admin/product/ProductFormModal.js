@@ -38,6 +38,7 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
     newPrice: 0,
     quantity: 1,
     startDate: "",
+    soldRatio: 0,
     lastDate: "",
     active: true,
     category: null,
@@ -69,6 +70,8 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
       promotion: false,
       productNew: false,
       newPrice: 0,
+      freeDelivery: false,
+      soldRatio: 0,
       quantity: 1,
       startDate: "",
       lastDate: "",
@@ -591,14 +594,22 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
           </Box>
           {formData.inSold && (
             <>
-              <TextField
+              {/* <TextField
                 name="newPrice"
                 label="Nouveau prix"
                 type="number"
                 fullWidth
                 value={formData.newPrice}
                 onChange={handleInputChange}
-              />
+              /> */}
+              <TextField
+                name="soldRatio"
+                label="Pourcentage de réduction"
+                type="number"
+                fullWidth
+                value={formData.soldRatio}
+                onChange={handleInputChange}
+                inputProps={{ min: 10, max: 90 }}/>
               <TextField
                 name="startDate"
                 label="Début de la promotion"

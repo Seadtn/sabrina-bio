@@ -36,13 +36,12 @@ const ProductCard = ({ product }) => {
         count: 1,
         imageUrl: `data:image/*;base64,${product.image}`,
         price: product.promotion
-        ? (product.soldRatio !== null
-            ? displayPrice - displayPrice * product.soldRatio * 0.01
-            : product.newPrice)
-        : getDisplayPrice(),
+          ? Math.round(displayPrice - displayPrice * product.soldRatio * 0.01)
+          : getDisplayPrice(),
         maxQuantity: product.quantity,
         type: product.productType,
-        freeDelivery: product.freeDelivery === null ? false : product.freeDelivery,
+        freeDelivery:
+          product.freeDelivery === null ? false : product.freeDelivery,
         taste: product.availableOptions[0]?.taste,
         option:
           product.availableOptions[0]?.value >= 1000
@@ -57,17 +56,16 @@ const ProductCard = ({ product }) => {
   const getDisplayPrice = () => {
     if (product.prices && product.productType !== "STANDARD") {
       const priceValues = Object.values(product.prices);
-      return priceValues.length > 0 ? Math.min(...priceValues) : 0;
+      return priceValues.length > 0 ? Math.round(Math.min(...priceValues)) : 0;
     }
-    return product.price;
+    return Math.round(product.price);
   };
 
   const displayPrice = getDisplayPrice();
 
   const promotionalPrice = product.promotion
-  ? (product.soldRatio !== null
-      ? displayPrice - displayPrice * product.soldRatio * 0.01
-      : product.newPrice): null;
+    ? displayPrice - displayPrice * product.soldRatio * 0.01
+    : null;
 
   const onClickAddFavoriteItems = () => {
     let favoriteItem = {};
@@ -78,10 +76,8 @@ const ProductCard = ({ product }) => {
         titleFr: product.nameFr,
         titleEng: product.nameEng,
         price: product.promotion
-        ? (product.soldRatio !== null
-            ? displayPrice - displayPrice * product.soldRatio * 0.01
-            : product.newPrice)
-        : getDisplayPrice(),
+          ? displayPrice - displayPrice * product.soldRatio * 0.01
+          : getDisplayPrice(),
         imageUrl: `data:image/*;base64,${product.image}`,
         unit: product.availableOptions[0].unit,
         value: product.availableOptions[0].value,
@@ -94,10 +90,8 @@ const ProductCard = ({ product }) => {
         titleFr: product.nameFr,
         titleEng: product.nameEng,
         price: product.promotion
-        ? (product.soldRatio !== null
-            ? displayPrice - displayPrice * product.soldRatio * 0.01
-            : product.newPrice)
-        : getDisplayPrice(),
+          ? Math.round(displayPrice - displayPrice * product.soldRatio * 0.01)
+          : getDisplayPrice(),
         imageUrl: `data:image/*;base64,${product.image}`,
         unit: "",
         value: "",

@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { getAllCategories } from "../../../api/backend";
 
-const SousCategoryFormModal = ({ sousCategory, open, onClose, onSave }) => {
+const SousCategoryFormModal = ({ sousCategory, open, onClose, onSave, onPromote }) => {
   const [formData, setFormData] = useState({
     frenchName: "",
     englishName: "",
@@ -25,11 +25,12 @@ const SousCategoryFormModal = ({ sousCategory, open, onClose, onSave }) => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-        const fetchCategories = async () => {
-          const categories = await getAllCategories();
-          setCategories(categories);
-        };
-        fetchCategories();
+    const fetchCategories = async () => {
+      const categories = await getAllCategories();
+      setCategories(categories);
+    };
+    fetchCategories();
+
     if (sousCategory) {
       setFormData({
         id: sousCategory.id,
@@ -49,6 +50,7 @@ const SousCategoryFormModal = ({ sousCategory, open, onClose, onSave }) => {
       });
     }
   }, [sousCategory]);
+
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -56,15 +58,31 @@ const SousCategoryFormModal = ({ sousCategory, open, onClose, onSave }) => {
       [name]: type === "checkbox" ? checked : value,
     }));
   };
+
   const handleSubmit = () => {
     onSave(formData);
+    onClose();
+  };
+
+  const handlePromote = () => {
+    const promotedCategory = {
+      arabicName: formData.arabicName,
+      frenchName: formData.frenchName,
+      englishName: formData.englishName,
+      creationDate: formData.creationDate,
+      tri: 0, // The new category should have the correct tri (order number) value
+      products: [], // Empty initially, backend will assign related products
+    };
+
+    // Pass the subcategory ID along with the new category data to be promoted
+    onPromote(sousCategory.id, promotedCategory);
     onClose();
   };
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth={"lg"}>
       <DialogTitle>
-        {sousCategory ? "Modifier la catégorie" : "Ajouter une catégorie"}
+        {sousCategory ? "Modifier la sous-catégorie" : "Ajouter une sous-catégorie"}
       </DialogTitle>
       <DialogContent
         sx={{
@@ -103,11 +121,7 @@ const SousCategoryFormModal = ({ sousCategory, open, onClose, onSave }) => {
             onChange={handleInputChange}
           />
         </Box>
-        <Box
-          sx={{ display: "flex", minWidth: "400px", marginTop: "20px" }}
-          lang="ar"
-          dir="rtl"
-        >
+        <Box sx={{ display: "flex", minWidth: "400px", marginTop: "20px" }} lang="ar" dir="rtl">
           <TextField
             name="arabicName"
             label="الاسم بالعربية"
@@ -130,6 +144,15 @@ const SousCategoryFormModal = ({ sousCategory, open, onClose, onSave }) => {
         <Button onClick={onClose} style={{ color: "#2fcb00" }}>
           Annuler
         </Button>
+        {sousCategory && (
+          <Button
+            onClick={handlePromote}
+            style={{ color: "#2fcb00", borderColor: "#2fcb00" }}
+            variant="outlined"
+          >
+            Promouvoir en catégorie
+          </Button>
+        )}
         <Button
           onClick={handleSubmit}
           variant="contained"

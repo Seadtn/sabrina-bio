@@ -13,7 +13,20 @@ const languages = {
   fr: { label: "Français", flag: "/images/flags/french.png" },
   en: { label: "English", flag: "/images/flags/english.jpg" },
 };
-
+// Improved Arabic normalization that removes ligatures
+const normalizeArabic = (text = "") => {
+  return text
+    .normalize("NFKD")
+    .replace(/[\u064B-\u065F]/g, "") // Remove diacritics
+    .replace(/أ|إ|آ/g, "ا") // Normalize various forms of 'alif'
+    .replace(/ة/g, "ه") // Convert 'ta marbuta' to 'heh'
+    .replace(/ى/g, "ي") // Convert 'alif maqsura' to 'ya'
+    .replace(/ؤ/g, "و") // Convert 'waw with hamza' to 'waw'
+    .replace(/ئ/g, "ي") // Convert 'ya with hamza' to 'ya'
+    .replace(/[ـ]/g, "") // Remove Arabic ligatures (ـ)
+    .replace(/\s+/g, " ") // Normalize whitespace
+    .trim();
+};
 const NavBar = () => {
   const { items } = useSelector((state) => state.cart);
   const location = useLocation(); // Get the current location
@@ -27,6 +40,8 @@ const NavBar = () => {
   const dropdownRef = useRef(null);
   const { t } = useTranslation();
   const isArabic = i18n.language === "ar";
+  const isFrench = i18n.language === "fr";
+
   const navigate = useNavigate();
 
   const totalCartAmount = items.reduce((sum, item) => item.count + sum, 0);
@@ -34,7 +49,15 @@ const NavBar = () => {
     (sum, item) => item.count + sum,
     0
   );
-
+  const getName = (product) => {
+    if (isArabic) {
+      return product.name || product.nameFr || product.nameEng || "";
+    } else if (isFrench) {
+      return product.nameFr || product.nameEng || product.name || "";
+    } else {
+      return product.nameEng || product.nameFr || product.name || "";
+    }
+  };
   const changeLanguage = (langKey) => {
     i18n.changeLanguage(langKey);
     setSelectedLanguage(langKey);
@@ -60,14 +83,16 @@ const NavBar = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
   const handleSearch = async (searchTerm) => {
     if (searchTerm.trim() === "") {
       setSearchResults([]);
       return;
     }
     try {
-      const products = await searchProductsByName(searchTerm);
+      const normalizedTerm = normalizeArabic(searchTerm); // Arabic normalization
+      console.log("Normalized search term:", normalizedTerm);
+      const products = await searchProductsByName(normalizedTerm);
+      console.log("Search results:", products);
       setSearchResults(products);
     } catch (error) {
       console.error("Error fetching search results:", error);
@@ -134,7 +159,7 @@ const NavBar = () => {
                 </div>
               )}
             </div>
-            <SearchBar onSearch={handleSearch} className="search-bar" />
+            <SearchBar onSearch={handleSearch} className="search-bar" setSearchResults={setSearchResults} />
           </div>
           <div className="logo navbar-center">
             <Link to="/">
@@ -226,15 +251,15 @@ const NavBar = () => {
               onClick={() => setIsMobile(!isMobile)}
             >
               {isMobile ? (
-                <i className="fas fa-times menu" style={{color:"black"}}></i>
+                <i className="fas fa-times menu" style={{ color: "black" }}></i>
               ) : (
-                <i className="fas fa-bars menu" style={{color:"black"}}></i>
+                <i className="fas fa-bars menu" style={{ color: "black" }}></i>
               )}
             </button>
           </div>
         </div>
         <div className="search-mobile-margin">
-          <SearchBar onSearch={handleSearch} className="search-bar-mobile" />
+          <SearchBar onSearch={handleSearch} className="search-bar-mobile" setSearchResults={setSearchResults}/>
         </div>
       </nav>
       {searchResults.length > 0 && (
@@ -248,11 +273,11 @@ const NavBar = () => {
               <Link to={`/product/${product.id}`} style={{ display: "flex" }}>
                 <img
                   src={"data:image/*;base64," + product.image}
-                  alt={product.name}
+                  alt={getName(product)}
                   className="search-result-image"
                   loading="lazy"
                 />
-                <p>{product.name}</p>
+                <p>{getName(product)}</p>
               </Link>
             </div>
           ))}

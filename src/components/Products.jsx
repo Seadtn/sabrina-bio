@@ -5,7 +5,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { useTranslation } from "react-i18next";
 import Loader from "./loader/Loader";
 import i18n from "../i18n/i18n";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getAllCategories, getPaginatedProducts, getSousCategoriesbyIdCategory } from "../api/backend";
 
 const Products = () => {
@@ -23,8 +23,10 @@ const Products = () => {
   const isFrench = i18n.language === "fr";
   const [categories, setCategories] = useState([]);
   const PRODUCTS_LIMIT = 9;
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   // Fetch products
   const fetchProducts = useCallback(async (offset = 0, filters = {}) => {
@@ -63,18 +65,48 @@ const Products = () => {
     }
   }, [category, subcategory, searchTerm, sortOption]);
 
-  // Handle initial query param for category
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    const initialCategory = params.get("category");
-    if (initialCategory) {
-      setCategory(initialCategory);
-      fetchProducts(0, { categoryId: initialCategory });
-    } else {
-      fetchProducts();
-    }
-  }, [location.search, fetchProducts]);
+  // Update URL with current filter params, but don't trigger data fetch
+  const updateUrlParams = useCallback((params = {}) => {
+    const urlParams = new URLSearchParams();
+    
+    const categoryValue = params.category !== undefined ? params.category : category;
+    const searchValue = params.search !== undefined ? params.search : searchTerm;
+    
+    if (categoryValue) urlParams.append("category", categoryValue);
+    if (searchValue) urlParams.append("name", searchValue);
+    
+    const searchString = urlParams.toString();
+    const newUrl = searchString ? `${location.pathname}?${searchString}` : location.pathname;
+    
+    navigate(newUrl, { replace: true });
+  }, [category, searchTerm, location.pathname, navigate]);
 
+  // Handle initial query params on first load only
+  useEffect(() => {
+    if (isInitialLoad) {
+      const params = new URLSearchParams(location.search);
+      const initialCategory = params.get("category");
+      const initialName = params.get("name");
+
+      const initialFilters = {};
+      
+      if (initialCategory) {
+        setCategory(initialCategory);
+        initialFilters.categoryId = initialCategory;
+      }
+      
+      if (initialName) {
+        setSearchTerm(initialName);
+        initialFilters.search = initialName;
+      }
+
+      // Fetch products with initial values
+      fetchProducts(0, initialFilters);
+      setIsInitialLoad(false);
+    }
+  }, [location.search, fetchProducts, isInitialLoad]);
+
+  // Fetch categories on component mount
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -87,8 +119,9 @@ const Products = () => {
     fetchCategories();
   }, []);
 
+  // Fetch subcategories when category changes
   useEffect(() => {
-    if (category) {
+    if (!isInitialLoad && category) {
       const fetchSubcategories = async () => {
         try {
           const sousCategories = await getSousCategoriesbyIdCategory(category);
@@ -98,19 +131,10 @@ const Products = () => {
         }
       };
       fetchSubcategories();
-    } else {
+    } else if (!isInitialLoad) {
       setSubcategories([]);
     }
-  }, [category]);
-
-  // Debounce function to prevent too many API calls
-  const debounce = (func, wait) => {
-    let timeout;
-    return (...args) => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => func(...args), wait);
-    };
-  };
+  }, [category, isInitialLoad]);
 
   // Modified handlers to trigger new API calls
   const handleCategoryChange = (event) => {
@@ -118,6 +142,7 @@ const Products = () => {
     setCategory(newCategory);
     setSubcategory("");
     fetchProducts(0, { categoryId: newCategory, subcategoryId: "" });
+    updateUrlParams({ category: newCategory });
   };
 
   const handleSubcategoryChange = (event) => {
@@ -126,10 +151,15 @@ const Products = () => {
     fetchProducts(0, { subcategoryId: newSubcategory });
   };
 
-  // Debounced search handler
-  const debouncedSearch = debounce((value) => {
-    fetchProducts(0, { search: value });
-  }, 500);
+  // Debounced search function to prevent excessive API calls
+  const debouncedSearch = useCallback((value) => {
+    const timer = setTimeout(() => {
+      fetchProducts(0, { search: value });
+      updateUrlParams({ search: value });
+    }, 500);
+    
+    return () => clearTimeout(timer);
+  }, [fetchProducts, updateUrlParams]);
 
   const handleSearchChange = (event) => {
     const value = event.target.value;
