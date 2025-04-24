@@ -20,9 +20,9 @@ const ProductSliderCard = ({ product }) => {
     if (product.price === 0 && product.prices) {
       // Get the lowest price from the prices object
       const priceValues = Object.values(product.prices);
-      return priceValues.length > 0 ?  Math.round(Math.min(...priceValues)) : 0;
+      return priceValues.length > 0 ? Math.round(Math.min(...priceValues)) : 0;
     }
-    return  Math.round(product.price);
+    return Math.round(product.price);
   };
 
   const getName = (product) => {
@@ -36,9 +36,13 @@ const ProductSliderCard = ({ product }) => {
   };
 
   const displayPrice = getDisplayPrice();
-  const promotionalPrice = product.promotion
-    ? displayPrice - displayPrice * product.soldRatio * 0.01
+  const promotionalPrice = Math.round(product.promotion)
+    ? Math.max(
+        0,
+        Math.round(displayPrice - displayPrice * (product.soldRatio * 0.01))
+      )
     : null;
+
   const dispatch = useDispatch();
   const onClickAddFavoriteItems = () => {
     let favoriteItem = {};
@@ -49,7 +53,7 @@ const ProductSliderCard = ({ product }) => {
         titleFr: product.nameFr,
         titleEng: product.nameEng,
         price: product.promotion
-          ?  Math.round(displayPrice - displayPrice * product.soldRatio * 0.01)
+          ? Math.round(displayPrice - displayPrice * product.soldRatio * 0.01)
           : getDisplayPrice(),
         imageUrl: `data:image/*;base64,${product.image}`,
         unit: product.availableOptions[0].unit,
@@ -63,7 +67,7 @@ const ProductSliderCard = ({ product }) => {
         titleFr: product.nameFr,
         titleEng: product.nameEng,
         price: product.promotion
-          ?  Math.round(displayPrice - displayPrice * product.soldRatio * 0.01)
+          ? Math.round(displayPrice - displayPrice * product.soldRatio * 0.01)
           : getDisplayPrice(),
         imageUrl: `data:image/*;base64,${product.image}`,
         unit: "",
@@ -80,12 +84,13 @@ const ProductSliderCard = ({ product }) => {
         count: 1,
         imageUrl: `data:image/*;base64,${product.image}`,
         price: product.promotion
-          ?  Math.round(displayPrice - displayPrice * product.soldRatio * 0.01)
+          ? Math.round(displayPrice - displayPrice * product.soldRatio * 0.01)
           : getDisplayPrice(),
         maxQuantity: product.quantity,
         type: product.productType,
+        freeDelivery:
+          product.freeDelivery === null ? false : product.freeDelivery,
         taste: product.availableOptions[0]?.taste,
-        freeDelivery: product.freeDelivery === null ? false : product.freeDelivery,
         option:
           product.availableOptions[0]?.value >= 1000
             ? product.availableOptions[0]?.value / 1000
@@ -99,6 +104,7 @@ const ProductSliderCard = ({ product }) => {
   const handleFastView = () => {
     dispatch(openFastViewModal(product));
   };
+
   return (
     <div className="col4 product" style={{ margin: "10px" }}>
       <div className="image-container">
@@ -111,24 +117,33 @@ const ProductSliderCard = ({ product }) => {
             {t("homePage.products.newLabel")}
           </div>
         )}
+
         {product.promotion && (
           <div
-            className={`${product.productNew ? "sold-label1" : "sold-label2"}`}
+            className={product.productNew ? "sold-label1" : "sold-label2"}
             dir={isArabic ? "rtl" : "ltr"}
             lang={isArabic ? "ar" : "fr"}
           >
             {t("homePage.products.soldLabel")}
           </div>
         )}
+
         {product.freeDelivery && (
           <div
-            className={`${product.promotion ? "free-delivery-label1" : "free-delivery-label2"}`}
+            className={
+              product.promotion && product.productNew
+                ? "free-delivery-label1"
+                : product.promotion || product.productNew
+                  ? "free-delivery-label2"
+                  : "free-delivery-label3"
+            }
             dir={isArabic ? "rtl" : "ltr"}
             lang={isArabic ? "ar" : "fr"}
           >
             {t("homePage.products.deliveryLabel")}
           </div>
         )}
+
         <Link to={`/product/${product.id}`} className="product-link">
           <img
             src={`data:image/*;base64,${product.image}`}
@@ -192,7 +207,7 @@ const ProductSliderCard = ({ product }) => {
           dir={isArabic ? "rtl" : "ltr"}
           lang={isArabic ? "ar" : "fr"}
         >
-          {displayPrice} {!isArabic ? "DT" : "دت"}
+          {Math.round(displayPrice)} {!isArabic ? "DT" : "دت"}
         </p>
 
         {product.promotion && (
@@ -201,7 +216,7 @@ const ProductSliderCard = ({ product }) => {
             dir={isArabic ? "rtl" : "ltr"}
             lang={isArabic ? "ar" : "fr"}
           >
-            {promotionalPrice} {!isArabic ? "DT" : "دت"}
+            {Math.round(promotionalPrice)} {!isArabic ? "DT" : "دت"}
           </p>
         )}
       </div>

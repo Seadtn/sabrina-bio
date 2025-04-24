@@ -12,6 +12,8 @@ import { useDispatch } from "react-redux";
 import { addItems } from "../redux/cart/slice.ts";
 import { openFastViewModal } from "../redux/fastView/slice.ts";
 import { useMediaQuery } from "@mui/material";
+import { Chip } from "@mui/material";
+import FastOrderBlock from "./fastOrderBlock.jsx";
 
 const Product = () => {
   const { id } = useParams();
@@ -38,12 +40,17 @@ const Product = () => {
         count: 1,
         imageUrl: `data:image/*;base64,${product.image}`,
         price: product.promotion
-          ? displayPrice - displayPrice * product.soldRatio * 0.01
+          ? Math.round(displayPrice - displayPrice * product.soldRatio * 0.01)
           : getDisplayPrice(),
         maxQuantity: product.quantity,
         type: product.productType,
-        taste: selectedTaste,
-        option: selectedOption >= 1000 ? selectedOption / 1000 : selectedOption,
+        freeDelivery:
+          product.freeDelivery === null ? false : product.freeDelivery,
+        taste: product.availableOptions[0]?.taste,
+        option:
+          product.availableOptions[0]?.value >= 1000
+            ? product.availableOptions[0]?.value / 1000
+            : product.availableOptions[0]?.value,
         title: product.name,
         titleFr: product.nameFr,
         titleEng: product.nameEng,
@@ -127,7 +134,7 @@ const Product = () => {
               className={`option-button ${
                 selectedOption === option.value ? "selected" : ""
               }`}
-              style={{color:selectedOption === option.value ?"":"black"}}
+              style={{ color: selectedOption === option.value ? "" : "black" }}
             >
               {option.value >= 1000
                 ? `${option.value / 1000} ${
@@ -278,7 +285,59 @@ const Product = () => {
               </div>
               <div className="col-single">
                 <h2> {getName(product)}</h2>
-
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  {product.productNew && (
+                    <div>
+                      <Chip
+                        label={t("homePage.products.newLabel")}
+                        size="small"
+                        sx={{
+                          backgroundColor: "#2fcb00",
+                          color: "white",
+                          padding: "5px",
+                          marginRight: "3px",
+                          marginTop: "5px",
+                          marginLeft: "3px",
+                        }}
+                      />
+                      <br />{" "}
+                    </div>
+                  )}
+                  {product.promotion && (
+                    <div>
+                      <Chip
+                        label={t("homePage.products.soldLabel")}
+                        color="warning"
+                        size="small"
+                        sx={{
+                          color: "white",
+                          padding: "5px",
+                          marginRight: "3px",
+                          marginTop: "5px",
+                          marginLeft: "3px",
+                        }}
+                      />
+                      <br />{" "}
+                    </div>
+                  )}
+                  {product.freeDelivery && (
+                    <div>
+                      <Chip
+                        label={t("homePage.products.deliveryLabel")}
+                        size="small"
+                        sx={{
+                          backgroundColor: "rgb(231, 31, 31)",
+                          color: "white",
+                          padding: "5px",
+                          marginRight: "3px",
+                          marginTop: "5px",
+                          marginLeft: "3px",
+                        }}
+                      />
+                      <br />{" "}
+                    </div>
+                  )}
+                </div>
                 <h4
                   className={
                     product.promotion ? "old-price-product" : "price-product"
@@ -286,7 +345,7 @@ const Product = () => {
                   dir={isArabic ? "rtl" : "ltr"}
                   lang={isArabic ? "ar" : "fr"}
                 >
-                  {displayPrice} {!isArabic ? "DT" : "دت"}
+                  {Math.round(displayPrice)} {!isArabic ? "DT" : "دت"}
                 </h4>
 
                 {product.promotion && (
@@ -295,7 +354,7 @@ const Product = () => {
                     dir={isArabic ? "rtl" : "ltr"}
                     lang={isArabic ? "ar" : "fr"}
                   >
-                    {promotionalPrice?.toFixed(2)} {!isArabic ? "DT" : "دت"}
+                    {Math.round(promotionalPrice)} {!isArabic ? "DT" : "دت"}
                   </h4>
                 )}
                 {(product.hasTaste || product.availableOptions?.length > 0) && (
@@ -370,6 +429,18 @@ const Product = () => {
               </div>
             </>
           </div>
+          <FastOrderBlock
+            product={product}
+            price={product.promotion ? promotionalPrice : displayPrice}
+            taste={product.availableOptions?.[0]?.taste}
+            option={
+              product.availableOptions?.[0]
+                ? product.availableOptions[0].value >= 1000
+                  ? product.availableOptions[0].value / 1000
+                  : product.availableOptions[0].value
+                : null
+            }
+          />
           <h2 className="title-left">{t("homePage.products.related")}</h2>
           <div className="row products">
             {loading ? (

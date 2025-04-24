@@ -39,10 +39,10 @@ const ModalCart = () => {
           </div>
         </div>
         <div className="modal__buttons button">
-          <button className="button__left" onClick={toggleSwitchOk}>
+          <button className="button__left" onClick={toggleSwitchOk} style={{color:"black"}}>
             {t("Modals.modalCart.btn1")}
           </button>
-          <button className="button__right" onClick={toggleSwitchOk}>
+          <button className="button__right"  onClick={toggleSwitchOk}>
             <Link to={`/cart`}>{t("Modals.modalCart.btn2")}</Link>
           </button>
         </div>

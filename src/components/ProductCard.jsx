@@ -127,7 +127,14 @@ const ProductCard = ({ product }) => {
         )}
         {product.freeDelivery && (
           <div
-            className={`${product.promotion ? "free-delivery-label1" : product.productNew ? "free-delivery-label2" : "free-delivery-label3"}`}
+            className={
+              (!product.promotion && !product.productNew) 
+                ? "free-delivery-label3"
+                : (product.promotion && !product.productNew) ||
+                  (!product.promotion && product.productNew)
+                  ? "free-delivery-label2"
+                  : "free-delivery-label1"
+            }
             dir={isArabic ? "rtl" : "ltr"}
             lang={isArabic ? "ar" : "fr"}
           >

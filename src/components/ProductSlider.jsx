@@ -4,7 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "../App.css";
 import Arrows from "./arrows";
-import OnSoldCard from "./ProductSliderCard";
+import ProductSliderCard from "./ProductSliderCard";
 
 function ProductSlider(props) {
   const { products,title } = props;
@@ -46,7 +46,7 @@ function ProductSlider(props) {
       <div>
         <Slider {...settings}>
           {products.map((product, index) => (
-            <OnSoldCard key={index} product={product} />
+            <ProductSliderCard key={index} product={product} />
           ))}
         </Slider>
       </div>

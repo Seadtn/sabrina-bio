@@ -50,6 +50,7 @@ const SuccessModal = ({ open, onClose }) => {
           onClick={onClose}
           variant="contained"
           sx={{
+            color: "#fff",
             borderRadius: 2,
             textTransform: "none",
             backgroundColor: "#4caf50",

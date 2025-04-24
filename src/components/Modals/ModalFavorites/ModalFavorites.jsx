@@ -39,7 +39,7 @@ const ModalFavorites = () => {
           </div>
         </div>
         <div className="modal__buttons button">
-          <button className="button__left" onClick={toggleFavSwitchOk}>
+          <button className="button__left" onClick={toggleFavSwitchOk} style={{color:"black"}}>
           {t("Modals.ModalFavorites.btn1")}
           </button>
           <button className="button__right" onClick={toggleFavSwitchOk}>
