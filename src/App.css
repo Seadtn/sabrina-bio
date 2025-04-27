@@ -355,6 +355,9 @@ nav ul li a:hover {
     display: none;
   }
   nav ul {
+    height: 100%;
+  }
+  .nav-links-mobile{
     position: absolute;
     top: 90px;
     right: 0;
@@ -365,7 +368,8 @@ nav ul li a:hover {
     text-align: right;
     z-index: 10;
     padding: 10px;
-    height: 140px;
+    height :140px;
+
   }
   nav ul li {
     display: block;
@@ -479,7 +483,7 @@ nav ul li a:hover {
   }
 }
 @media only screen and (max-width: 786px) {
-  nav ul {
+  .nav-links-mobile {
     position: absolute;
     top: 50px;
   }

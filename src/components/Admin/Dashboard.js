@@ -36,6 +36,7 @@ import SousCategoryDashboard from "./sousCategorie/SousCategoryDashboard.js";
 import CelebrationIcon from "@mui/icons-material/Celebration";
 import ChatBubbleIcon from "@mui/icons-material/ChatBubble";
 import ProductOTYDashboard from "./ProductOfTheYear/ProductOTYDashboard.js";
+import TestimonialDashboard from "./avisClient/TestimonialDashboard.js";
 const NAVIGATION = [
   { kind: "header", title: "All" },
   { segment: "products", title: "Produits", icon: <ShoppingCartIcon /> },
@@ -91,6 +92,7 @@ export default function Dashboard() {
   const [sortOption, setSortOption] = React.useState("");
   const [contacts, setContacts] = React.useState([]);
   const [subcategory, setSubcategory] = React.useState("");
+    // eslint-disable-next-line no-unused-vars
   const [currentOffset, setCurrentOffset] = React.useState(0);
   const [subcategories, setSubcategories] = React.useState([]);
   const [isInitialized, setIsInitialized] = React.useState(false);
@@ -438,6 +440,9 @@ export default function Dashboard() {
             categories={Souscategories}
             setCategories={setSousCategories}
           />
+        )}
+        {activePage === "ClientAvis" && (
+          <TestimonialDashboard />
         )}
         {activePage === "contacts" && (
           <ContactDashboard contacts={contacts} setContacts={setContacts} />

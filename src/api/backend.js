@@ -1,10 +1,10 @@
-import { getRequest, postRequest } from "./Request";
+import { deleteRequest, getRequest, postRequest, putRequest } from "./Request";
 import axios from "axios";
 
 //const localhost = "https://135.125.1.158:8080";
-const localhost = "https://sabrina-bio.tn"; // Production
+// const localhost = "https://sabrina-bio.tn"; // Production
 // const localhost = "http://localhost:8080"; // Local
-// const localhost = "http://192.168.1.10:8080"; // phone test
+const localhost = "http://192.168.1.4:8080"; // phone test
 // const localhost = "http://192.168.234.10:8080"; // Telnet
 const Product_URL = `${localhost}/api/v1/productManagement/`;
 const Command_URL = `${localhost}/api/v1/commandManagement/`;
@@ -12,6 +12,7 @@ const Contact_URL = `${localhost}/api/v1/contactManagement/`;
 const Category_URL = `${localhost}/api/v1/categoryManagement/`;
 const ProductOTY_URL = `${localhost}/api/v1/productoty/`;
 const USER_URL = `${localhost}/api/v1/authDashbord/`;
+const Testimonial_URL = `${localhost}/api/v1/avisClientManagement/`;
 
 export const getAllProducts = async () => {
   try {
@@ -283,8 +284,6 @@ export const getActiveProductOTY = async () => {
     try {
       const product = await getRequest(ProductOTY_URL + "active");
       if (!product || Object.keys(product).length === 0) {
-        // Handle the case where no active product exists
-        console.log("No active Product of the Year found.");
         return null; // or return a default value
       }
       return product;
@@ -310,4 +309,98 @@ export const updateProductOTY = async (id, productOTY) => {
 export const deleteProductOTY = async (id) => {
   const response = await axios.delete(`${ProductOTY_URL}${id}`);
   return response.data;
+};
+
+/**
+ * Get paginated testimonials with optional filtering
+ * @param {Object} params - Parameters for pagination and filtering
+ * @returns {Promise<Object>} - Paginated testimonials and metadata
+ */
+export const getPaginatedTestimonials = async (params = {}) => {
+  const queryParams = new URLSearchParams({
+    offset: params.offset || 0,
+    limit: params.limit || 10,
+    ...(params.type && { type: params.type }),
+    ...(params.productId && { productId: params.productId }),
+    ...(params.active !== undefined && { active: params.active }),
+    ...(params.sort && { sort: params.sort })
+  }).toString();
+
+  const response = await getRequest(`${Testimonial_URL}getAllTestimonialsbyPages?${queryParams}`);
+  return response;
+};
+
+/**
+ * Get a specific testimonial by ID
+ * @param {string} id - Testimonial ID
+ * @returns {Promise<Object>} - Testimonial data
+ */
+export const getTestimonialById = async (id) => {
+  try {
+    const testimonial = await getRequest(Testimonial_URL + "getTestimonialById/" + id);
+    return testimonial;
+  } catch (error) {
+    console.error("Error fetching testimonial:", error.message);
+    throw error;
+  }
+};
+
+/**
+ * Create a new testimonial
+ * @param {Object} testimonialData - Testimonial data
+ * @returns {Promise<Object>} - Created testimonial
+ */
+export const createTestimonial = async (testimonialData) => {
+  try {
+    const response = await postRequest(Testimonial_URL + "addNewTestimonial", testimonialData);
+    return response;
+  } catch (error) {
+    console.error("Error creating testimonial:", error.message);
+    throw error;
+  }
+};
+
+/**
+ * Update an existing testimonial
+ * @param {string} id - Testimonial ID
+ * @param {Object} testimonialData - Updated testimonial data
+ * @returns {Promise<Object>} - Updated testimonial
+ */
+export const updateTestimonial = async (id, testimonialData) => {
+  try {
+    const response = await putRequest(Testimonial_URL + "updateTestimonial/" + id, testimonialData);
+    return response;
+  } catch (error) {
+    console.error("Error updating testimonial:", error.message);
+    throw error;
+  }
+};
+
+/**
+ * Delete a testimonial
+ * @param {string} id - Testimonial ID to delete
+ * @returns {Promise<Object>} - Response from delete operation
+ */
+export const deleteTestimonial = async (id) => {
+  try {
+    const response = await deleteRequest(Testimonial_URL + "deleteTestimonial/" + id);
+    return response;
+  } catch (error) {
+    console.error("Error deleting testimonial:", error.message);
+    throw error;
+  }
+};
+
+/**
+ * Get all active testimonials for client display
+ * @returns {Promise<Array>} - List of active testimonials
+ */
+export const getActiveTestimonials = async () => {
+  try {
+    const testimonials = await getRequest(Testimonial_URL + "getActiveTestimonials");
+    return testimonials;
+  } catch (error) {
+    console.error("Error fetching active testimonials:", error.message);
+    throw error;
+  }
 };

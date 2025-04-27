@@ -14,11 +14,11 @@ import {
 import ClientAvis from "./ClientAvis";
 import ProductOfTheYear from "./ProductOfYear";
 import ProductSlider from "./ProductSlider";
+import Loader from "./loader/Loader";
 
 const Home = () => {
   const [NewProducts, setNewproducts] = useState([]);
   const [bestSeller, setBestSeller] = useState([]);
-  // const [loading, setLoading] = useState(true); // TODO: Add loading state
   const [products, setProducts] = useState([]);
   const [productOTY, setProductOTY] = useState(null);
 
@@ -26,7 +26,6 @@ const Home = () => {
 
   useEffect(() => {
     let loadProducts = true;
-
     const getProducts = async () => {
       if (loadProducts) {
         const newProduct = await getLatestOnSoldProduct();
@@ -46,7 +45,9 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
+    (NewProducts.length>0 &&  products.lengths>0) ? (
+      <Loader />
+    ) : ( <div>
       <BannerSection />
       <div className="container">
         <Categories />
@@ -86,7 +87,7 @@ const Home = () => {
         </div>
 
         {/* Client Avis Section */}
-        {/* <ClientAvis /> */}
+        <ClientAvis />
         {/* On Sold Products Section */}
         <div className="content">
           <ProductSlider
@@ -104,8 +105,9 @@ const Home = () => {
         style={{ display: "block", opacity: 0 }} // Invisible by default
       >
       </a>
-    </div>
+    </div>)
   );
+
 };
 
 export default Home;

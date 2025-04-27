@@ -1,6 +1,5 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import ProductOfTheYear from "../components/ProductOfYear";
 
 // Translation resources
 const resources = {
@@ -25,7 +24,8 @@ const resources = {
         },
         slider: {
           collectionBtn: "visit collections",
-          description:"Discover the ultimate destination for lovers of nature and beautyExplore the latest trends in the world of natural beauty that are making a difference. Beauty, essential and therapeutic products for men, women and children.We have everything you need for your health and beauty",
+          description:
+            "Discover the ultimate destination for lovers of nature and beautyExplore the latest trends in the world of natural beauty that are making a difference. Beauty, essential and therapeutic products for men, women and children.We have everything you need for your health and beauty",
           type: {
             firstShop: "{{itm}}% Off For Your First Shopping",
             newProduct: "Check out our new arrivals !",
@@ -43,8 +43,8 @@ const resources = {
             herbs: "Herbs and grains",
             oils: "Natural Oils",
             cosmetic: "Health and Beauty",
-            pain:"Pain and Rheumatism",
-            diseases:"Diseases",
+            pain: "Pain and Rheumatism",
+            diseases: "Diseases",
           },
           sort: {
             title: "Sort By",
@@ -61,14 +61,21 @@ const resources = {
             grammage: "Weight",
             dosage: "Dose",
             gouts: "Flavors",
-            showLess:"Show Less",
-            viewAll:"View All",
+            showLess: "Show Less",
+            viewAll: "View All",
           },
           viewAllBtn: "View More",
           viewCartBtn: "View Cart",
           viewBtn: "Fast View",
           buyBtn: "Buy",
           related: "Related Products",
+        },
+        avisClient: {
+          title: "Customer Reviews",
+          before: "Before",
+          after: "After",
+          comment: "Comment",
+          btn: "View Product",
         },
         deliverySection: {
           delivery: {
@@ -207,7 +214,8 @@ const resources = {
         },
         slider: {
           collectionBtn: "زيارة المجموعات",
-          description:"اكتشف الوجهة النهائية لعشاق الطبيعية والجمال  استكشف أحدث الاتجاهات في عالم الطبيعية والجمال التي تحدث فرقا. منتجات جمالية، أساسية وعلاجية للرجال، النساء والأطفال. لدينا كل ما تحتاجه لصحتك وجمالك",
+          description:
+            "اكتشف الوجهة النهائية لعشاق الطبيعية والجمال  استكشف أحدث الاتجاهات في عالم الطبيعية والجمال التي تحدث فرقا. منتجات جمالية، أساسية وعلاجية للرجال، النساء والأطفال. لدينا كل ما تحتاجه لصحتك وجمالك",
           type: {
             firstShop: "خصم على تسوقك الأول ٪{{itm}}",
             newProduct: " تصفح أحدث المنتجات لدينا !",
@@ -225,8 +233,8 @@ const resources = {
             herbs: "الأعشاب و الحبوب",
             oils: "الزيوت الطبيعية",
             cosmetic: "الصحة والجمال",
-            pain:"الآلام والبرد	",
-            diseases:"الأمراض	",
+            pain: "الآلام والبرد	",
+            diseases: "الأمراض	",
           },
           sort: {
             title: "ترتيب حسب",
@@ -243,14 +251,21 @@ const resources = {
             grammage: "الوزن",
             dosage: "الجرعة",
             gouts: "النّكهات",
-            showLess:"عرض أقل",
-            viewAll:"عرض الكل",
+            showLess: "عرض أقل",
+            viewAll: "عرض الكل",
           },
           viewAllBtn: "عرض المزيد",
           viewCartBtn: "الذهاب إلى السلة",
           viewBtn: "عرض سريع",
           buyBtn: "شراء",
           related: "منتجات ذات صلة",
+        },
+        avisClient: {
+          title: "آراء عملائنا",
+          before: "قبل",
+          after: "بعد",
+          comment: "تعليق",
+          btn: "عرض المنتج",
         },
         deliverySection: {
           delivery: {
@@ -339,7 +354,8 @@ const resources = {
         subject: "الموضوع",
         email: "بريدك الإلكتروني",
         message: "الرسالة",
-        description: "Sabrina Bio مختصة في العلاج بالأعشاب الطبيعية، تقدم لكم خلطات علاجية، زيوت أساسية و  منتجات تجميلية .. على خاطر نحبوكم بالحويجة الطبيعية والصحية نودوكم",
+        description:
+          "Sabrina Bio مختصة في العلاج بالأعشاب الطبيعية، تقدم لكم خلطات علاجية، زيوت أساسية و  منتجات تجميلية .. على خاطر نحبوكم بالحويجة الطبيعية والصحية نودوكم",
         btn: "إرسال",
         error: "الرجاء ملء جميع البيانات ",
         modal: {
@@ -384,7 +400,8 @@ const resources = {
         },
         slider: {
           collectionBtn: " Visiter les collections",
-          description:"Découvrez la destination ultime pour les amoureux de nature et de beauté Découvrez les dernières tendances dans le monde de la beauté naturelle qui font la différence. Produits de beauté, essentiels et thérapeutiques pour hommes, femmes et enfants.Nous avons tout ce dont vous avez besoin pour votre santé et votre beauté",
+          description:
+            "Découvrez la destination ultime pour les amoureux de nature et de beauté Découvrez les dernières tendances dans le monde de la beauté naturelle qui font la différence. Produits de beauté, essentiels et thérapeutiques pour hommes, femmes et enfants.Nous avons tout ce dont vous avez besoin pour votre santé et votre beauté",
           type: {
             firstShop: "{{itm}}% de réduction pour vos premiers achats",
             newProduct: "Découvrez nos nouvelles arrivées !",
@@ -402,8 +419,8 @@ const resources = {
             herbs: "Herbes et Grains",
             oils: "Huiles Naturelles",
             cosmetic: "Santé et Beauté",
-            pain:"Maux et Rhumatismes	",
-            diseases:"Maladies",
+            pain: "Maux et Rhumatismes	",
+            diseases: "Maladies",
           },
           sort: {
             title: "Trier par",
@@ -420,14 +437,21 @@ const resources = {
             grammage: "Grammage",
             dosage: "Dosage",
             gouts: "Goûts",
-            showLess:"Voir moins",
-            viewAll:"Voir tout",
+            showLess: "Voir moins",
+            viewAll: "Voir tout",
           },
           viewAllBtn: "Voir plus",
           viewBtn: "Vue rapide",
           viewCartBtn: "Voir le panier",
           buyBtn: "Acheter",
           related: "Produits Connexes",
+        },
+        avisClient: {
+          title: "Avis Client",
+          before: "Avant",
+          after: "Après",
+          comment: "Commentaire",
+          btn: "Voir le produit",
         },
         deliverySection: {
           delivery: {
@@ -463,9 +487,9 @@ const resources = {
         categories: {
           title: "Nos catégories",
         },
-        subcategories:{
-          title:"Sous-catégories",
-        }
+        subcategories: {
+          title: "Sous-catégories",
+        },
       },
       cartPage: {
         cart: {
@@ -521,7 +545,8 @@ const resources = {
         subject: "Sujet",
         email: "Votre Email",
         message: "Message",
-        description:"Sabrina Bio est Spécialisé dans les traitements naturels à base de plantes, vous proposant des mélanges thérapeutiques, des huiles essentielles et des produits cosmétiques",
+        description:
+          "Sabrina Bio est Spécialisé dans les traitements naturels à base de plantes, vous proposant des mélanges thérapeutiques, des huiles essentielles et des produits cosmétiques",
         btn: "Envoyer",
         error: "Veuillez remplir tous les champs",
         modal: {

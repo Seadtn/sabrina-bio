@@ -27,7 +27,6 @@ const Favorite = React.lazy(() => import("./components/Favorite/Favorites"));
 
 function AppContent() {
   const navigate = useNavigate();
-
   const location = useLocation();
   const isDashboardRoute = location.pathname.startsWith("/admin");
   const isMounted = React.useRef(false);
@@ -35,15 +34,15 @@ function AppContent() {
   // Check if user is authenticated and fetch the session data
   const isAuthenticated = Boolean(localStorage.getItem("user"));
   const userData = JSON.parse(localStorage.getItem("user"));
-// eslint-disable-next-line
+    // eslint-disable-next-line no-unused-vars
   const { items, successModal, errorModal } = useSelector(
     (state) => state.cart
   );
-  // eslint-disable-next-line
+    // eslint-disable-next-line no-unused-vars
   const { successFastViewModal, product } = useSelector(
     (state) => state.fastView
   );
-  // eslint-disable-next-line
+  // eslint-disable-next-line no-unused-vars
   const { favorites, errorFavModal, successFavModal } = useSelector(
     (state) => state.favorite
   );
@@ -128,7 +127,12 @@ function AppContent() {
 function App() {
   return (
     <Provider store={store}>
-      <Router>
+      <Router
+        future={{
+          v7_startTransition: true,
+          v7_relativeSplatPath: true, // Opting into relative splat paths
+        }}
+      >
         <AppContent />
       </Router>
     </Provider>

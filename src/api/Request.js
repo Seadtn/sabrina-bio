@@ -21,3 +21,23 @@ export const postRequest = async (url, data) => {
     throw error;
   }
 };
+
+export const putRequest = async (url, data) => {
+  try {
+    const response = await axios.put(url, data);
+    return response.data;
+  } catch (error) {
+    console.error("Error putting data:", error.message);
+    throw error;
+  }
+};
+
+export const deleteRequest = async (url) => {
+  try {
+    const response = await axios.delete(url);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting data:", error.message);
+    throw error;
+  }
+};

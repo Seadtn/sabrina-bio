@@ -19,8 +19,10 @@ const CategoryFormModal = ({ category, open, onClose, onSave }) => {
     image: "",
     creationDate: new Date().toISOString().split("T")[0],
   });
+  const [triActive, setTriActive] = useState(false);
   useEffect(() => {
     if (category) {
+      setTriActive(true);
       setFormData({
         id: category.id,
         frenchName: category.frenchName,
@@ -30,7 +32,10 @@ const CategoryFormModal = ({ category, open, onClose, onSave }) => {
         creationDate: category.creationDate,
         image: category.image,
       });
+      
     } else {
+      setTriActive(false);
+
       setFormData({
         frenchName: "",
         englishName: "",
@@ -102,7 +107,7 @@ const CategoryFormModal = ({ category, open, onClose, onSave }) => {
           </Typography>
         )}
         </Box>
-        <Box sx={{ display: "flex", minWidth: "400px", marginTop: "20px" }}>
+        {triActive && <Box sx={{ display: "flex", minWidth: "400px", marginTop: "20px" }}>
           <TextField
             name="tri"
             label="Numéro de tri"
@@ -111,7 +116,7 @@ const CategoryFormModal = ({ category, open, onClose, onSave }) => {
             value={formData.tri}
             onChange={handleInputChange}
           />
-        </Box>
+        </Box>}
         <Box sx={{ display: "flex", minWidth: "400px", marginTop: "20px" }}>
           <TextField
             name="frenchName"

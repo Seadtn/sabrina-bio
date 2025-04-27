@@ -90,9 +90,7 @@ const NavBar = () => {
     }
     try {
       const normalizedTerm = normalizeArabic(searchTerm); // Arabic normalization
-      console.log("Normalized search term:", normalizedTerm);
       const products = await searchProductsByName(normalizedTerm);
-      console.log("Search results:", products);
       setSearchResults(products);
     } catch (error) {
       console.error("Error fetching search results:", error);

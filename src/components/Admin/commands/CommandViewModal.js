@@ -41,7 +41,6 @@ const CommandViewModal = ({ open, onClose, command, onEditStatus }) => {
     }
   };
   const hasFreeDeliveryItem = () => {
-    console.log("command?.commandProducts", command?.commandProducts);
     return command?.commandProducts.some((item) => item.product.freeDelivery === true);
   };
   return (
