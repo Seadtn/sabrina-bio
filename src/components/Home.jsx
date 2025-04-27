@@ -45,7 +45,7 @@ const Home = () => {
   }, []);
 
   return (
-    (NewProducts.length>0 &&  products.lengths>0) ? (
+    (NewProducts.length===0 &&  products.lengths===0) ? (
       <Loader />
     ) : ( <div>
       <BannerSection />
