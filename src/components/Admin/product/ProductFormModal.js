@@ -31,6 +31,9 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
     description: "",
     price: 0,
     image: null,
+    image2: null, // State for image2
+    image3: null, // State for image3
+    image4: null, // State for image4
     creationDate: new Date().toISOString().split("T")[0],
     inSold: false,
     promotion: false,
@@ -52,7 +55,12 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
   });
 
   const [categories, setCategories] = useState([]);
-  const [previewUrl, setPreviewUrl] = useState("");
+  const [imagePreviews, setImagePreviews] = useState({
+    image: "",
+    image2: "",
+    image3: "",
+    image4: "",
+  });
   const currentDate = new Date().toISOString().split("T")[0];
   const [subcategories, setSubcategories] = useState([]);
 
@@ -65,6 +73,9 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
       description: "",
       price: 0,
       image: null,
+      image2: null,
+      image3: null,
+      image4: null,
       creationDate: currentDate,
       inSold: false,
       promotion: false,
@@ -77,14 +88,19 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
       lastDate: "",
       active: true,
       category: null,
-      souscategory: null, // Added souscategory field
+      souscategory: null,
       productType: "STANDARD",
       prices: {},
       availableOptions: [],
       hasTaste: false,
       tastes: [],
     });
-    setPreviewUrl("");
+    setImagePreviews({
+      image: "",
+      image2: "",
+      image3: "",
+      image4: "",
+    });
   }, [currentDate]);
 
   useEffect(() => {
@@ -115,13 +131,26 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
         tastes: product.tastes || [],
       });
 
+      // Set image previews
+      const previews = {};
+      
       if (product.image) {
-        setPreviewUrl(
-          typeof product.image === "string"
-            ? `data:image/jpeg;base64,${product.image}`
-            : URL.createObjectURL(product.image)
-        );
+        previews.image = typeof product.image === "string"
+          ? `data:image/jpeg;base64,${product.image}`
+          : URL.createObjectURL(new Blob([product.image]));
       }
+      
+      // Handle additional images
+      ['image2', 'image3', 'image4'].forEach(field => {
+        if (product[field]) {
+          // For byte arrays or base64 strings
+          previews[field] = typeof product[field] === "string"
+            ? `data:image/jpeg;base64,${product[field]}`
+            : URL.createObjectURL(new Blob([product[field]], { type: 'image/jpeg' }));
+        }
+      });
+      
+      setImagePreviews(previews);
     } else {
       resetForm();
     }
@@ -205,6 +234,7 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
       };
     });
   };
+  
   useEffect(() => {
     const fetchCategories = async () => {
       const categories = await getAllCategories();
@@ -283,16 +313,21 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
     });
   };
 
-  const handleImageChange = (e) => {
+  // Updated to handle multiple images
+  const handleImageChange = (e, imageField) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
         setFormData((prev) => ({
           ...prev,
-          image: event.target.result.split(",")[1],
+          [imageField]: event.target.result.split(",")[1], // Store base64 string without prefix
         }));
-        setPreviewUrl(URL.createObjectURL(file));
+        
+        setImagePreviews((prev) => ({
+          ...prev,
+          [imageField]: URL.createObjectURL(file), // Store preview URL
+        }));
       };
       reader.readAsDataURL(file);
     }
@@ -312,8 +347,8 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
         sx={{
           display: "flex",
           flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "space-evenly",
+          alignItems: "flex-start",
+          justifyContent: "space-between",
           gap: 2,
           my: 2,
           minWidth: "800px",
@@ -324,39 +359,116 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            gap: 2,
+            gap: 3,
+            width: "250px",
           }}
         >
-          {previewUrl && (
-            <img
-              src={previewUrl}
-              alt="Preview"
-              style={{ width: "200px", height: "200px", objectFit: "cover" }}
-            />
-          )}
-          <Button
-            variant="contained"
-            style={{ background: "#2fcb00" }}
-            component="label"
+          {/* Main image */}
+          <Box sx={{ textAlign: "center" }}>
+            <Box
+              sx={{
+                width: "200px",
+                height: "200px",
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+                overflow: "hidden",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: "10px",
+                backgroundColor: "#f5f5f5",
+              }}
+            >
+              {imagePreviews.image ? (
+                <img
+                  src={imagePreviews.image}
+                  alt="Preview"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+              ) : (
+                <Box sx={{ color: '#888', fontSize: '14px' }}>Image principale</Box>
+              )}
+            </Box>
+            <Button
+              variant="contained"
+              style={{ background: "#2fcb00" }}
+              component="label"
+              fullWidth
+            >
+              Image principale
+              <input
+                type="file"
+                hidden
+                accept="image/*"
+                onChange={(e) => handleImageChange(e, "image")}
+              />
+            </Button>
+          </Box>
+
+          {/* Additional images */}
+          <Box
+            sx={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              gap: 2,
+              width: "100%",
+            }}
           >
-            Choisir une image
-            <input
-              type="file"
-              hidden
-              accept="image/*"
-              onChange={handleImageChange}
-            />
-          </Button>
+            {["image2", "image3", "image4"].map((field, index) => (
+              <Box key={index} sx={{ textAlign: "center", width: "110px" }}>
+                <Box
+                  sx={{
+                    width: "100px",
+                    height: "100px",
+                    border: "1px solid #ccc",
+                    borderRadius: "4px",
+                    overflow: "hidden",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    marginBottom: "8px",
+                    backgroundColor: "#f5f5f5",
+                  }}
+                >
+                  {imagePreviews[field] ? (
+                    <img
+                      src={imagePreviews[field]}
+                      alt={`Preview ${index + 2}`}
+                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                    />
+                  ) : (
+                    <Box sx={{ color: '#888', fontSize: '12px' }}>Image {index + 2}</Box>
+                  )}
+                </Box>
+                <Button
+                  variant="outlined"
+                  size="small"
+                  style={{ color: "#2fcb00", borderColor: "#2fcb00", fontSize: "12px" }}
+                  component="label"
+                  fullWidth
+                >
+                  Image {index + 2}
+                  <input
+                    type="file"
+                    hidden
+                    accept="image/*"
+                    onChange={(e) => handleImageChange(e, field)}
+                  />
+                </Button>
+              </Box>
+            ))}
+          </Box>
         </Box>
+
         <Box
           sx={{
             display: "flex",
             flexDirection: "column",
             gap: 2,
-            marginTop: "100px",
             overflowY: "auto",
             maxHeight: "70vh",
-            maxWidth: "400px",
+            width: "500px",
           }}
         >
           <TextField
@@ -594,14 +706,6 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
           </Box>
           {formData.inSold && (
             <>
-              {/* <TextField
-                name="newPrice"
-                label="Nouveau prix"
-                type="number"
-                fullWidth
-                value={formData.newPrice}
-                onChange={handleInputChange}
-              /> */}
               <TextField
                 name="soldRatio"
                 label="Pourcentage de réduction"

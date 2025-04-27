@@ -14,6 +14,7 @@ import { openFastViewModal } from "../redux/fastView/slice.ts";
 import { useMediaQuery } from "@mui/material";
 import { Chip } from "@mui/material";
 import FastOrderBlock from "./fastOrderBlock.jsx";
+import Slider from "react-slick";
 
 const Product = () => {
   const { id } = useParams();
@@ -22,6 +23,7 @@ const Product = () => {
   const [loading, setLoading] = useState(false);
   const [selectedTaste, setSelectedTaste] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null); // State for the selected image
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false); // New state for toggling description
   const descriptionRef = useRef(null); // Reference for the description section
   const { t } = useTranslation();
@@ -31,6 +33,7 @@ const Product = () => {
   const handleFastView = () => {
     dispatch(openFastViewModal(product));
   };
+
   const [hasMoreLines, setHasMoreLines] = useState(false);
 
   const onClickAddItem = () => {
@@ -79,6 +82,7 @@ const Product = () => {
           );
           setRelated(relatedResponse);
         }
+        setSelectedImage(`data:image/*;base64,${productResponse?.image}`);
       } catch (error) {
         console.error("Error fetching product or related products:", error);
       } finally {
@@ -114,7 +118,15 @@ const Product = () => {
   const promotionalPrice = product.promotion
     ? displayPrice - displayPrice * product.soldRatio * 0.01
     : null;
-  const isMobile = useMediaQuery("(max-width:768px)"); // Adjust breakpoint as needed
+  const isMobile = useMediaQuery("(max-width:768px)");
+  const handleImageClick = (image) => {
+    if (typeof image === "string") {
+      setSelectedImage(`data:image/*;base64,${image}`);
+    } else {
+      const base64String = arrayBufferToBase64(image);
+      setSelectedImage(`data:image/*;base64,${base64String}`);
+    }
+  };
 
   const renderOptions = () => {
     if (!product.availableOptions?.length) return null;
@@ -169,7 +181,24 @@ const Product = () => {
       </div>
     );
   };
+  const images = [
+    product.image,
+    product.image2,
+    product.image3,
+    product.image4,
+  ].filter(Boolean);
 
+  const settings = {
+    dots: false,
+    infinite: false,
+    slidesToShow: images.length,
+    slidesToScroll: 1,
+    autoplay: false,
+    arrows: false,
+    appendDots: (dots) => {
+      return <ul style={{ margin: "0px" }}>{dots}</ul>;
+    },
+  };
   const renderTastes = () => {
     if (!product.hasTaste || !product.tastes?.length) return null;
 
@@ -263,7 +292,34 @@ const Product = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+  const handleImageSource = (imgData) => {
+    let imageSrc = "";
 
+    // If imgData is a base64 string (detected by starting with "data:image")
+    if (typeof imgData === "string") {
+      imageSrc = `data:image/jpeg;base64,${imgData}`;
+    }
+    // If imgData is a byte[] array, convert it to base64
+    else if (imgData && imgData.length) {
+      // Convert byte[] array to base64 string
+      const base64String = arrayBufferToBase64(imgData);
+      imageSrc = `data:image/jpeg;base64,${base64String}`;
+    }
+    return (
+      <img src={imageSrc} className="thumbnail" alt="Product" loading="lazy" />
+    );
+  };
+
+  // Helper function to convert byte[] array to base64 string
+  const arrayBufferToBase64 = (buffer) => {
+    let binary = "";
+    const bytes = new Uint8Array(buffer);
+    const len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
+  };
   return (
     <div
       className="container"
@@ -278,64 +334,73 @@ const Product = () => {
             <>
               <div className="col-single">
                 <img
-                  src={`data:image/*;base64,${product?.image}`}
+                  src={selectedImage}
                   alt={product.name}
                   className="product-image"
                 />
+                {/* Slider component */}
+                {(product.image2 || product.image3 || product.image4) && (
+                  <div className="thumbnail-slider">
+                    <Slider {...settings}>
+                      {images.map((imgData, idx) => {
+                        return (
+                          <div
+                            key={idx}
+                            onClick={() => handleImageClick(imgData)}
+                          >
+                            {handleImageSource(imgData)} {/* Render image */}
+                          </div>
+                        );
+                      })}
+                    </Slider>
+                  </div>
+                )}
               </div>
+
               <div className="col-single">
                 <h2> {getName(product)}</h2>
                 <div style={{ display: "flex", alignItems: "center" }}>
                   {product.productNew && (
-                    <div>
-                      <Chip
-                        label={t("homePage.products.newLabel")}
-                        size="small"
-                        sx={{
-                          backgroundColor: "#2fcb00",
-                          color: "white",
-                          padding: "5px",
-                          marginRight: "3px",
-                          marginTop: "5px",
-                          marginLeft: "3px",
-                        }}
-                      />
-                      <br />{" "}
-                    </div>
+                    <Chip
+                      label={t("homePage.products.newLabel")}
+                      size="small"
+                      sx={{
+                        backgroundColor: "#2fcb00",
+                        color: "white",
+                        padding: "5px",
+                        marginRight: "3px",
+                        marginTop: "5px",
+                        marginLeft: "3px",
+                      }}
+                    />
                   )}
                   {product.promotion && (
-                    <div>
-                      <Chip
-                        label={t("homePage.products.soldLabel")}
-                        color="warning"
-                        size="small"
-                        sx={{
-                          color: "white",
-                          padding: "5px",
-                          marginRight: "3px",
-                          marginTop: "5px",
-                          marginLeft: "3px",
-                        }}
-                      />
-                      <br />{" "}
-                    </div>
+                    <Chip
+                      label={t("homePage.products.soldLabel")}
+                      color="warning"
+                      size="small"
+                      sx={{
+                        color: "white",
+                        padding: "5px",
+                        marginRight: "3px",
+                        marginTop: "5px",
+                        marginLeft: "3px",
+                      }}
+                    />
                   )}
                   {product.freeDelivery && (
-                    <div>
-                      <Chip
-                        label={t("homePage.products.deliveryLabel")}
-                        size="small"
-                        sx={{
-                          backgroundColor: "rgb(231, 31, 31)",
-                          color: "white",
-                          padding: "5px",
-                          marginRight: "3px",
-                          marginTop: "5px",
-                          marginLeft: "3px",
-                        }}
-                      />
-                      <br />{" "}
-                    </div>
+                    <Chip
+                      label={t("homePage.products.deliveryLabel")}
+                      size="small"
+                      sx={{
+                        backgroundColor: "rgb(231, 31, 31)",
+                        color: "white",
+                        padding: "5px",
+                        marginRight: "3px",
+                        marginTop: "5px",
+                        marginLeft: "3px",
+                      }}
+                    />
                   )}
                 </div>
                 <h4
@@ -357,12 +422,14 @@ const Product = () => {
                     {Math.round(promotionalPrice)} {!isArabic ? "DT" : "دت"}
                   </h4>
                 )}
+
                 {(product.hasTaste || product.availableOptions?.length > 0) && (
                   <>
                     {renderOptions()}
                     {renderTastes()}
                   </>
                 )}
+
                 {product.quantity === 0 ? (
                   <div style={{ color: "red", marginBottom: "10px" }}>
                     {isArabic
@@ -391,12 +458,11 @@ const Product = () => {
                     }}
                     onClick={() => onClickAddItem()}
                   >
-                    {"  "}
-                    <i className="fa fa-shopping-cart"></i>
-                    {"  "}
+                    <i className="fa fa-shopping-cart"></i>{" "}
                     {t("homePage.products.buyBtn")}
                   </Button>
                 )}
+
                 <h3 id="details">{!isArabic ? "Description" : "وصف"}</h3>
                 <div
                   ref={descriptionRef}
@@ -429,6 +495,7 @@ const Product = () => {
               </div>
             </>
           </div>
+
           <FastOrderBlock
             product={product}
             price={product.promotion ? promotionalPrice : displayPrice}
@@ -441,6 +508,7 @@ const Product = () => {
                 : null
             }
           />
+
           <h2 className="title-left">{t("homePage.products.related")}</h2>
           <div className="row products">
             {loading ? (
