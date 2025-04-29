@@ -271,7 +271,7 @@ export default function Dashboard() {
           ? prev.map((prod) =>
               prod.id === productData.id ? { ...prod, ...response } : prod
             )
-          : [...prev, response]
+          : [response,...prev]
       );
 
       setSelectedProduct(null);
