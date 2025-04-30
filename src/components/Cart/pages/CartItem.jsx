@@ -67,6 +67,12 @@ const CartItem = ({
     }
     return "";
   };
+  const getOption=(opt)=>{
+    if(opt>=1000){
+      return opt/1000
+    }
+    return opt
+  }
   return (
     <>
       <div
@@ -109,7 +115,7 @@ const CartItem = ({
                   }}
                 >
                   {" "}
-                  {option} {getUnitLabel(type, Number(option), isArabic)}{" "}
+                  {getOption(option)} {getUnitLabel(type, Number(option), isArabic)}{" "}
                   {taste ? "-" + taste : ""}
                 </small>
               </Link>
