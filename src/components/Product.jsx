@@ -50,7 +50,7 @@ const Product = () => {
         freeDelivery:
           product.freeDelivery === null ? false : product.freeDelivery,
         taste: selectedTaste,
-        option:parseInt(selectedOption),
+        option: parseInt(selectedOption),
         title: product.name,
         titleFr: product.nameFr,
         titleEng: product.nameEng,
@@ -70,7 +70,9 @@ const Product = () => {
           setSelectedTaste(productResponse.tastes[0]);
         }
         if (productResponse.availableOptions?.length > 0) {
-          setSelectedOption(productResponse.availableOptions[0].value);
+          setSelectedOption(
+            parseInt(productResponse.availableOptions[0].value)
+          );
         }
 
         if (productResponse.category?.id) {
@@ -139,37 +141,39 @@ const Product = () => {
           {product.availableOptions.map((option) => (
             <button
               key={option.value}
-              onClick={() => setSelectedOption(option.value)}
+              onClick={() => setSelectedOption(Number(option.value))}
               className={`option-button ${
-                selectedOption === option.value ? "selected" : ""
+                selectedOption === Number(option.value) ? "selected" : ""
               }`}
-              style={{ color: selectedOption === option.value ? "" : "black" }}
+              style={{
+                color: selectedOption === Number(option.value) ? "" : "black",
+              }}
             >
-              {option.value >= 1000
-                ? `${option.value / 1000} ${
-                    !isArabic
+              {Number(option.value) >= 1000
+                ? `${Number(option.value) / 1000} ${
+                    isArabic
                       ? product.productType === "GRAMMAGE"
-                        ? "Kg"
-                        : product.productType === "DOSAGE"
-                          ? "L"
-                          : ""
-                      : product.productType === "GRAMMAGE"
                         ? "كغ"
                         : product.productType === "DOSAGE"
                           ? "ل"
                           : ""
+                      : product.productType === "GRAMMAGE"
+                        ? "Kg"
+                        : product.productType === "DOSAGE"
+                          ? "L"
+                          : ""
                   }`
                 : `${option.value} ${
-                    !isArabic
+                    isArabic
                       ? product.productType === "GRAMMAGE"
-                        ? "g"
-                        : product.productType === "DOSAGE"
-                          ? "ml"
-                          : ""
-                      : product.productType === "GRAMMAGE"
                         ? "غ"
                         : product.productType === "DOSAGE"
                           ? "مل"
+                          : ""
+                      : product.productType === "GRAMMAGE"
+                        ? "g"
+                        : product.productType === "DOSAGE"
+                          ? "ml"
                           : ""
                   }`}
             </button>
