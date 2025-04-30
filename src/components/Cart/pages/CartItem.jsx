@@ -115,7 +115,7 @@ const CartItem = ({
                   }}
                 >
                   {" "}
-                  {getOption(option)} {getUnitLabel(type, Number(option), isArabic)}{" "}
+                  {getOption(Number(option))} {getUnitLabel(type, Number(option), isArabic)}{" "}
                   {taste ? "-" + taste : ""}
                 </small>
               </Link>
