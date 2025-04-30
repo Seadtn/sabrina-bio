@@ -57,9 +57,13 @@ const CartItem = ({
     if (!isArabic) {
       if (type === "GRAMMAGE" && option >= 1000) return "Kg";
       if (type === "DOSAGE" && option >= 1000) return "L";
+      if(type === "GRAMMAGE" && option < 1000) return "g";
+      if(type === "DOSAGE" && option < 1000) return "ml";
     } else {
-      if (type === "GRAMMAGE" && option < 1000) return "كغ";
-      if (type === "DOSAGE" && option < 1000) return "ل";
+      if (type === "GRAMMAGE" && option >= 1000) return "كغ";
+      if (type === "DOSAGE" && option >= 1000) return "ل";
+      if(type === "GRAMMAGE" && option < 1000) return "غ";
+      if(type === "DOSAGE" && option < 1000) return "مل";
     }
     return "";
   };
