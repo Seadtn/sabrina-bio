@@ -31,10 +31,7 @@ const ProductOfTheYear = ({ productOTY }) => {
         maxQuantity: product?.quantity,
         type: product?.productType,
         taste: product?.availableOptions[0]?.taste,
-        option:
-          product?.availableOptions[0]?.value >= 1000
-            ? product?.availableOptions[0]?.value / 1000
-            : product?.availableOptions[0]?.value,
+        option:product?.availableOptions[0]?.value,
         freeDelivery: product?.freeDelivery,
         title: product?.name,
         titleFr: product?.nameFr,
