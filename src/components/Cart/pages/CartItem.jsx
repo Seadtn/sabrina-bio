@@ -53,6 +53,16 @@ const CartItem = ({
       return titleEng || titleFr || title || "";
     }
   };
+  const getUnitLabel = (type, option, isArabic) => {
+    if (!isArabic) {
+      if (type === "GRAMMAGE" && option >= 1000) return "Kg";
+      if (type === "DOSAGE" && option >= 1000) return "L";
+    } else {
+      if (type === "GRAMMAGE" && option < 1000) return "كغ";
+      if (type === "DOSAGE" && option < 1000) return "ل";
+    }
+    return "";
+  };
   return (
     <>
       <div
@@ -95,18 +105,7 @@ const CartItem = ({
                   }}
                 >
                   {" "}
-                  {option}{" "}
-                  {!isArabic
-                    ? type === "GRAMMAGE"
-                      ? "Kg"
-                      : type === "DOSAGE"
-                        ? "L"
-                        : ""
-                    : type === "GRAMMAGE"
-                      ? "كغ"
-                      : type === "DOSAGE"
-                        ? "ل"
-                        : ""}{" "}
+                  {option} {getUnitLabel(type, option, isArabic)}{" "}
                   {taste ? "-" + taste : ""}
                 </small>
               </Link>
