@@ -43,10 +43,7 @@ const ProductCard = ({ product }) => {
         freeDelivery:
           product.freeDelivery === null ? false : product.freeDelivery,
         taste: product.availableOptions[0]?.taste,
-        option:
-          product.availableOptions[0]?.value >= 1000
-            ? product.availableOptions[0]?.value / 1000
-            : product.availableOptions[0]?.value,
+        option: product.availableOptions[0]?.value,
         title: product.name,
         titleFr: product.nameFr,
         titleEng: product.nameEng,
@@ -128,10 +125,10 @@ const ProductCard = ({ product }) => {
         {product.freeDelivery && (
           <div
             className={
-              (!product.promotion && !product.productNew) 
+              !product.promotion && !product.productNew
                 ? "free-delivery-label3"
                 : (product.promotion && !product.productNew) ||
-                  (!product.promotion && product.productNew)
+                    (!product.promotion && product.productNew)
                   ? "free-delivery-label2"
                   : "free-delivery-label1"
             }

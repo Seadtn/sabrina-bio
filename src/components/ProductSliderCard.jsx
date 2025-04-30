@@ -91,10 +91,7 @@ const ProductSliderCard = ({ product }) => {
         freeDelivery:
           product.freeDelivery === null ? false : product.freeDelivery,
         taste: product.availableOptions[0]?.taste,
-        option:
-          product.availableOptions[0]?.value >= 1000
-            ? product.availableOptions[0]?.value / 1000
-            : product.availableOptions[0]?.value,
+        option: product.availableOptions[0]?.value,
         title: product.name,
         titleFr: product.nameFr,
         titleEng: product.nameEng,
