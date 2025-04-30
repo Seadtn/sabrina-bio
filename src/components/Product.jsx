@@ -50,10 +50,7 @@ const Product = () => {
         freeDelivery:
           product.freeDelivery === null ? false : product.freeDelivery,
         taste: selectedTaste,
-        option:
-        selectedOption >= 1000
-            ? selectedOption / 1000
-            : selectedOption,
+        option:parseInt(selectedOption),
         title: product.name,
         titleFr: product.nameFr,
         titleEng: product.nameEng,
