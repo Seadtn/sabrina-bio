@@ -50,7 +50,7 @@ const Product = () => {
         freeDelivery:
           product.freeDelivery === null ? false : product.freeDelivery,
         taste: selectedTaste,
-        option: parseInt(selectedOption),
+        option: selectedOption,
         title: product.name,
         titleFr: product.nameFr,
         titleEng: product.nameEng,
@@ -71,7 +71,7 @@ const Product = () => {
         }
         if (productResponse.availableOptions?.length > 0) {
           setSelectedOption(
-            parseInt(productResponse.availableOptions[0].value)
+            productResponse.availableOptions[0].value
           );
         }
 
@@ -141,16 +141,16 @@ const Product = () => {
           {product.availableOptions.map((option) => (
             <button
               key={option.value}
-              onClick={() => setSelectedOption(Number(option.value))}
+              onClick={() => setSelectedOption(option.value)}
               className={`option-button ${
-                selectedOption === Number(option.value) ? "selected" : ""
+                selectedOption === option.value ? "selected" : ""
               }`}
               style={{
-                color: selectedOption === Number(option.value) ? "" : "black",
+                color: selectedOption === option.value ? "" : "black",
               }}
             >
-              {Number(option.value) >= 1000
-                ? `${Number(option.value) / 1000} ${
+              {option.value >= 1000
+                ? `${option.value / 1000} ${
                     isArabic
                       ? product.productType === "GRAMMAGE"
                         ? "كغ"
