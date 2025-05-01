@@ -18,13 +18,7 @@ const normalizeArabic = (text = "") => {
   return text
     .normalize("NFKD")
     .replace(/[\u064B-\u065F]/g, "") // Remove diacritics
-    .replace(/أ|إ|آ/g, "ا") // Normalize various forms of 'alif'
-    .replace(/ة/g, "ه") // Convert 'ta marbuta' to 'heh'
-    .replace(/ى/g, "ي") // Convert 'alif maqsura' to 'ya'
-    .replace(/ؤ/g, "و") // Convert 'waw with hamza' to 'waw'
-    .replace(/ئ/g, "ي") // Convert 'ya with hamza' to 'ya'
     .replace(/[ـ]/g, "") // Remove Arabic ligatures (ـ)
-    .replace(/\s+/g, " ") // Normalize whitespace
     .trim();
 };
 const NavBar = () => {
