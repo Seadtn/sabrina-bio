@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import { getActiveTestimonials } from "../api/backend";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -112,7 +110,8 @@ const ClientAvis = () => {
                       className="buy-button-avis"
                       onClick={() => navigate("product/" + item.productId)}
                     >
-                      <Link>التطلع على المنتح</Link>
+                      {/* TODO : translate this */}
+                      <Link>{t("homePage.avisClient.btn")}</Link> 
                     </div>
                   </div>
                 </div>

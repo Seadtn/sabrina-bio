@@ -17,6 +17,8 @@ import Dashboard from "./components/Admin/Dashboard";
 import ModalCart from "./components/Modals/ModalCart/ModalCart";
 import ModalFavorites from "./components/Modals/ModalFavorites/ModalFavorites";
 import FastViewModal from "./components/Modals/ModalFastView/FastViewModal.js";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import LoginPage from "./components/Admin/Auth/LoginPage.js";
 const Home = React.lazy(() => import("./components/Home"));
 const Cart = React.lazy(() => import("./components/Cart/Cart"));

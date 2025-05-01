@@ -1,26 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
 import Arrows from "./arrows";
+import { getAllCategories } from "../api/backend";
+import i18n from "../i18n/i18n";
 
 const Categories = () => {
   const { t } = useTranslation();
-  
-  const img = [
-    { id: 4, url: "/images/Categories/herbs.jpg", path: "homePage.products.category.herbs" },
-    { id: 2, url: "/images/Categories/oils.jpg", path: "homePage.products.category.oils" },
-    { id: 1, url: "/images/Categories/cosmetics.jpg", path: "homePage.products.category.cosmetic" },
-    { id: 5, url: "/images/Categories/diseases.jpg", path: "homePage.products.category.diseases" },
-    { id: 3, url: "/images/Categories/pain.jpg", path: "homePage.products.category.pain" },
-  ];
+  const isArabic = i18n.language === "ar";
+  const isFrench = i18n.language === "fr";
+  const [categories, setCategories] = React.useState([]);
+  useEffect(() => { 
+    const fetchCategories = async () => {
+      try {
+        const response = await getAllCategories();
+        setCategories(response);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   const settings = {
     dots: false,
     infinite: true,
-    slidesToShow: 5,
+    slidesToShow: 6,
     slidesToScroll: 1,
-    autoplay: true,
+    autoplay: false,
     arrows: true,
     prevArrow: <Arrows />,
     nextArrow: <Arrows />,
@@ -50,26 +59,35 @@ const Categories = () => {
         },
       },
     ],
+  };  const arrayBufferToBase64 = (buffer) => {
+    let binary = "";
+    const bytes = new Uint8Array(buffer);
+    const len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
   };
 
   return (
-    <div className="container">
+    <div className="container" >
       <h2 className="title">{t("homePage.categories.title")}</h2>
-      <Slider {...settings}>
-        {img.map((image) => (
-          <div className="newCategoryCardGroup" key={image.id}>
+      <Slider {...settings} 
+      >
+        {categories.map((category) => (
+          <div className="newCategoryCardGroup" key={category.id}>
             <Link
-              to={`/products?category=${image.id}`}
+              to={`/products?category=${category.id}`}
               className="CategoryCardGroup"
             >
               <img
                 className="card-image"
-                src={process.env.PUBLIC_URL + image.url}
-                alt={t(image.path)}
+                src={'data:image/jpeg;base64,' + arrayBufferToBase64(category.image)}
+                alt={isArabic ? category.arabicName : isFrench ? category.frenchName : category.englishName}
                 loading="lazy"
               />
             </Link>
-            <div className="category-text">{t(image.path)}</div>
+            <div className="category-text">{isArabic ? category.arabicName : isFrench ? category.frenchName : category.englishName}</div>
           </div>
         ))}
       </Slider>

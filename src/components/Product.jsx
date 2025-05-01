@@ -23,7 +23,6 @@ const Product = () => {
   const [loading, setLoading] = useState(false);
   const [selectedTaste, setSelectedTaste] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
-  const [selectedImage, setSelectedImage] = useState(null); // State for the selected image
   const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false); // New state for toggling description
   const descriptionRef = useRef(null); // Reference for the description section
   const { t } = useTranslation();
@@ -81,7 +80,7 @@ const Product = () => {
           );
           setRelated(relatedResponse);
         }
-        setSelectedImage(`data:image/*;base64,${productResponse?.image}`);
+        // setSelectedImage(`data:image/*;base64,${productResponse?.image}`);
       } catch (error) {
         console.error("Error fetching product or related products:", error);
       } finally {
@@ -118,14 +117,14 @@ const Product = () => {
     ? displayPrice - displayPrice * product.soldRatio * 0.01
     : null;
   const isMobile = useMediaQuery("(max-width:768px)");
-  const handleImageClick = (image) => {
-    if (typeof image === "string") {
-      setSelectedImage(`data:image/*;base64,${image}`);
-    } else {
-      const base64String = arrayBufferToBase64(image);
-      setSelectedImage(`data:image/*;base64,${base64String}`);
-    }
-  };
+  // const handleImageClick = (image) => {
+  //   if (typeof image === "string") {
+  //     setSelectedImage(`data:image/*;base64,${image}`);
+  //   } else {
+  //     const base64String = arrayBufferToBase64(image);
+  //     setSelectedImage(`data:image/*;base64,${base64String}`);
+  //   }
+  // };
 
   const renderOptions = () => {
     if (!product.availableOptions?.length) return null;
@@ -190,11 +189,11 @@ const Product = () => {
   ].filter(Boolean);
 
   const settings = {
-    dots: false,
+    dots: true,
     infinite: false,
-    slidesToShow: images.length,
+    slidesToShow: 1,
     slidesToScroll: 1,
-    autoplay: false,
+    autoplay: true,
     arrows: false,
     appendDots: (dots) => {
       return <ul style={{ margin: "0px" }}>{dots}</ul>;
@@ -307,7 +306,7 @@ const Product = () => {
       imageSrc = `data:image/jpeg;base64,${base64String}`;
     }
     return (
-      <img src={imageSrc} className="thumbnail" alt="Product" loading="lazy" />
+      <img src={imageSrc} className="product-image" alt="Product" loading="lazy" />
     );
   };
 
@@ -334,27 +333,25 @@ const Product = () => {
           <div className="row_product row2">
             <>
               <div className="col-single">
-                <img
+                {/* <img
                   src={selectedImage}
                   alt={product.name}
                   className="product-image"
-                />
+                /> */}
                 {/* Slider component */}
-                {(product.image2 || product.image3 || product.image4) && (
-                  <div className="thumbnail-slider">
+                {images.length > 0 && (
+
                     <Slider {...settings}>
                       {images.map((imgData, idx) => {
                         return (
                           <div
                             key={idx}
-                            onClick={() => handleImageClick(imgData)}
                           >
                             {handleImageSource(imgData)} {/* Render image */}
                           </div>
                         );
                       })}
                     </Slider>
-                  </div>
                 )}
               </div>
 

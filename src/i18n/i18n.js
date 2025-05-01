@@ -267,6 +267,7 @@ const resources = {
           comment: "تعليق",
           btn: "عرض المنتج",
         },
+        
         deliverySection: {
           delivery: {
             title: "توصيل سريع",
