@@ -497,14 +497,8 @@ const Product = () => {
           <FastOrderBlock
             product={product}
             price={product.promotion ? promotionalPrice : displayPrice}
-            taste={product.availableOptions?.[0]?.taste}
-            option={
-              product.availableOptions?.[0]
-                ? product.availableOptions[0].value >= 1000
-                  ? product.availableOptions[0].value / 1000
-                  : product.availableOptions[0].value
-                : null
-            }
+            taste={selectedTaste}
+            option={selectedOption}
           />
 
           <h2 className="title-left">{t("homePage.products.related")}</h2>

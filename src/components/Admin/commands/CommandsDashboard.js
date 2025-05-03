@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import CommandsTable from './CommandsTable';
 import CommandViewModal from './CommandViewModal';
 import { Card, CardContent, Typography, Grid } from '@mui/material';
-import { changeCommandStatus, getAllCommands } from '../../../api/backend';
+import { changeCommandStatus, getAllCommands,getCommandByID } from '../../../api/backend';
 
 function CommandsDashboard({ page, rowsPerPage, setPage, setRowsPerPage, totalPages }) {
   const [commands, setCommands] = useState([]);
@@ -17,14 +17,18 @@ function CommandsDashboard({ page, rowsPerPage, setPage, setRowsPerPage, totalPa
     rejectedCommands: { count: 0, money: 0 },
   });
 
-  const handleEditCommand = (command) => {
-    setSelectedCommand(command);
-    setOpenViewModal(true);
-  };
 
-  const handleViewCommand = (command) => {
-    setSelectedCommand(command);
-    setOpenViewModal(true);
+
+  const handleViewCommand = async (command) => {
+    try {
+      const response = await getCommandByID(command.id);
+      if (response && response.data) {
+        setSelectedCommand(response.data);
+        setOpenViewModal(true);
+      }
+    } catch (error) {
+      console.error('Error viewing command:', error);
+    }
   };
 
   const handleEditCommandStatus = (command) => {
@@ -112,7 +116,6 @@ function CommandsDashboard({ page, rowsPerPage, setPage, setRowsPerPage, totalPa
       {/* Commands Table with Pagination */}
       <CommandsTable
         commands={commands}
-        onEdit={handleEditCommand}
         onView={handleViewCommand}
         page={page}
         rowsPerPage={rowsPerPage}

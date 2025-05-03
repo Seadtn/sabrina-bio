@@ -13,13 +13,11 @@ import {
 
 function CommandsTable({
   commands,
-  onEdit,
   onView,
   page,
   rowsPerPage,
   setPage,
   setRowsPerPage,
-  totalPages,
   totalElements,
 }) {
   const handleChangePage = (event, newPage) => {

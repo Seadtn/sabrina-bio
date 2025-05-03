@@ -192,7 +192,7 @@ const FastOrderBlock = ({ product, price, option, taste }) => {
             <button className="btn-primary" type="button" onClick={() => setQuantity((q) => q + 1)}>+</button>
           </div>
 
-          <button className="order__button" type="submit">
+          <button className="order__button" type="submit" disabled={quantity < 1}>
             <span>{t("cartPage.order.title")}</span>
           </button>
           <div className="order__politics">{t("cartPage.order.closingPhrase")}</div>
