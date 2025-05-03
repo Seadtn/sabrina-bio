@@ -42,6 +42,19 @@ function CommandsTable({
     }
   };
 
+  // Calculate the maximum valid page
+  const maxPage = Math.max(0, Math.ceil(totalElements / rowsPerPage) - 1);
+  
+  // Ensure page is within valid range
+  const validPage = Math.min(Math.max(0, page), maxPage);
+
+  // If page is out of range, adjust it (this will trigger a re-render)
+  React.useEffect(() => {
+    if (page !== validPage) {
+      setPage(validPage);
+    }
+  }, [page, validPage, setPage]);
+
   return (
     <>
       <TableContainer component={Paper}>
@@ -60,33 +73,42 @@ function CommandsTable({
             </TableRow>
           </TableHead>
           <TableBody>
-            {commands.map((command,index) => {
-              const displayIndex = page * rowsPerPage + index + 1; 
-              return(
-              
-              <TableRow
-                key={command.id}
-                onClick={(event) => onView(command, event)}
-              >
-                <TableCell>#{displayIndex}</TableCell>
-                <TableCell>{`${command.firstName} ${command.lastName}`}</TableCell>
-                <TableCell>
-                  <div>{command.mail === "" ? command.phone2 : command.mail}</div>
-                  <div>{command.phone}</div>
+            {commands.map((command, index) => {
+              const displayIndex = page * rowsPerPage + index + 1;
+              return (
+                <TableRow
+                  key={command.id}
+                  onClick={(event) => onView(command.id, event)}
+                  hover
+                  sx={{ cursor: 'pointer' }}
+                >
+                  <TableCell>#{displayIndex}</TableCell>
+                  <TableCell>{`${command.firstName} ${command.lastName}`}</TableCell>
+                  <TableCell>
+                    <div>{command.mail === "" ? command.phone2 : command.mail}</div>
+                    <div>{command.phone}</div>
+                  </TableCell>
+                  <TableCell>{`${command.city}, ${command.postalCode}`}</TableCell>
+                  <TableCell>
+                    <Chip
+                      label={command.status}
+                      color={getStatusColor(command.status)}
+                    />
+                  </TableCell>
+                  <TableCell>{command.creationDate}</TableCell>
+                  <TableCell>{command.paymentMethod}</TableCell>
+                  <TableCell>{command.confirmationDate}</TableCell>
+                  <TableCell>{`TND${command?.totalPrice}`}</TableCell>
+                </TableRow>
+              );
+            })}
+            {commands.length === 0 && (
+              <TableRow>
+                <TableCell colSpan={9} align="center">
+                  Aucune commande trouvée
                 </TableCell>
-                <TableCell>{`${command.city}, ${command.postalCode}`}</TableCell>
-                <TableCell>
-                  <Chip
-                    label={command.status}
-                    color={getStatusColor(command.status)}
-                  />
-                </TableCell>
-                <TableCell>{command.creationDate}</TableCell>
-                <TableCell>{command.paymentMethod}</TableCell>
-                <TableCell>{command.confirmationDate}</TableCell>
-                <TableCell>{`TND${command?.totalPrice}`}</TableCell>
               </TableRow>
-            )})}
+            )}
           </TableBody>
         </Table>
       </TableContainer>
@@ -95,11 +117,14 @@ function CommandsTable({
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}
         component="div"
-        count={totalElements} // The count should be based on total records available
+        count={totalElements || 0} // Ensure count is at least 0
         rowsPerPage={rowsPerPage}
-        page={page}
+        page={validPage} // Use the validated page value
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
+        labelDisplayedRows={({ from, to, count }) =>
+          `${from}-${to} sur ${count !== -1 ? count : `plus de ${to}`}`
+        }
       />
     </>
   );

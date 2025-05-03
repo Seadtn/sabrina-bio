@@ -60,7 +60,7 @@ const ProductTable = ({
           {products.map((product, index) => {
             const displayIndex = page * rowsPerPage + index + 1; // Adjust index
             return (
-              <TableRow key={product.id} onClick={(event) => onView(product, event)}>
+              <TableRow key={product.id} onClick={(event) => onView(product.id, event)}>
                 <TableCell>{displayIndex}</TableCell>
                 <TableCell>
                   <img
@@ -74,8 +74,8 @@ const ProductTable = ({
                   />
                 </TableCell>
                 <TableCell>{product.name}</TableCell>
-                <TableCell>{product.category?.frenchName}</TableCell>
-                <TableCell>{product.souscategory?.frenchName}</TableCell>
+                <TableCell>{product.categoryName}</TableCell>
+                <TableCell>{product.subCategoryName}</TableCell>
                 <TableCell>
                   {product.description.length > 25
                     ? product.description.substring(0, 25) + "..."
@@ -128,7 +128,7 @@ const ProductTable = ({
                   <IconButton
                     onClick={(event) => {
                       event.stopPropagation();
-                      onEdit(product);
+                      onEdit(product.id);
                     }}
                   >
                     <EditIcon />

@@ -26,6 +26,7 @@ import {
   getAllContacts,
   getAllSousCategories,
   getPaginatedProductsTable,
+  getProductById,
   getSousCategoriesbyIdCategory,
 } from "../../api/backend.js";
 import CategoryIcon from "@mui/icons-material/Category";
@@ -92,7 +93,7 @@ export default function Dashboard() {
   const [sortOption, setSortOption] = React.useState("");
   const [contacts, setContacts] = React.useState([]);
   const [subcategory, setSubcategory] = React.useState("");
-    // eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line no-unused-vars
   const [currentOffset, setCurrentOffset] = React.useState(0);
   const [subcategories, setSubcategories] = React.useState([]);
   const [isInitialized, setIsInitialized] = React.useState(false);
@@ -106,7 +107,7 @@ export default function Dashboard() {
     if (timerRef.current) {
       clearTimeout(timerRef.current);
     }
-    
+
     // Set a new timer
     timerRef.current = setTimeout(() => {
       setFiltersChanged(true);
@@ -151,11 +152,18 @@ export default function Dashboard() {
     setTimeout(() => setOpenFormModal(true), 0);
   };
 
-  const handleEditProduct = (product) => {
-    setSelectedProduct(product);
-    setOpenFormModal(true);
+  const handleEditProduct = async (id) => {
+    try {
+      const response = await getProductById(id);
+      if (response) {
+        setSelectedProduct(response);
+        setOpenFormModal(true);
+      }
+    } catch (error) {
+      console.error("Error viewing command:", error);
+    }
   };
-  
+
   const fetchPaginatedProducts = React.useCallback(
     async (offset = 0, filters = {}) => {
       const mergedFilters = {
@@ -247,10 +255,16 @@ export default function Dashboard() {
     if (isInitialized && !filtersChanged) {
       fetchPaginatedProducts(page * rowsPerPage);
     }
-    
+
     // Reset the filters changed flag
     setFiltersChanged(false);
-  }, [page, rowsPerPage, fetchPaginatedProducts, isInitialized, filtersChanged]);
+  }, [
+    page,
+    rowsPerPage,
+    fetchPaginatedProducts,
+    isInitialized,
+    filtersChanged,
+  ]);
 
   // Cleanup timer on unmount
   React.useEffect(() => {
@@ -260,7 +274,17 @@ export default function Dashboard() {
       }
     };
   }, []);
+  const setAndStoreActivePage = (page) => {
+    setActivePage(page);
+    sessionStorage.setItem("activeDashboardPage", page);
+  };
 
+  React.useEffect(() => {
+    const storedPage = sessionStorage.getItem("activeDashboardPage");
+    if (storedPage) {
+      setActivePage(storedPage);
+    }
+  }, []);
   const handleSaveProduct = async (productData) => {
     try {
       const isEdit = Boolean(productData.id);
@@ -271,7 +295,7 @@ export default function Dashboard() {
           ? prev.map((prod) =>
               prod.id === productData.id ? { ...prod, ...response } : prod
             )
-          : [response,...prev]
+          : [response, ...prev]
       );
 
       setSelectedProduct(null);
@@ -281,9 +305,16 @@ export default function Dashboard() {
     }
   };
 
-  const handleViewProduct = (product) => {
-    setSelectedProduct(product);
-    setOpenViewModal(true);
+  const handleViewProduct = async (id) => {
+    try {
+      const response = await getProductById(id);
+      if (response && response) {
+        setSelectedProduct(response);
+        setOpenViewModal(true);
+      }
+    } catch (error) {
+      console.error("Error viewing command:", error);
+    }
   };
 
   const handleDeleteProduct = async (id) => {
@@ -298,7 +329,7 @@ export default function Dashboard() {
   // Custom Router (maybe for SPA-style nav)
   const customRouter = {
     navigate: (to) => {
-      setActivePage(to.slice(1));
+      setAndStoreActivePage(to.slice(1));
       return false;
     },
     pathname: "",
@@ -441,14 +472,15 @@ export default function Dashboard() {
             setCategories={setSousCategories}
           />
         )}
-        {activePage === "ClientAvis" && (
-          <TestimonialDashboard />
-        )}
+        {activePage === "ClientAvis" && <TestimonialDashboard />}
         {activePage === "contacts" && (
           <ContactDashboard contacts={contacts} setContacts={setContacts} />
         )}
         {activePage === "productOfTheYear" && (
-          <ProductOTYDashboard productsOTY={productOTY} setProductsOTY={setProductOTY} />
+          <ProductOTYDashboard
+            productsOTY={productOTY}
+            setProductsOTY={setProductOTY}
+          />
         )}
       </DashboardLayout>
     </AppProvider>

@@ -133,24 +133,33 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
 
       // Set image previews
       const previews = {};
-      
+
       if (product.image) {
-        previews.image = typeof product.image === "string"
-          ? `data:image/jpeg;base64,${product.image}`
-          : URL.createObjectURL(new Blob([product.image]));
+        previews.image =
+          typeof product.image === "string"
+            ? `data:image/jpeg;base64,${product.image}`
+            : URL.createObjectURL(new Blob([product.image]));
       }
-      
+
       // Handle additional images
-      ['image2', 'image3', 'image4'].forEach(field => {
+      ["image2", "image3", "image4"].forEach((field) => {
         if (product[field]) {
           // For byte arrays or base64 strings
-          previews[field] = typeof product[field] === "string"
-            ? `data:image/jpeg;base64,${product[field]}`
-            : URL.createObjectURL(new Blob([product[field]], { type: 'image/jpeg' }));
+          previews[field] =
+            typeof product[field] === "string"
+              ? `data:image/jpeg;base64,${product[field]}`
+              : URL.createObjectURL(
+                  new Blob([product[field]], { type: "image/jpeg" })
+                );
         }
       });
-      
+
       setImagePreviews(previews);
+
+      // Fetch subcategories if category exists
+      if (product.category?.id) {
+        fetchSubcategories(product.category.id);
+      }
     } else {
       resetForm();
     }
@@ -160,24 +169,26 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
     const { name, value, type, checked } = e.target;
 
     if (name === "category") {
+      const selectedCategory = categories.find((cat) => cat.id === value);
       setFormData((prev) => ({
         ...prev,
-        [name]: value,
+        [name]: selectedCategory,
         souscategory: null,
       }));
       try {
-        const response = await fetchSubcategories(value.id);
-        if (!response.ok) {
-          throw new Error("Failed to fetch subcategories");
-        }
-        const subcategories = await response.json();
-        setFormData((prev) => ({
-          ...prev,
-          souscategory: subcategories,
-        }));
+        console.log("Selected category ID:", value);
+        const subcategories = await getSousCategoriesbyIdCategory(value);
+        setSubcategories(subcategories || []);
       } catch (error) {
         console.error("Error fetching subcategories:", error);
+        setSubcategories([]);
       }
+    } else if (name === "souscategory") {
+      const selectedSubCategory = subcategories.find((cat) => cat.id === value);
+      setFormData((prev) => ({
+        ...prev,
+        [name]: selectedSubCategory,
+      }));
     } else if (name === "productType" && value !== formData.productType) {
       setFormData((prev) => ({
         ...prev,
@@ -234,31 +245,15 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
       };
     });
   };
-  
-  useEffect(() => {
-    const fetchCategories = async () => {
-      const categories = await getAllCategories();
-      setCategories(categories);
-    };
-    fetchCategories();
-
-    if (product) {
-      setFormData({
-        ...product,
-        souscategory: product.souscategory || null,
-      });
-      if (product.category?.id) {
-        fetchSubcategories(product.category.id); // Fetch subcategories if editing an existing product
-      }
-    } else {
-      resetForm();
-    }
-  }, [product, resetForm]);
 
   const fetchSubcategories = async (categoryId) => {
-    const fetchedSubcategories =
-      await getSousCategoriesbyIdCategory(categoryId);
-    setSubcategories(fetchedSubcategories);
+    try {
+      const fetchedSubcategories = await getSousCategoriesbyIdCategory(categoryId);
+      setSubcategories(fetchedSubcategories || []);
+    } catch (error) {
+      console.error("Error fetching subcategories:", error);
+      setSubcategories([]);
+    }
   };
 
   const handleOptionValueChange = (index, newValue) => {
@@ -323,7 +318,7 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
           ...prev,
           [imageField]: event.target.result.split(",")[1], // Store base64 string without prefix
         }));
-        
+
         setImagePreviews((prev) => ({
           ...prev,
           [imageField]: URL.createObjectURL(file), // Store preview URL
@@ -337,6 +332,10 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
     onSave(formData);
     onClose();
   };
+
+  // Get the category and subcategory values safely
+  const categoryValue = formData.category?.id || "";
+  const subcategoryValue = formData.souscategory?.id || "";
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="lg">
@@ -386,7 +385,9 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
                   style={{ width: "100%", height: "100%", objectFit: "cover" }}
                 />
               ) : (
-                <Box sx={{ color: '#888', fontSize: '14px' }}>Image principale</Box>
+                <Box sx={{ color: "#888", fontSize: "14px" }}>
+                  Image principale
+                </Box>
               )}
             </Box>
             <Button
@@ -435,16 +436,26 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
                     <img
                       src={imagePreviews[field]}
                       alt={`Preview ${index + 2}`}
-                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                      }}
                     />
                   ) : (
-                    <Box sx={{ color: '#888', fontSize: '12px' }}>Image {index + 2}</Box>
+                    <Box sx={{ color: "#888", fontSize: "12px" }}>
+                      Image {index + 2}
+                    </Box>
                   )}
                 </Box>
                 <Button
                   variant="outlined"
                   size="small"
-                  style={{ color: "#2fcb00", borderColor: "#2fcb00", fontSize: "12px" }}
+                  style={{
+                    color: "#2fcb00",
+                    borderColor: "#2fcb00",
+                    fontSize: "12px",
+                  }}
                   component="label"
                   fullWidth
                 >
@@ -602,29 +613,29 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
             <Select
               labelId="category-label"
               name="category"
-              value={formData.category}
+              value={categoryValue}
               onChange={handleInputChange}
               label="Catégorie"
             >
-              {categories.map((category, index) => (
-                <MenuItem key={index} value={category}>
+              {categories.map((category) => (
+                <MenuItem key={category.id} value={category.id}>
                   {category.frenchName}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
-          {subcategories.length > 0 && (
+          {subcategories?.length > 0 && (
             <FormControl fullWidth>
               <InputLabel id="subcategory-label">Sous-catégorie</InputLabel>
               <Select
                 labelId="subcategory-label"
                 name="souscategory"
-                value={formData?.souscategory}
+                value={subcategoryValue}
                 onChange={handleInputChange}
                 label="Sous Catégorie"
               >
                 {subcategories.map((subcategory) => (
-                  <MenuItem key={subcategory.id} value={subcategory}>
+                  <MenuItem key={subcategory.id} value={subcategory.id}>
                     {subcategory.frenchName}
                   </MenuItem>
                 ))}
@@ -713,7 +724,8 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
                 fullWidth
                 value={formData.soldRatio}
                 onChange={handleInputChange}
-                inputProps={{ min: 10, max: 90 }}/>
+                inputProps={{ min: 10, max: 90 }}
+              />
               <TextField
                 name="startDate"
                 label="Début de la promotion"

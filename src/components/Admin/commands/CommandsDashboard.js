@@ -19,9 +19,9 @@ function CommandsDashboard({ page, rowsPerPage, setPage, setRowsPerPage, totalPa
 
 
 
-  const handleViewCommand = async (command) => {
+  const handleViewCommand = async (id) => {
     try {
-      const response = await getCommandByID(command.id);
+      const response = await getCommandByID(id);
       if (response && response.data) {
         setSelectedCommand(response.data);
         setOpenViewModal(true);

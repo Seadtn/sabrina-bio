@@ -65,17 +65,17 @@ const ProductViewModal = ({ open, onClose, product }) => {
                       ? product?.availableOptions?.map((option, index) => (
                           <div key={index}>
                             {option.value} {option.unit} -{" "}
-                            {product?.prices[option.value]} DT
+                            {Math.round(product?.prices[option.value])} DT
                           </div>
                         ))
                       : product?.availableOptions?.map((option, index) => (
                           <div key={index}>
                             {option.value} {option.unit} -{" "}
-                            {(
+                            {Math.round((
                               product?.prices[option.value] -
                               product?.prices[option.value] *
                                 (product.soldRatio * 0.01)
-                            ).toFixed(2)}{" "}
+                            ))}{" "}
                             DT
                           </div>
                         ))}
@@ -84,11 +84,11 @@ const ProductViewModal = ({ open, onClose, product }) => {
                   <div>
                     <Typography variant="h4" gutterBottom>
                       {product?.promotion
-                        ? (
+                        ? Math.round((
                             product?.price -
                             product?.price * (product.soldRatio * 0.01)
-                          ).toFixed(2)
-                        : product?.price?.toFixed(2)}{" "}
+                          ))
+                        : Math.round(product?.price)}{" "}
                       DT
                     </Typography>
                     {product?.promotion && (

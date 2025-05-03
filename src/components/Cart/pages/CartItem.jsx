@@ -67,11 +67,14 @@ const CartItem = ({
     }
     return "";
   };
-  const getOption=(opt)=>{
-    if(opt>=1000){
+  const getOption=(opt,type)=>{
+    if((type === "GRAMMAGE" || type === "DOSAGE") && opt>=1000){
       return opt/1000
     }
-    return opt
+    if((type === "GRAMMAGE" || type === "DOSAGE") && opt<1000){
+      return opt
+    }
+    return ""
   }
   return (
     <>
@@ -115,7 +118,7 @@ const CartItem = ({
                   }}
                 >
                   {" "}
-                  {getOption(Number(option))} {getUnitLabel(type, Number(option), isArabic)}{" "}
+                  {getOption(Number(option),type)} {getUnitLabel(type, Number(option), isArabic)}{" "}
                   {taste ? "-" + taste : ""}
                 </small>
               </Link>
