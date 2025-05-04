@@ -248,7 +248,8 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
 
   const fetchSubcategories = async (categoryId) => {
     try {
-      const fetchedSubcategories = await getSousCategoriesbyIdCategory(categoryId);
+      const fetchedSubcategories =
+        await getSousCategoriesbyIdCategory(categoryId);
       setSubcategories(fetchedSubcategories || []);
     } catch (error) {
       console.error("Error fetching subcategories:", error);
@@ -307,22 +308,63 @@ const ProductFormModal = ({ open, onClose, product, onSave }) => {
       };
     });
   };
-
-  // Updated to handle multiple images
+  // Modified handleImageChange function with image compression
   const handleImageChange = (e, imageField) => {
     const file = e.target.files[0];
     if (file) {
+      // Check file size before processing
+      if (file.size > 1024 * 1024 * 2) {
+        // 2MB limit
+        alert(
+          `L'image ${file.name} est trop grande. La taille maximale est de 2MB.`
+        );
+        return;
+      }
+
       const reader = new FileReader();
       reader.onload = (event) => {
-        setFormData((prev) => ({
-          ...prev,
-          [imageField]: event.target.result.split(",")[1], // Store base64 string without prefix
-        }));
+        // Create an image element to resize the image
+        const img = new Image();
+        img.onload = () => {
+          // Create canvas for resizing
+          const canvas = document.createElement("canvas");
 
-        setImagePreviews((prev) => ({
-          ...prev,
-          [imageField]: URL.createObjectURL(file), // Store preview URL
-        }));
+          // Calculate new dimensions (max 800px width/height)
+          let width = img.width;
+          let height = img.height;
+          const maxDimension = 800;
+
+          if (width > height && width > maxDimension) {
+            height = Math.round((height * maxDimension) / width);
+            width = maxDimension;
+          } else if (height > maxDimension) {
+            width = Math.round((width * maxDimension) / height);
+            height = maxDimension;
+          }
+
+          // Resize image
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0, width, height);
+
+          // Get resized image as base64 string with reduced quality
+          const resizedImage = canvas.toDataURL("image/jpeg", 0.7); // 0.7 quality = 30% compression
+
+          // Update form data with base64 string without prefix
+          setFormData((prev) => ({
+            ...prev,
+            [imageField]: resizedImage.split(",")[1], // Store base64 string without prefix
+          }));
+
+          // Update preview
+          setImagePreviews((prev) => ({
+            ...prev,
+            [imageField]: resizedImage, // Store full data URL for preview
+          }));
+        };
+
+        img.src = event.target.result;
       };
       reader.readAsDataURL(file);
     }
