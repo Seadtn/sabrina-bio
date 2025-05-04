@@ -93,12 +93,12 @@ const ClientAvis = () => {
                   <div className="comment-captures">
                     {item.images &&
                       item.images.map((img, i) => (
-                        <img
+                        (img &&<img
                           key={i}
                           src={`data:image/jpeg;base64,${img}`}
                           alt={`Avis ${i + 1}`}
                           className="capture-img"
-                        />
+                        />)
                       ))}
                   </div>
                   <div className="testimonial-content">

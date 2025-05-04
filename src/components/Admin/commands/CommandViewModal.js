@@ -114,7 +114,7 @@ const CommandViewModal = ({ open, onClose, command, onEditStatus }) => {
                     <TableCell>{commandProduct.taste}</TableCell>
                     <TableCell>{commandProduct.unit}</TableCell>
                     <TableCell align="right">
-                      TND {commandProduct.prix?.toFixed(2)}
+                      TND {commandProduct.prix?.toFixed(2) * commandProduct.quantity}
                     </TableCell>
                   </TableRow>
                 ))}

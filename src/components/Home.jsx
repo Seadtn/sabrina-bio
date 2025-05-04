@@ -21,45 +21,59 @@ const Home = () => {
   const [bestSeller, setBestSeller] = useState([]);
   const [products, setProducts] = useState([]);
   const [productOTY, setProductOTY] = useState(null);
+  const [loading, setLoading] = useState(true); // ✅ Loading state
 
   const { t } = useTranslation();
 
   useEffect(() => {
-    let loadProducts = true;
+    let isMounted = true;
+    
     const getProducts = async () => {
-      if (loadProducts) {
-        const newProduct = await getLatestOnSoldProduct();
-        setNewproducts(newProduct);
-        const poty = await getActiveProductOTY();
-        setProductOTY(poty);
-        const bestSellerProducts = await getBestSellers();
-        setBestSeller(bestSellerProducts);
-        const prods = await getProductsInHomePage();
-        setProducts(prods);
+      try {
+        const [newProduct, poty, bestSellerProducts, prods] = await Promise.all([
+          getLatestOnSoldProduct(),
+          getActiveProductOTY(),
+          getBestSellers(),
+          getProductsInHomePage(),
+        ]);
+
+        if (isMounted) {
+          setNewproducts(newProduct);
+          setProductOTY(poty);
+          setBestSeller(bestSellerProducts);
+          setProducts(prods);
+        }
+      } catch (error) {
+        console.error("Error loading homepage data", error);
+      } finally {
+        if (isMounted) setLoading(false); // ✅ Stop loading once done
       }
-      return () => {
-        loadProducts = false;
-      };
     };
+
     getProducts();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
+  if (loading) return <Loader />; // ✅ Display loader while loading
+
   return (
-    (NewProducts.length===0 &&  products.lengths===0) ? (
-      <Loader />
-    ) : ( <div>
+    <div>
       <BannerSection />
       <div className="container">
         <Categories />
 
         {productOTY && <ProductOfTheYear productOTY={productOTY} />}
-        {/* On Sold Products Section */}
+
         <div className="content">
           <ProductSlider
             products={bestSeller}
             title={t("homePage.mostSellerSection.title")}
           />
         </div>
+
         <div className="content most-seller-section">
           <h2 className="title">{t("homePage.products.title")}</h2>
           <div className="row products">
@@ -76,7 +90,6 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Publicity Banner */}
         <div className="publicity-banner">
           <img
             src={process.env.PUBLIC_URL + "/images/publicity/pub.jpg"}
@@ -86,9 +99,8 @@ const Home = () => {
           />
         </div>
 
-        {/* Client Avis Section */}
         <ClientAvis />
-        {/* On Sold Products Section */}
+
         <div className="content">
           <ProductSlider
             products={NewProducts}
@@ -96,18 +108,18 @@ const Home = () => {
           />
         </div>
       </div>
-      {/* Floating WhatsApp Button (invisible by default) */}
+
       <a
-        href="https://wa.me/21652052265" // Use wa.me for WhatsApp links
+        href="https://wa.me/21652052265"
         className="floating-whatsapp"
         target="_blank"
         rel="noopener noreferrer"
-        style={{ display: "block", opacity: 0 }} // Invisible by default
+        style={{ display: "block", opacity: 0 }}
       >
+        <span className="sr-only">Contact us on WhatsApp</span>
       </a>
-    </div>)
+    </div>
   );
-
 };
 
 export default Home;
