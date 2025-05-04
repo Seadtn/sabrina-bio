@@ -2209,7 +2209,6 @@ form button {
   padding: 24px;
   max-width: 900px;
   margin: 0 auto 10px auto;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   font-family: sans-serif;
 }
 
