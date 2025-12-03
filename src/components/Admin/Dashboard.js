@@ -19,6 +19,7 @@ import ProductViewModal from "./product/ProductViewModal.js";
 import BackupTableIcon from "@mui/icons-material/BackupTable";
 import CommandsDashboard from "./commands/CommandsDashboard.js";
 import {
+  activeProduct,
   addNewProduct,
   deleteProduct,
   getAllCategories,
@@ -320,12 +321,27 @@ export default function Dashboard() {
   const handleDeleteProduct = async (id) => {
     try {
       await deleteProduct(id);
-      setProducts((prev) => prev.filter((product) => product.id !== id));
+      setProducts((prev) =>
+        prev.map((product) =>
+          product.id === id ? { ...product, active: false } : product
+        )
+      );
     } catch (error) {
       console.error("Error deleting product:", error.message);
     }
   };
-
+  const handleActivateProduct = async (id) => {
+    try {
+      await activeProduct(id);
+      setProducts((prev) =>
+        prev.map((product) =>
+          product.id === id ? { ...product, active: true } : product
+        )
+      );
+    } catch (error) {
+      console.error("Error activating product:", error.message);
+    }
+  };
   // Custom Router (maybe for SPA-style nav)
   const customRouter = {
     navigate: (to) => {
@@ -344,7 +360,13 @@ export default function Dashboard() {
     >
       <DashboardLayout branding={{ title: "", logo: <AppLogo /> }}>
         {activePage === "products" && (
-          <PageContainer>
+          <PageContainer
+            sx={{
+              "@media (min-width:1200px)": {
+                maxWidth: "1600px", // your custom width
+              },
+            }}
+          >
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <Button
@@ -423,6 +445,7 @@ export default function Dashboard() {
                 products={products}
                 onEdit={handleEditProduct}
                 onDelete={handleDeleteProduct}
+                onActivate={handleActivateProduct}
                 onView={handleViewProduct}
                 page={page}
                 rowsPerPage={rowsPerPage}

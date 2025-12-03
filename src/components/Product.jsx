@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import "../App.css";
 import ProductCard from "./ProductCard";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "react-loading-skeleton/dist/skeleton.css";
 import Loader from "./loader/Loader";
 import i18n from "../i18n/i18n";
@@ -28,6 +28,7 @@ const Product = () => {
   const { t } = useTranslation();
   const isArabic = i18n.language === "ar";
   const isFrench = i18n.language === "fr";
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleFastView = () => {
     dispatch(openFastViewModal(product));
@@ -62,6 +63,11 @@ const Product = () => {
       setLoading(true);
       try {
         const productResponse = await getProductById(id);
+        if (productResponse.active === false) {
+          setLoading(false);
+          navigate("/products");
+          return;
+        }
         setProduct(productResponse);
 
         // Set initial selections if available
@@ -69,9 +75,7 @@ const Product = () => {
           setSelectedTaste(productResponse.tastes[0]);
         }
         if (productResponse.availableOptions?.length > 0) {
-          setSelectedOption(
-            productResponse.availableOptions[0].value
-          );
+          setSelectedOption(productResponse.availableOptions[0].value);
         }
 
         if (productResponse.category?.id) {
@@ -306,7 +310,12 @@ const Product = () => {
       imageSrc = `data:image/jpeg;base64,${base64String}`;
     }
     return (
-      <img src={imageSrc} className="product-image" alt="Product" loading="lazy" />
+      <img
+        src={imageSrc}
+        className="product-image"
+        alt="Product"
+        loading="lazy"
+      />
     );
   };
 
@@ -340,18 +349,15 @@ const Product = () => {
                 /> */}
                 {/* Slider component */}
                 {images.length > 0 && (
-
-                    <Slider {...settings}>
-                      {images.map((imgData, idx) => {
-                        return (
-                          <div
-                            key={idx}
-                          >
-                            {handleImageSource(imgData)} {/* Render image */}
-                          </div>
-                        );
-                      })}
-                    </Slider>
+                  <Slider {...settings}>
+                    {images.map((imgData, idx) => {
+                      return (
+                        <div key={idx}>
+                          {handleImageSource(imgData)} {/* Render image */}
+                        </div>
+                      );
+                    })}
+                  </Slider>
                 )}
               </div>
 

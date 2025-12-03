@@ -12,13 +12,13 @@ import {
   TablePagination,
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
-
-const ProductTable = ({
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';const ProductTable = ({
   products,
   onEdit,
   onView,
   onDelete,
+  onActivate,
   page,
   rowsPerPage,
   totalCount,
@@ -40,7 +40,7 @@ const ProductTable = ({
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
-          <TableRow >
+          <TableRow>
             <TableCell>ID</TableCell>
             <TableCell>Image</TableCell>
             <TableCell>Nom</TableCell>
@@ -53,6 +53,7 @@ const ProductTable = ({
             <TableCell>Promotion</TableCell>
             <TableCell>Livrison gratuite</TableCell>
             <TableCell>Nouveau produit</TableCell>
+            <TableCell>Statut</TableCell>
             <TableCell>Actions</TableCell>
           </TableRow>
         </TableHead>
@@ -60,7 +61,10 @@ const ProductTable = ({
           {products.map((product, index) => {
             const displayIndex = page * rowsPerPage + index + 1; // Adjust index
             return (
-              <TableRow key={product.id} onClick={(event) => onView(product.id, event)}>
+              <TableRow
+                key={product.id}
+                onClick={(event) => onView(product.id, event)}
+              >
                 <TableCell>{displayIndex}</TableCell>
                 <TableCell>
                   <img
@@ -125,6 +129,13 @@ const ProductTable = ({
                   />
                 </TableCell>
                 <TableCell>
+                  {product.active ? (
+                    <Chip label="Actif" color="success" size="small" />
+                  ) : (
+                    <Chip label="Inactif" color="error" size="small" />
+                  )}
+                </TableCell>
+                <TableCell>
                   <IconButton
                     onClick={(event) => {
                       event.stopPropagation();
@@ -133,14 +144,25 @@ const ProductTable = ({
                   >
                     <EditIcon />
                   </IconButton>
-                  <IconButton
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      onDelete(product.id);
-                    }}
-                  >
-                    <DeleteIcon />
-                  </IconButton>
+                  {product.active ? (
+                    <IconButton
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        onDelete(product.id);
+                      }}
+                    >
+                      <VisibilityOffIcon />
+                    </IconButton>
+                  ) : (
+                    <IconButton
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        onActivate(product.id);
+                      }}
+                    >
+                      <VisibilityIcon />
+                    </IconButton>
+                  )}
                 </TableCell>
               </TableRow>
             );

@@ -3,7 +3,7 @@ import axios from "axios";
 
 //const localhost = "https://135.125.1.158:8080";
 const localhost = "https://sabrina-bio.tn"; // Production
-// const localhost = "http://localhost:8080"; // Local
+//  const localhost = "http://localhost:8080"; // Local
 // const localhost = "http://192.168.100.15:8080"; // phone test
 // const localhost = "http://192.168.234.10:8080"; // Telnet
 const Product_URL = `${localhost}/api/v1/productManagement/`;
@@ -130,7 +130,15 @@ export const deleteProduct = async (id) => {
   try {
     await postRequest(Product_URL + "deleteProduct/" + id);
   } catch (error) {
-    console.error("Error adding new product:", error.message);
+    console.error("Error deleting product:", error.message);
+    throw error;
+  }
+};
+export const activeProduct = async (id) => {
+  try {
+    await postRequest(Product_URL + "activeProduct/" + id);
+  } catch (error) {
+    console.error("Error activating  product:", error.message);
     throw error;
   }
 };
