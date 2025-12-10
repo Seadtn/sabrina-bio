@@ -105,7 +105,7 @@ const Product = () => {
     }
   };
   const getDisplayPrice = () => {
-    if (!product.hasTaste && !product.availableOptions?.length) {
+    if ((!product.hasTaste && !product.availableOptions?.length) || product.productType==="STANDARD") {
       return product.price;
     }
 
@@ -131,7 +131,7 @@ const Product = () => {
   // };
 
   const renderOptions = () => {
-    if (!product.availableOptions?.length) return null;
+    if (!product.availableOptions?.length || product.productType==="STANDARD") return null;
 
     return (
       <div className="options-section">
