@@ -26,7 +26,7 @@ jobs:
     # 🐳 Build Docker image
     - name: Build Docker image
       run: |
-        docker build -t website_frontend:latest .
+        sudo docker build -t website_frontend:latest .
 
     - name: List Docker images
-      run: docker images
+      run: sudo docker images
