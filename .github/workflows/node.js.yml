@@ -9,7 +9,7 @@ on:
 
 jobs:
   build:
-    runs-on: sabrinabio
+    runs-on: self-hosted
 
     # Run only on push OR merged PR
     if: github.event_name == 'push' || github.event.pull_request.merged == true
@@ -26,7 +26,7 @@ jobs:
     # 🐳 Build Docker image
     - name: Build Docker image
       run: |
-        docker build -t my-frontend:latest .
+        docker build -t website_frontend:latest .
 
     - name: List Docker images
       run: docker images
