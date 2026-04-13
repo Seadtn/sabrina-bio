@@ -1,0 +1,32 @@
+name: Front SB build only
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+    types: [closed]
+
+jobs:
+  build:
+    runs-on: sabrinabio
+
+    # Run only on push OR merged PR
+    if: github.event_name == 'push' || github.event.pull_request.merged == true
+
+    steps:
+    - name: Print runner hostname
+      run: |
+        echo "Running on:"
+        hostname
+
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    # 🐳 Build Docker image
+    - name: Build Docker image
+      run: |
+        docker build -t my-frontend:latest .
+
+    - name: List Docker images
+      run: docker images
